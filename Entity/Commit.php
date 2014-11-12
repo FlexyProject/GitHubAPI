@@ -197,7 +197,7 @@ class Commit implements EntityInterface {
 	 * @return Commit
 	 */
 	public function setTimestamp($timestamp) {
-		$this->timestamp = new DateTime($timestamp);
+		$this->timestamp = (new DateTime($timestamp))->format(DateTime::ISO8601);
 
 		return $this;
 	}
