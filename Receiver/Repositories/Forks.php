@@ -5,11 +5,6 @@ use Scion\Http\Request;
 
 class Forks extends AbstractRepositories {
 
-	/** Sort constants */
-	const SORT_NEWEST     = 'newest';
-	const SORT_OLDEST     = 'oldest';
-	const SORT_STARGAZERS = 'stargazers';
-
 	/**
 	 * List forks
 	 * @see https://developer.github.com/v3/repos/forks/#list-forks

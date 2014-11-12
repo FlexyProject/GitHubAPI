@@ -35,10 +35,13 @@ class AbstractApi {
 	const TYPE_MEMBER  = 'member';
 
 	/** Available sort */
-	const SORT_CREATED   = 'created';
-	const SORT_UPDATED   = 'updated';
-	const SORT_PUSHED    = 'pushed';
-	const SORT_FULL_NAME = 'full_name';
+	const SORT_CREATED    = 'created';
+	const SORT_UPDATED    = 'updated';
+	const SORT_PUSHED     = 'pushed';
+	const SORT_FULL_NAME  = 'full_name';
+	const SORT_NEWEST     = 'newest';
+	const SORT_OLDEST     = 'oldest';
+	const SORT_STARGAZERS = 'stargazers';
 
 	/** Protected properties */
 	protected $timeout = 240;
