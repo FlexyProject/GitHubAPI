@@ -12,29 +12,19 @@ class AbstractApi {
 	const API_UPLOADS = 'https://uploads.github.com';
 	const API_RAW_URL = 'https://raw.github.com';
 
-	/** Default branches */
-	const BRANCH_MASTER  = 'master';
-	const BRANCH_DEVELOP = 'develop';
-
-	/** Archive type */
+	/** Archive constants */
 	const ARCHIVE_TARBALL = 'tarball';
 	const ARCHIVE_ZIPBALL = 'zipball';
 
-	/** Client constants */
-	const USER_AGENT = 'scion-framework.github-api';
+	/** Branch constants */
+	const BRANCH_MASTER  = 'master';
+	const BRANCH_DEVELOP = 'develop';
 
-	/** Available direction */
+	/** Direction constants */
 	const DIRECTION_ASC  = 'asc';
 	const DIRECTION_DESC = 'desc';
 
-	/** Available types */
-	const TYPE_ALL     = 'all';
-	const TYPE_OWNER   = 'owner';
-	const TYPE_PUBLIC  = 'public';
-	const TYPE_PRIVATE = 'private';
-	const TYPE_MEMBER  = 'member';
-
-	/** Available sort */
+	/** Sort constants */
 	const SORT_CREATED    = 'created';
 	const SORT_UPDATED    = 'updated';
 	const SORT_PUSHED     = 'pushed';
@@ -42,6 +32,22 @@ class AbstractApi {
 	const SORT_NEWEST     = 'newest';
 	const SORT_OLDEST     = 'oldest';
 	const SORT_STARGAZERS = 'stargazers';
+
+	/** State constants */
+	const STATE_PENDING = 'pending';
+	const STATE_SUCCESS = 'success';
+	const STATE_ERROR   = 'error';
+	const STATE_FAILURE = 'failure';
+
+	/** Type constants */
+	const TYPE_ALL     = 'all';
+	const TYPE_OWNER   = 'owner';
+	const TYPE_PUBLIC  = 'public';
+	const TYPE_PRIVATE = 'private';
+	const TYPE_MEMBER  = 'member';
+
+	/** Client constants */
+	const USER_AGENT = 'scion-framework.github-api';
 
 	/** Protected properties */
 	protected $timeout = 240;

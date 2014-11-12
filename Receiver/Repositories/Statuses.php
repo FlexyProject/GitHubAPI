@@ -5,11 +5,7 @@ use Scion\Http\Request;
 
 class Statuses extends AbstractRepositories {
 
-	/** State constants */
-	const STATE_PENDING = 'pending';
-	const STATE_SUCCESS = 'success';
-	const STATE_ERROR   = 'error';
-	const STATE_FAILURE = 'failure';
+
 
 	/**
 	 * Create a Status
