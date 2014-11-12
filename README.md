@@ -1,5 +1,7 @@
 # Services\GitHub component for Scion-Framework
-This is the Services\GitHub component for Scion-Framework.
+This is the Services\GitHub component for Scion-Framework.  
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/build-status/master)
 
 ## Requirements
 * PHP >= 5.6.1
