@@ -29,4 +29,4 @@ $emojis->get();
 ```
 
 ## License
-The files in this archive are released under the [GNU Lesser GPL v3](LICENSE) license.
+The files in this archive are released under the [GNU Lesser GPL v3](https://github.com/Scion-Framework/scion-core/blob/develop/LICENSE) license.
