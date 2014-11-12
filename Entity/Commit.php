@@ -65,7 +65,7 @@ class Commit implements EntityInterface {
 
 	/**
 	 * Set author
-	 * @param \stdClass $author
+	 * @param \Traversable $author
 	 * @return Commit
 	 */
 	public function setAuthor($author) {
@@ -91,7 +91,7 @@ class Commit implements EntityInterface {
 
 	/**
 	 * Set committer
-	 * @param null $committer
+	 * @param \Traversable $committer
 	 * @return Commit
 	 */
 	public function setCommitter($committer) {
