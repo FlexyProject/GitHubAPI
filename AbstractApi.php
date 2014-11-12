@@ -23,6 +23,23 @@ class AbstractApi {
 	/** Client constants */
 	const USER_AGENT = 'scion-framework.github-api';
 
+	/** Available direction */
+	const DIRECTION_ASC  = 'asc';
+	const DIRECTION_DESC = 'desc';
+
+	/** Available types */
+	const TYPE_ALL     = 'all';
+	const TYPE_OWNER   = 'owner';
+	const TYPE_PUBLIC  = 'public';
+	const TYPE_PRIVATE = 'private';
+	const TYPE_MEMBER  = 'member';
+
+	/** Available sort */
+	const SORT_CREATED   = 'created';
+	const SORT_UPDATED   = 'updated';
+	const SORT_PUSHED    = 'pushed';
+	const SORT_FULL_NAME = 'full_name';
+
 	/** Protected properties */
 	protected $timeout = 240;
 	protected $success;

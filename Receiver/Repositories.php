@@ -21,23 +21,6 @@ class Repositories extends AbstractReceiver {
 	const STATISTICS    = 'Statistics';
 	const STATUSES      = 'Statuses';
 
-	/** Available types */
-	const TYPE_ALL     = 'all';
-	const TYPE_OWNER   = 'owner';
-	const TYPE_PUBLIC  = 'public';
-	const TYPE_PRIVATE = 'private';
-	const TYPE_MEMBER  = 'member';
-
-	/** Available sort */
-	const SORT_CREATED   = 'created';
-	const SORT_UPDATED   = 'updated';
-	const SORT_PUSHED    = 'pushed';
-	const SORT_FULL_NAME = 'full_name';
-
-	/** Available direction */
-	const DIRECTION_ASC  = 'asc';
-	const DIRECTION_DESC = 'desc';
-
 	/**
 	 * List repositories for the authenticated user.
 	 * @see https://developer.github.com/v3/repos/#list-your-repositories
@@ -46,7 +29,7 @@ class Repositories extends AbstractReceiver {
 	 * @param string $direction
 	 * @return mixed
 	 */
-	public function listYourRepositories($type = self::TYPE_ALL, $sort = self::SORT_FULL_NAME, $direction = self::DIRECTION_DESC) {
+	public function listYourRepositories($type = AbstractApi::TYPE_ALL, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
 		return $this->api->request(sprintf('/user/repos?type=%s&sort=%s&direction=%s', $type, $sort, $direction));
 	}
 
