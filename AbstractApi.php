@@ -128,7 +128,10 @@ class AbstractApi {
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_HTTPHEADER     => ['Content-Type: application/json'],
+			CURLOPT_HTTPHEADER     => [
+				'Accept: application/vnd.github.v3+json',
+				'Content-Type: application/json'
+			],
 			CURLOPT_URL            => $url
 		]);
 
