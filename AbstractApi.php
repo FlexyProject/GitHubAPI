@@ -40,11 +40,21 @@ class AbstractApi {
 	const STATE_FAILURE = 'failure';
 
 	/** Type constants */
-	const TYPE_ALL     = 'all';
-	const TYPE_OWNER   = 'owner';
-	const TYPE_PUBLIC  = 'public';
-	const TYPE_PRIVATE = 'private';
-	const TYPE_MEMBER  = 'member';
+	const TYPE_ALL        = 'all';
+	const TYPE_COMMENTS   = 'comments';
+	const TYPE_GISTS      = 'gists';
+	const TYPE_HOOKS      = 'hooks';
+	const TYPE_ISSUES     = 'issues';
+	const TYPE_MEMBER     = 'member';
+	const TYPE_MILESTONES = 'milestones';
+	const TYPE_ORGS       = 'orgs';
+	const TYPE_OWNER      = 'owner';
+	const TYPE_PAGES      = 'pages';
+	const TYPE_PUBLIC     = 'public';
+	const TYPE_PULLS      = 'pulls';
+	const TYPE_PRIVATE    = 'private';
+	const TYPE_REPOS      = 'repos';
+	const TYPE_USERS      = 'users';
 
 	/** Client constants */
 	const USER_AGENT = 'scion-framework.github-api';
