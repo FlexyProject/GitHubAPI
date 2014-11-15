@@ -1,6 +1,11 @@
 <?php
 namespace Scion\Services\GitHub\Receiver\Activity;
 
+/**
+ * Class Feeds
+ * @see     https://developer.github.com/v3/activity/feeds/
+ * @package Scion\Services\GitHub\Receiver\Activity
+ */
 class Feeds extends AbstractActivity {
 
 	/**

@@ -3,6 +3,11 @@ namespace Scion\Services\GitHub\Receiver\Activity;
 
 use Scion\Http\Request;
 
+/**
+ * Class Watching
+ * @see     https://developer.github.com/v3/activity/watching/
+ * @package Scion\Services\GitHub\Receiver\Activity
+ */
 class Watching extends AbstractActivity {
 
 	/**

@@ -5,8 +5,6 @@ use Scion\Http\Request;
 
 class Statuses extends AbstractRepositories {
 
-
-
 	/**
 	 * Create a Status
 	 * @see https://developer.github.com/v3/repos/statuses/#create-a-status

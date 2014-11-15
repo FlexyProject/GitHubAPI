@@ -1,6 +1,11 @@
 <?php
 namespace Scion\Services\GitHub\Receiver\Activity;
 
+/**
+ * Class Events
+ * @see     https://developer.github.com/v3/activity/events/
+ * @package Scion\Services\GitHub\Receiver\Activity
+ */
 class Events extends AbstractActivity {
 
 	/**
@@ -65,7 +70,7 @@ class Events extends AbstractActivity {
 	 * @param string $username
 	 * @return mixed
 	 */
-		public function listUserReceiveEvents($username) {
+	public function listUserReceiveEvents($username) {
 		return $this->api->request(
 			sprintf('/users/%s/received_events', $username)
 		);

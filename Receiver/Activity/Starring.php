@@ -4,6 +4,11 @@ namespace Scion\Services\GitHub\Receiver\Activity;
 use Scion\Http\Request;
 use Scion\Services\GitHub\AbstractApi;
 
+/**
+ * Class Starring
+ * @see     https://developer.github.com/v3/activity/starring/
+ * @package Scion\Services\GitHub\Receiver\Activity
+ */
 class Starring extends AbstractActivity {
 
 	/**

@@ -4,6 +4,11 @@ namespace Scion\Services\GitHub\Receiver\Activity;
 use Scion\Http\Request;
 use Scion\Stdlib\DateTime;
 
+/**
+ * Class Notifications
+ * @see     https://developer.github.com/v3/activity/notifications/
+ * @package Scion\Services\GitHub\Receiver\Activity
+ */
 class Notifications extends AbstractActivity {
 
 	/**
