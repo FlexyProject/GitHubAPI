@@ -15,7 +15,7 @@ This is the Services\GitHub component for Scion-Framework.
 * \Scion\Stdlib
 
 ## Documentation
-Documentation is hosted at [http://scion.justdavid.me](http://scion.justdavid.me)
+Documentation is available [here](https://github.com/Scion-Framework/scion-docs/blob/master/references/services/github.md).
 
 ## Quick Start
 ```php
