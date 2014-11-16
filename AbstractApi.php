@@ -41,8 +41,11 @@ class AbstractApi {
 	const SORT_STARGAZERS = 'stargazers';
 
 	/** State constants */
+	const STATE_ALL     = 'all';
+	const STATE_CLOSED  = 'closed';
 	const STATE_ERROR   = 'error';
 	const STATE_FAILURE = 'failure';
+	const STATE_OPEN    = 'open';
 	const STATE_PENDING = 'pending';
 	const STATE_SUCCESS = 'success';
 
