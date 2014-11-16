@@ -24,6 +24,13 @@ class AbstractApi {
 	const DIRECTION_ASC  = 'asc';
 	const DIRECTION_DESC = 'desc';
 
+	/** Filter constants */
+	const FILTER_ALL        = 'all';
+	const FILTER_ASSIGNED   = 'assigned';
+	const FILTER_CREATED    = 'created';
+	const FILTER_MENTIONED  = 'mentioned';
+	const FILTER_SUBSCRIBED = 'subscribed';
+
 	/** Sort constants */
 	const SORT_CREATED    = 'created';
 	const SORT_UPDATED    = 'updated';
