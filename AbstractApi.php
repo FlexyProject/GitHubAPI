@@ -32,13 +32,15 @@ class AbstractApi {
 	const FILTER_SUBSCRIBED = 'subscribed';
 
 	/** Sort constants */
-	const SORT_CREATED    = 'created';
-	const SORT_UPDATED    = 'updated';
-	const SORT_PUSHED     = 'pushed';
-	const SORT_FULL_NAME  = 'full_name';
-	const SORT_NEWEST     = 'newest';
-	const SORT_OLDEST     = 'oldest';
-	const SORT_STARGAZERS = 'stargazers';
+	const SORT_COMPLETENESS = 'completeness';
+	const SORT_CREATED      = 'created';
+	const SORT_DUE_DATE     = 'due_date';
+	const SORT_FULL_NAME    = 'full_name';
+	const SORT_NEWEST       = 'newest';
+	const SORT_OLDEST       = 'oldest';
+	const SORT_PUSHED       = 'pushed';
+	const SORT_STARGAZERS   = 'stargazers';
+	const SORT_UPDATED      = 'updated';
 
 	/** State constants */
 	const STATE_ALL     = 'all';
