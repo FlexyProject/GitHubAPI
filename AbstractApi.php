@@ -7,6 +7,9 @@ use Scion\File\Parser\Json as JsonParser;
 
 class AbstractApi {
 
+	/** API version */
+	const API_VERSION = 'v3';
+
 	/** API constants */
 	const API_URL     = 'https://api.github.com';
 	const API_UPLOADS = 'https://uploads.github.com';
@@ -72,10 +75,31 @@ class AbstractApi {
 	const USER_AGENT = 'scion-framework.github-api';
 
 	/** Protected properties */
+	protected $apiUrl  = self::API_URL;
 	protected $timeout = 240;
 	protected $success;
+	protected $failure;
 	protected $clientId;
 	protected $clientSecret;
+
+	/**
+	 * Get apiUrl
+	 * @return mixed
+	 */
+	public function getApiUrl() {
+		return $this->apiUrl;
+	}
+
+	/**
+	 * Set apiUrl
+	 * @param mixed $apiUrl
+	 * @return AbstractApi
+	 */
+	public function setApiUrl($apiUrl) {
+		$this->apiUrl = $apiUrl;
+
+		return $this;
+	}
 
 	/**
 	 * Get clientId
@@ -116,18 +140,19 @@ class AbstractApi {
 	}
 
 	/**
+	 * Curl request
 	 * @param string $url
 	 * @param string $method
-	 * @param string $prefix
+	 * @param array  $postFields
 	 * @return mixed
 	 */
-	public function request($url, $method = Request::METHOD_GET, $prefix = self::API_URL) {
+	public function request($url, $method = Request::METHOD_GET, $postFields = []) {
 
 		/** Building url */
-		$url = $prefix . $url;
+		$url = $this->getApiUrl() . $url;
 		if (null !== $this->clientId && null !== $this->clientSecret) {
 			$url .= (strstr($url, '?') !== false ? '&' : '?');
-			$url .= sprintf('client_id=%s&client_secret=%s', $this->clientId, $this->clientSecret);
+			$url .= http_build_query(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret]);
 		}
 
 		/** Call curl */
@@ -141,7 +166,7 @@ class AbstractApi {
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_HTTPHEADER     => [
-				'Accept: application/vnd.github.v3+json',
+				'Accept: application/vnd.github.' . self::API_VERSION . '+json',
 				'Content-Type: application/json'
 			],
 			CURLOPT_URL            => $url
@@ -175,6 +200,7 @@ class AbstractApi {
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5 */
 			case Request::METHOD_POST:
 				$curl->setOption(CURLOPT_POST, true);
+				$curl->setOption(CURLOPT_POSTFIELDS, $postFields);
 				break;
 
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6 */
@@ -195,6 +221,9 @@ class AbstractApi {
 
 		$curl->success(function ($instance) {
 			$this->success = JsonParser::decode($instance->response);
+		});
+		$curl->error(function ($instance) {
+			$this->failure = JsonParser::decode($instance->response);
 		});
 		$curl->perform();
 
