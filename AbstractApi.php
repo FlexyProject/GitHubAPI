@@ -14,6 +14,7 @@ class AbstractApi {
 	const API_URL     = 'https://api.github.com';
 	const API_UPLOADS = 'https://uploads.github.com';
 	const API_RAW_URL = 'https://raw.github.com';
+	const USER_AGENT  = 'scion-framework.github-api';
 
 	/** Archive constants */
 	const ARCHIVE_TARBALL = 'tarball';
@@ -71,16 +72,15 @@ class AbstractApi {
 	const TYPE_REPOS      = 'repos';
 	const TYPE_USERS      = 'users';
 
-	/** Client constants */
-	const USER_AGENT = 'scion-framework.github-api';
-
 	/** Protected properties */
-	protected $apiUrl  = self::API_URL;
-	protected $timeout = 240;
+	protected $apiUrl   = self::API_URL;
+	protected $timeout  = 240;
 	protected $success;
 	protected $failure;
 	protected $clientId;
 	protected $clientSecret;
+	protected $httpAuth = ['username' => '', 'password' => ''];
+	protected $token;
 
 	/**
 	 * Get apiUrl
@@ -140,6 +140,44 @@ class AbstractApi {
 	}
 
 	/**
+	 * Get httpAuth
+	 * @return array
+	 */
+	public function getHttpAuth() {
+		return $this->httpAuth;
+	}
+
+	/**
+	 * Set httpAuth
+	 * @param array $httpAuth
+	 * @return AbstractApi
+	 */
+	public function setHttpAuth(array $httpAuth) {
+		$this->httpAuth = $httpAuth;
+
+		return $this;
+	}
+
+	/**
+	 * Get token
+	 * @return string
+	 */
+	public function getToken() {
+		return $this->token;
+	}
+
+	/**
+	 * Set token
+	 * @param string $token
+	 * @return AbstractApi
+	 */
+	public function setToken($token) {
+		$this->token = $token;
+
+		return $this;
+	}
+
+	/**
 	 * Curl request
 	 * @param string $url
 	 * @param string $method
@@ -172,11 +210,31 @@ class AbstractApi {
 			CURLOPT_URL            => $url
 		]);
 
+		/** Basic authentication via username and Password */
+		if (!empty($this->getHttpAuth())) {
+			$curl->setOption([
+				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+				CURLOPT_USERPWD  => $this->getHttpAuth()['username'] . ':' . $this->getHttpAuth()['password']
+			]);
+		}
+
+		/** Basic authentication via OAuth token **/
+		if (!empty($this->getToken())) {
+			$curl->setOption([
+				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+				CURLOPT_USERPWD  => $this->getToken() . ':x-oauth-basic'
+			]);
+		}
+
 		/** Methods */
 		switch ($method) {
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7 */
 			case Request::METHOD_DELETE:
-				$curl->setOption(CURLOPT_CUSTOMREQUEST, Request::METHOD_DELETE);
+				$curl->setOption([
+					CURLOPT_CUSTOMREQUEST => $method,
+					CURLOPT_POST          => true,
+					CURLOPT_POSTFIELDS    => $postFields
+				]);
 				break;
 
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3 */
@@ -187,26 +245,32 @@ class AbstractApi {
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.4 */
 			case Request::METHOD_HEAD:
 				$curl->setOption([
-					CURLOPT_CUSTOMREQUEST => Request::METHOD_HEAD,
+					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_NOBODY        => true
 				]);
 				break;
 
 			/** @see http://tools.ietf.org/html/rfc5789 */
 			case Request::METHOD_PATCH:
-				$curl->setOption(CURLOPT_CUSTOMREQUEST, Request::METHOD_PATCH);
+				$curl->setOption([
+					CURLOPT_CUSTOMREQUEST => $method,
+					CURLOPT_POST          => true,
+					CURLOPT_POSTFIELDS    => $postFields
+				]);
 				break;
 
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5 */
 			case Request::METHOD_POST:
-				$curl->setOption(CURLOPT_POST, true);
-				$curl->setOption(CURLOPT_POSTFIELDS, $postFields);
+				$curl->setOption([
+					CURLOPT_POST       => true,
+					CURLOPT_POSTFIELDS => $postFields
+				]);
 				break;
 
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.6 */
 			case Request::METHOD_PUT:
 				$curl->setOption([
-					CURLOPT_CUSTOMREQUEST => Request::METHOD_PUT,
+					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_PUT           => true,
 					CURLOPT_HTTPHEADER    => [
 						'X-HTTP-Method-Override: PUT',
