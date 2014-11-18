@@ -210,7 +210,10 @@ class AbstractApi {
 			CURLOPT_URL            => $url
 		]);
 
-		/** Basic authentication via username and Password */
+		/**
+		 * Basic authentication via username and Password
+		 * @see https://developer.github.com/v3/auth/#via-username-and-password
+		 */
 		if (!empty($this->getHttpAuth())) {
 			$curl->setOption([
 				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
@@ -218,7 +221,10 @@ class AbstractApi {
 			]);
 		}
 
-		/** Basic authentication via OAuth token **/
+		/**
+		 * Basic authentication via OAuth token
+		 * @see https://developer.github.com/v3/auth/#via-oauth-tokens
+		 **/
 		if (!empty($this->getToken())) {
 			$curl->setOption([
 				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
@@ -230,6 +236,8 @@ class AbstractApi {
 		switch ($method) {
 			/** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.7 */
 			case Request::METHOD_DELETE:
+			/** @see http://tools.ietf.org/html/rfc5789 */
+			case Request::METHOD_PATCH:
 				$curl->setOption([
 					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_POST          => true,
@@ -247,15 +255,6 @@ class AbstractApi {
 				$curl->setOption([
 					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_NOBODY        => true
-				]);
-				break;
-
-			/** @see http://tools.ietf.org/html/rfc5789 */
-			case Request::METHOD_PATCH:
-				$curl->setOption([
-					CURLOPT_CUSTOMREQUEST => $method,
-					CURLOPT_POST          => true,
-					CURLOPT_POSTFIELDS    => $postFields
 				]);
 				break;
 
