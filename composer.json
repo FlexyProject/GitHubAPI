@@ -18,6 +18,7 @@
         "psr-4": {"GitHub\\": "lib/"}
     },
     "require": {
-        "php": ">=5.6.1"
+        "php": ">=5.6.1",
+        "emulienfou/Crypt": "*"
     }
 }
