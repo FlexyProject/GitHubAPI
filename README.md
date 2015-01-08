@@ -19,13 +19,13 @@ Documentation is available [here](https://github.com/Scion-Framework/scion-docs/
 ## Quick Start
 ```php
 // Create a client object
-$client = new \Scion\Services\Github\Client();
+$client = new \Github\Client();
 
 // Miscellaneous
-$miscellaneous = $client->getReceiver(\Scion\Services\GitHub\Client::MISCELLANEOUS);
+$miscellaneous = $client->getReceiver(\GitHub\Client::MISCELLANEOUS);
 
 // Lists all the emojis available to use on GitHub.
-$emojis = $miscellaneous->getReceiver(\Scion\Services\GitHub\Receiver\Miscellaneous::EMOJIS);
+$emojis = $miscellaneous->getReceiver(\GitHub\Receiver\Miscellaneous::EMOJIS);
 $emojis->get();
 ```
 
