@@ -30,60 +30,121 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listYourRepositories($type = AbstractApi::TYPE_ALL, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
-		return $this->api->request(sprintf('/user/repos?type=%s&sort=%s&direction=%s', $type, $sort, $direction));
+		return $this->api->request(
+			sprintf('/user/repos?%s', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
+		);
 	}
 
 	/**
 	 * List public repositories for the specified user.
 	 * @see https://developer.github.com/v3/repos/#list-user-repositories
 	 * @param string $username
+	 * @param string $type
+	 * @param string $sort
+	 * @param string $direction
 	 * @return mixed
 	 */
-	public function listUserRepositories($username) {
-		return $this->api->request(sprintf('/users/%s/repos', $username));
+	public function listUserRepositories($username, $type = AbstractApi::TYPE_OWNER, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
+		return $this->api->request(
+			sprintf('/users/%s/repos?%s', $username, http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
+		);
 	}
 
 	/**
 	 * List repositories for the specified org.
 	 * @see https://developer.github.com/v3/repos/#list-organization-repositories
 	 * @param string $organization
+	 * @param string $type
 	 * @return mixed
 	 */
-	public function listOrganizationRepositories($organization) {
-		return $this->api->request(sprintf('/orgs/%s/repos', $organization));
+	public function listOrganizationRepositories($organization, $type = AbstractApi::TYPE_ALL) {
+		return $this->api->request(
+			sprintf('/orgs/%s/repos?%', $organization, http_build_query(['type' => $type]))
+		);
 	}
 
 	/**
 	 * List all public repositories
 	 * @see https://developer.github.com/v3/repos/#list-all-public-repositories
+	 * @param string $since
 	 * @return mixed
 	 */
-	public function listPublicRepositories() {
-		return $this->api->request(sprintf('/repositories'));
+	public function listPublicRepositories($since = '') {
+		return $this->api->request(
+			sprintf('/repositories?%s', http_build_query(['since', $since]))
+		);
 	}
 
 	/**
 	 * Create a new repository for the authenticated user.
 	 * @see https://developer.github.com/v3/repos/#create
+	 * @param string $name
+	 * @param string $description
+	 * @param string $homepage
+	 * @param bool   $private
+	 * @param bool   $hasIssues
+	 * @param bool   $hasWiki
+	 * @param bool   $hasDownloads
+	 * @param int    $teamId
+	 * @param bool   $autoInit
+	 * @param string $gitignoreTemplate
+	 * @param string $licenseTemplate
 	 * @return mixed
 	 */
-	public function createRepository() {
+	public function createRepository($name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $teamId = 0, $autoInit = false, $gitignoreTemplate = '', $licenseTemplate = '') {
 		return $this->api->request(
 			sprintf('/user/repos'),
-			Request::METHOD_POST
+			Request::METHOD_POST,
+			[
+				'name'               => $name,
+				'description'        => $description,
+				'homepage'           => $homepage,
+				'private'            => $private,
+				'has_issues'         => $hasIssues,
+				'has_wiki'           => $hasWiki,
+				'has_downloads'      => $hasDownloads,
+				'team_id'            => $teamId,
+				'auto_init'          => $autoInit,
+				'gitignore_template' => $gitignoreTemplate,
+				'license_template'   => $licenseTemplate
+			]
 		);
 	}
 
 	/**
 	 * Create a new repository in this organization. The authenticated user must be a member of the specified organization.
 	 * @see https://developer.github.com/v3/repos/#create
-	 * @param $organization
+	 * @param string $organization
+	 * @param string $name
+	 * @param string $description
+	 * @param string $homepage
+	 * @param bool   $private
+	 * @param bool   $hasIssues
+	 * @param bool   $hasWiki
+	 * @param bool   $hasDownloads
+	 * @param int    $teamId
+	 * @param bool   $autoInit
+	 * @param string $gitignoreTemplate
+	 * @param string $licenseTemplate
 	 * @return mixed
 	 */
-	public function createOrganizationRepository($organization) {
+	public function createOrganizationRepository($organization, $name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $teamId = 0, $autoInit = false, $gitignoreTemplate = '', $licenseTemplate = '') {
 		return $this->api->request(
-			sprintf('/orgs/%s/repos', $organization),
-			Request::METHOD_POST
+			sprintf('/orgs/%s/repos?%s', $organization),
+			Request::METHOD_POST,
+			[
+				'name'               => $name,
+				'description'        => $description,
+				'homepage'           => $homepage,
+				'private'            => $private,
+				'has_issues'         => $hasIssues,
+				'has_wiki'           => $hasWiki,
+				'has_downloads'      => $hasDownloads,
+				'team_id'            => $teamId,
+				'auto_init'          => $autoInit,
+				'gitignore_template' => $gitignoreTemplate,
+				'license_template'   => $licenseTemplate
+			]
 		);
 	}
 
@@ -101,11 +162,28 @@ class Repositories extends AbstractReceiver {
 	/**
 	 * Edit
 	 * @see https://developer.github.com/v3/repos/#edit
+	 * @param string $name
+	 * @param string $description
+	 * @param string $homepage
+	 * @param bool   $private
+	 * @param bool   $hasIssues
+	 * @param bool   $hasWiki
+	 * @param bool   $hasDownloads
+	 * @param string $defaultBranch
 	 * @return mixed
 	 */
-	public function edit() {
+	public function edit($name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $defaultBranch = '') {
 		return $this->api->request(
-			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo()),
+			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo(), http_build_query([
+				'name'           => $name,
+				'description'    => $description,
+				'homepage'       => $homepage,
+				'private'        => $private,
+				'has_issues'     => $hasIssues,
+				'has_wiki'       => $hasWiki,
+				'has_downloads'  => $hasDownloads,
+				'default_branch' => $defaultBranch
+			])),
 			Request::METHOD_PATCH
 		);
 	}
@@ -113,11 +191,12 @@ class Repositories extends AbstractReceiver {
 	/**
 	 * List contributors
 	 * @see https://developer.github.com/v3/repos/#list-contributors
+	 * @param string $anon
 	 * @return mixed
 	 */
-	public function listContributors() {
+	public function listContributors($anon = '0') {
 		return $this->api->request(
-			sprintf('/repos/%s/%s/contributors', $this->getOwner(), $this->getRepo())
+			sprintf('/repos/%s/%s/contributors?%s', $this->getOwner(), $this->getRepo(), http_build_query(['anon' => $anon]))
 		);
 	}
 
