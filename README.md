@@ -1,5 +1,5 @@
-# Services\GitHub component for Scion-Framework
-This is a Client and WebHook wrapper for GitHub API v3, written with PHP5.
+# GitHub API
+This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP5.  
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/build.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/build-status/master)
 
