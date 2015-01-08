@@ -1,11 +1,10 @@
 # Services\GitHub component for Scion-Framework
-This is the Services\GitHub component for Scion-Framework.  
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/Component_ScionServicesGitHub/build-status/master)
+This is a Client and WebHook wrapper for GitHub API v3, written with PHP5.
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/build.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/build-status/master)
 
 ## Requirements
 * PHP >= 5.6.1
-* Scion-Framework
 
 ## Dependencies
 * \Scion\Crypt
