@@ -1,7 +1,7 @@
 # GitHub API
 This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP5.  
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/badges/build.png?b=master)](https://scrutinizer-ci.com/g/emulienfou/GitHubAPI/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/?branch=develop)
+[![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/build-status/develop)
 
 ## Requirements
 * PHP >= 5.6.1
@@ -12,9 +12,6 @@ This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github
 * \Scion\Http
 * \Scion\Mvc
 * \Scion\Stdlib
-
-## Documentation
-Documentation is available [here](https://github.com/Scion-Framework/scion-docs/blob/master/references/services/github.md).
 
 ## Quick Start
 ```php
