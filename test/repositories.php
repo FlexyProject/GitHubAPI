@@ -3,7 +3,7 @@ require 'bootstrap.php';
 
 // Client
 $client = new \Github\Client();
-//$client->setToken('2f57093398784a8ba8c05d550a992adfb7af96a5');
+//$client->setToken('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 //var_dump($client);
 
 // Repositories
