@@ -16,10 +16,10 @@
   ],
   "require": {
     "php": ">=5.6.1",
-    "Scion\\Crypt": "*",
-    "Scion\\File": "*",
-    "Scion\\Http": "*",
-    "Scion\\Stdlib": "*",
-    "Scion\\Utils": "*"
+    "Scion/Crypt": "*",
+    "Scion/File": "*",
+    "Scion/Http": "*",
+    "Scion/Stdlib": "*",
+    "Scion/Utils": "*"
   }
 }
