@@ -2,12 +2,12 @@
 require 'bootstrap.php';
 
 // Client
-$client = new \Github\Client();
+$client = new \Scion\Github\Client();
 //$client->setToken('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
 //var_dump($client);
 
 // Repositories
-$repositories = $client->getReceiver(\GitHub\Client::REPOSITORIES);
+$repositories = $client->getReceiver(\Scion\GitHub\Client::REPOSITORIES);
 //$repositories->getOwner();
 //$repositories->setOwner('owner name');
 //$repositories->getRepo();
@@ -29,14 +29,14 @@ $repositories = $client->getReceiver(\GitHub\Client::REPOSITORIES);
 //$repositories->deleteRepository();
 
 // Repositories\Collaborators
-$collaborators = $repositories->getReceiver(\GitHub\Receiver\Repositories::COLLABORATORS);
+$collaborators = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::COLLABORATORS);
 //$collaborators->listCollaborators();
 //$collaborators->checkUserIsACollaborator('username');
 //$collaborators->addUserAsCollaborator('username');
 //$collaborators->removeUserAsCollaborator('username');
 
 // Repositories\Comments
-$comments = $repositories->getReceiver(\GitHub\Receiver\Repositories::COMMENTS);
+$comments = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::COMMENTS);
 //$comments->listComments();
 //$comments->listCommitComments(\GitHub\AbstractApi::BRANCH_MASTER);
 //$comments->addCommitComment('6dcb09b5b57875f334f61aebed695e2e4193db5e', 'Nice change', 'file1.txt', 4);
@@ -45,14 +45,14 @@ $comments = $repositories->getReceiver(\GitHub\Receiver\Repositories::COMMENTS);
 //$comments->deleteCommitComment(1);
 
 // Repositories\Commits
-$commits = $repositories->getReceiver(\GitHub\Receiver\Repositories::COMMITS);
+$commits = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::COMMITS);
 //$commits->listCommits();
 //$commits->getSingleCommit('6dcb09b5b57875f334f61aebed695e2e4193db5e');
 //$commits->compareTwoCommits('master', 'topic');
 //$commits->compareTwoCommits('user1:branchname', 'user2:branchname');
 
 // Repositories\Contents
-$contents = $repositories->getReceiver(\GitHub\Receiver\Repositories::CONTENTS);
+$contents = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::CONTENTS);
 //$readme   = $contents->getReadme();
 //$list     = $contents->getContents();
 //$create   = $contents->createFile('notes/hello.txt', 'my commit message', 'bXkgbmV3IGZpbGUgY29udGVudHM=');
@@ -61,26 +61,26 @@ $contents = $repositories->getReceiver(\GitHub\Receiver\Repositories::CONTENTS);
 //$archive  = $contents->getArchiveLink();
 
 // Repositories\DeployKeys
-$deploy_keys = $repositories->getReceiver(\GitHub\Receiver\Repositories::DEPLOY_KEYS);
+$deploy_keys = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::DEPLOY_KEYS);
 //$deploy_keys->listDeployKeys();
 //$deploy_keys->getDeployKey(1);
 //$deploy_keys->addNewDeployKey('octocat@octomac', 'ssh-rsa AAA...');
 //$deploy_keys->removeDeployKey(1);
 
 // Repositories\Deployments
-$deployments = $repositories->getReceiver(\GitHub\Receiver\Repositories::DEPLOYMENTS);
+$deployments = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::DEPLOYMENTS);
 //$deployments->listDeployments('a84d88e7554fc1fa21bcbc4efae3c782a70d2b9d', \GitHub\AbstractApi::BRANCH_MASTER, 'deploy', 'production');
 //$deployments->createDeployement(\GitHub\AbstractApi::BRANCH_MASTER, 'deploy', true, ["ci/janky","security/brakeman"], '{"task": "deploy:migrate"}', 'production', 'Deploy request from hubot');
 //$deployments->listDeploymentStatus(1);
 //$deployments->createDeploymentStatus(1, 'success', 'https://example.com/deployment/42/output', 'Deployment finished successfully.');
 
 // Repositories\Forks
-$forks = $repositories->getReceiver(\GitHub\Receiver\Repositories::FORKS);
-//$forks->listForks($sort = \GitHub\Receiver\Repositories\Forks::SORT_STARGAZERS);
+$forks = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::FORKS);
+//$forks->listForks($sort = \Scion\GitHub\Receiver\Repositories\Forks::SORT_STARGAZERS);
 //$forks->createFork('organization-login');
 
 // Repositories\Hooks
-$hooks = $repositories->getReceiver(\GitHub\Receiver\Repositories::HOOKS);
+$hooks = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::HOOKS);
 //$hooks->listHooks();
 //$hooks->getSingleHook(1);
 //$hooks->createHook('web', '{"url": "http://example.com/webhook","content_type": "json"}', ["push", "pull_request"], true);
@@ -90,21 +90,21 @@ $hooks = $repositories->getReceiver(\GitHub\Receiver\Repositories::HOOKS);
 //$hooks->deleteHook(1);
 
 // Repositories\Merging
-$merging = $repositories->getReceiver(\GitHub\Receiver\Repositories::MERGING);
+$merging = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::MERGING);
 //$merging->performMerge('master', 'cool_feature', 'Shipped cool_feature!');
 
 // Repositories\Pages
-$pages = $repositories->getReceiver(\GitHub\Receiver\Repositories::PAGES);
+$pages = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::PAGES);
 //$pages->getInformation();
 //$pages->listPagesBuilds();
 //$pages->listLatestPagesBuilds();
 
 // Repositories\Releases
-$releases = $repositories->getReceiver(\GitHub\Receiver\Repositories::RELEASES);
+$releases = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::RELEASES);
 //$releases->listReleases();
 //$releases->getSingleRelease(1);
-//$releases->createRelease('v1.0.0', \GitHub\AbstractApi::BRANCH_MASTER, 'v1.0.0', 'Description of the release', false, false);
-//$releases->editRelease(1, 'v1.0.0', \GitHub\AbstractApi::BRANCH_MASTER, 'v1.0.0', 'Description of the release', false, false);
+//$releases->createRelease('v1.0.0', \Scion\GitHub\AbstractApi::BRANCH_MASTER, 'v1.0.0', 'Description of the release', false, false);
+//$releases->editRelease(1, 'v1.0.0', \Scion\GitHub\AbstractApi::BRANCH_MASTER, 'v1.0.0', 'Description of the release', false, false);
 //$releases->deleteRelease(1);
 //$releases->getReleaseAssets(1);
 //$releases->uploadReleaseAsset(1, 'application/zip', 'foo.zip');
@@ -113,7 +113,7 @@ $releases = $repositories->getReceiver(\GitHub\Receiver\Repositories::RELEASES);
 //$releases->deleteReleaseAsset(1);
 
 // Repositories\Statistics
-$statistics = $repositories->getReceiver(\GitHub\Receiver\Repositories::STATISTICS);
+$statistics = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::STATISTICS);
 //$statistics->listContributors();
 //$statistics->getCommitActivity();
 //$statistics->getCodeFrequency();
@@ -121,7 +121,7 @@ $statistics = $repositories->getReceiver(\GitHub\Receiver\Repositories::STATISTI
 //$statistics->getPunchCard();
 
 // Repositories\Statuses
-$statuses = $repositories->getReceiver(\GitHub\Receiver\Repositories::STATUSES);
+$statuses = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::STATUSES);
 //$statuses->createStatus('6dcb09b5b57875f334f61aebed695e2e4193db5e', \GitHub\Receiver\Repositories\Statuses::STATE_SUCCESS, 'https://example.com/build/status', 'The build succeeded!', 'continuous-integration/jenkins');
 //$statuses->listStatuses('master');
 //$statuses->getCombinedStatus('master');

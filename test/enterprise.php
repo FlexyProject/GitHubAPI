@@ -2,22 +2,22 @@
 require 'bootstrap.php';
 
 // Client
-$client = new \Github\Client();
+$client = new \Scion\Github\Client();
 //var_dump($client);
 
 // Enterprise
-$enterprise = $client->getReceiver(\GitHub\Client::ENTERPRISE);
+$enterprise = $client->getReceiver(\Scion\GitHub\Client::ENTERPRISE);
 
 // AdminStats
-$adminStats = $activity->getReceiver(\GitHub\Receiver\Enterprise::ADMIN_STATS);
+$adminStats = $activity->getReceiver(\Scion\GitHub\Receiver\Enterprise::ADMIN_STATS);
 //$adminStats->getStatistics(\GitHub\AbstractApi::TYPE_ISSUES);
 
 // License
-$license = $activity->getReceiver(\GitHub\Receiver\Enterprise::LICENSE);
+$license = $activity->getReceiver(\Scion\GitHub\Receiver\Enterprise::LICENSE);
 //$license->getLicenseInformation();
 
 // ManagementConsole
-$managementConsole = $activity->getReceiver(\GitHub\Receiver\Enterprise::MANAGEMENT_CONSOLE);
+$managementConsole = $activity->getReceiver(\Scion\GitHub\Receiver\Enterprise::MANAGEMENT_CONSOLE);
 $managementConsole->setHostname('');
 $managementConsole->setPassword('');
 $managementConsole->upload();
@@ -33,5 +33,5 @@ $managementConsole->addNewAuthorizedSshKeys();
 $managementConsole->removeAuthorizedSshKeys();
 
 // SearchIndexing
-$searchIndexing = $activity->getReceiver(\GitHub\Receiver\Enterprise::SEARCH_INDEXING);
+$searchIndexing = $activity->getReceiver(\Scion\GitHub\Receiver\Enterprise::SEARCH_INDEXING);
 //$searchIndexing->queueIndexingJob(':owner/:repository');

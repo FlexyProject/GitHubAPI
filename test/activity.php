@@ -2,14 +2,14 @@
 require 'bootstrap.php';
 
 // Client
-$client = new \Github\Client();
+$client = new \Scion\Github\Client();
 //var_dump($client);
 
 // Activity
-$activity = $client->getReceiver(\GitHub\Client::ACTIVITY);
+$activity = $client->getReceiver(\Scion\GitHub\Client::ACTIVITY);
 
 // Events
-$events = $activity->getReceiver(\GitHub\Receiver\Activity::EVENTS);
+$events = $activity->getReceiver(\Scion\GitHub\Receiver\Activity::EVENTS);
 //$events->listPublicEvents();
 //$events->listRepositoryEvents();
 //$events->listIssueEvents();
@@ -22,11 +22,11 @@ $events = $activity->getReceiver(\GitHub\Receiver\Activity::EVENTS);
 //$events->listOrganizationEvents('username', 'organization');
 
 // Feeds
-$feeds = $activity->getReceiver(\GitHub\Receiver\Activity::FEEDS);
+$feeds = $activity->getReceiver(\Scion\GitHub\Receiver\Activity::FEEDS);
 //$feeds->listFeeds();
 
 // Notifications
-$notifications = $activity->getReceiver(\GitHub\Receiver\Activity::NOTIFICATIONS);
+$notifications = $activity->getReceiver(\Scion\GitHub\Receiver\Activity::NOTIFICATIONS);
 //$notifications->listNotifications(false, false, 'now');
 //$notifications->listRepositoryNotifications(false, false, 'now');
 //$notifications->markAsRead('now');
@@ -38,7 +38,7 @@ $notifications = $activity->getReceiver(\GitHub\Receiver\Activity::NOTIFICATIONS
 //$notifications->deleteThreadSubscription(1);
 
 // Starring
-$starring = $activity->getReceiver(\GitHub\Receiver\Activity::STARRING);
+$starring = $activity->getReceiver(\Scion\GitHub\Receiver\Activity::STARRING);
 //$starring->listStargazers();
 //$starring->listRepositories(\GitHub\AbstractApi::SORT_CREATED, \GitHub\AbstractApi::DIRECTION_DESC);
 //$starring->checkYouAreStarringRepository();
@@ -46,7 +46,7 @@ $starring = $activity->getReceiver(\GitHub\Receiver\Activity::STARRING);
 //$starring->unStarRepository();
 
 // Watching
-$watching = $activity->getReceiver(\GitHub\Receiver\Activity::WATCHING);
+$watching = $activity->getReceiver(\Scion\GitHub\Receiver\Activity::WATCHING);
 //$watching->listWatchers();
 //$watching->listSubscriptions('username');
 //$watching->getRepositorySubscription();
