@@ -1,5 +1,5 @@
 {
-  "name": "Scion/GitHubAPI",
+  "name": "scion/githubapi",
   "type": "library",
   "description": "GitHub API v3 Client and WebHook wrapper, written in PHP5",
   "homepage": "https://github.com/Scion-Framework/GitHubAPI",
