@@ -2,11 +2,11 @@
 require 'bootstrap.php';
 
 // Client
-$client = new \Github\Client();
+$client = new \Scion\Github\Client();
 //var_dump($client);
 
 // Gists
-$gists = $client->getReceiver(\GitHub\Client::GISTS);
+$gists = $client->getReceiver(\Scion\GitHub\Client::GISTS);
 //$gists->listGists('username');
 //$gists->listPublicGists();
 //$gists->listUsersStarredGists();
@@ -22,7 +22,7 @@ $gists = $client->getReceiver(\GitHub\Client::GISTS);
 //$gists->deleteGist(1);
 
 // Comments
-$comments = $gists->getReceiver(\GitHub\Receiver\Gists::COMMENTS);
+$comments = $gists->getReceiver(\Scion\GitHub\Receiver\Gists::COMMENTS);
 //$comments->listComments(1);
 //$comments->getSingleComment(1, 1);
 //$comments->createComment(1, 'Just commenting for the sake of commenting');

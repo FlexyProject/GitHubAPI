@@ -2,7 +2,7 @@
 require 'bootstrap.php';
 
 // Client
-$client = new \Github\Client();
+$client = new \Scion\Github\Client();
 //$client->getApiUrl();
 //$client->setApiUrl('');
 //$client->getClientId();
