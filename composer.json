@@ -4,22 +4,22 @@
   "description": "GitHub API v3 Client and WebHook wrapper, written in PHP5",
   "homepage": "https://github.com/Scion-Framework/GitHubAPI",
   "keywords": [
-    "github",
-    "api"
+	"github",
+	"api"
   ],
   "license": "LGPL-3.0+",
   "authors": [
-    {
-      "name": "David Sanchez",
-      "email": "david38sanchez@gmail.com"
-    }
+	{
+	  "name": "David Sanchez",
+	  "email": "david38sanchez@gmail.com"
+	}
   ],
   "require": {
-    "php": ">=5.6.1",
-    "Scion/Crypt": "*",
-    "Scion/File": "*",
-    "Scion/Http": "*",
-    "Scion/Stdlib": "*",
-    "Scion/Utils": "*"
+	"php": ">=5.6.1",
+	"scion/crypt": "*",
+	"scion/file": "*",
+	"scion/http": "*",
+	"scion/stdlib": "*",
+	"scion/utils": "*"
   }
 }
