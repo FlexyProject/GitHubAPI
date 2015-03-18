@@ -16,10 +16,10 @@
   ],
   "require": {
 	"php": ">=5.6.1",
-	"scion/crypt": "dev-master",
-	"scion/file": "dev-master",
-	"scion/http": "dev-master",
-	"scion/stdlib": "dev-master",
-	"scion/utils": "dev-master"
+	"Scion-Framework/Crypt": "*",
+	"Scion-Framework/File": "*",
+	"Scion-Framework/Http": "*",
+	"Scion-Framework/Stdlib": "*",
+	"Scion-Framework/Utils": "*"
   }
 }
