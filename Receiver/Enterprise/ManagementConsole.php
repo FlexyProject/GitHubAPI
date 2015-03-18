@@ -130,7 +130,7 @@ class ManagementConsole extends AbstractEnterprise {
 	}
 
 	public function retrieveAuthorizedSshKeys() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys')
 		);
 	}
