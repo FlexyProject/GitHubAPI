@@ -5,13 +5,14 @@ This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github
 
 ## Requirements
 * PHP >= 5.6.1
+* [cURL](http://php.net/manual/en/book.curl.php) extension
 
 ## Dependencies
-* \Scion\Crypt
-* \Scion\File
-* \Scion\Http
-* \Scion\Stdlib
-* \Scion\Utils
+* scion/crypt
+* scion/file
+* scion/http
+* scion/stdlib
+* scion/utils
 
 ## Quick Start
 ```php
@@ -25,6 +26,9 @@ $miscellaneous = $client->getReceiver(\Scion\GitHub\Client::MISCELLANEOUS);
 $emojis = $miscellaneous->getReceiver(\Scion\GitHub\Receiver\Miscellaneous::EMOJIS);
 $emojis->get();
 ```
+
+## Documentation
+The full documentation is available in the [wiki section](https://github.com/Scion-Framework/GitHubAPI/wiki).
 
 ## License
 The files in this archive are released under the [GNU Lesser GPL v3](https://github.com/Scion-Framework/scion-core/blob/develop/LICENSE) license.
