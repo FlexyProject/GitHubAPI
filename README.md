@@ -1,7 +1,7 @@
 # Scion: Wrapper for GitHub API v3
 This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP5.  
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/?branch=develop)
-[![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/build-status/develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/)
+[![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/build-status/master)
 
 ## Requirements
 * PHP >= 5.6.1
