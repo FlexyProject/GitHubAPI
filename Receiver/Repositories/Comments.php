@@ -12,8 +12,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listComments() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/comments', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -24,8 +24,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listCommitComments($ref = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits/%s/comments', $this->repositories->getOwner(), $this->repositories->getRepo(), $ref)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits/%s/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 
@@ -39,8 +39,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function addCommitComment($sha, $body, $path = '', $position = 0) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits/%s/comments?body=%s&path=%s&position=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $sha, $body, $path, $position),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits/%s/comments?body=%s&path=%s&position=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha, $body, $path, $position),
 			Request::METHOD_POST
 		);
 	}
@@ -52,8 +52,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getCommitComment($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/comments/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/comments/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -64,8 +64,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function updateCommitComment($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/comments/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/comments/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_PATCH
 		);
 	}
@@ -77,8 +77,8 @@ class Comments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function deleteCommitComment($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/comments/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/comments/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

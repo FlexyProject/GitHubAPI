@@ -1,8 +1,8 @@
 <?php
 namespace Scion\GitHub\Receiver;
 
-use Scion\Http\Request;
 use Scion\GitHub\AbstractApi;
+use Scion\Http\Request;
 
 class Issues extends AbstractReceiver {
 
@@ -32,7 +32,7 @@ class Issues extends AbstractReceiver {
 		$direction = AbstractApi::DIRECTION_DESC,
 		$since = ''
 	) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/issues?filter=%s&state=%s&labels=%s&sort=%s&direction=%s&since=%s', $filter, $state, $labels, $sort, $direction, $since)
 		);
 	}
@@ -56,7 +56,7 @@ class Issues extends AbstractReceiver {
 		$direction = AbstractApi::DIRECTION_DESC,
 		$since = ''
 	) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/user/issues?filter=%s&state=%s&labels=%s&sort=%s&direction=%s&since=%s', $filter, $state, $labels, $sort, $direction, $since)
 		);
 	}
@@ -82,7 +82,7 @@ class Issues extends AbstractReceiver {
 		$direction = AbstractApi::DIRECTION_DESC,
 		$since = ''
 	) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/orgs/%s/issues?filter=%s&state=%s&labels=%s&sort=%s&direction=%s&since=%s', $organization, $filter, $state, $labels, $sort, $direction, $since)
 		);
 	}
@@ -112,7 +112,7 @@ class Issues extends AbstractReceiver {
 		$direction = AbstractApi::DIRECTION_DESC,
 		$since = ''
 	) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/user/issues?milestone=%s&state=%s&assiognee=%s&creator=%s&mentioned=%s&labels=%s&sort=%s&direction=%s&since=%s', $milestone, $state, $assignee, $creator, $mentioned, $labels, $sort, $direction, $since)
 		);
 	}
@@ -124,7 +124,7 @@ class Issues extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function getIssue($number) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/issues/%s', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
@@ -140,7 +140,7 @@ class Issues extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function createIssue($title, $body = '', $assignee = '', $milestone = 0, $labels = []) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/issues?title=%s&body=%s&assignee=%s&milestone=%s&labels=%s', $this->getOwner(), $this->getRepo(), $title, $body, $assignee, $milestone, $labels),
 			Request::METHOD_POST
 		);
@@ -158,7 +158,7 @@ class Issues extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function editIssue($number, $title = '', $body = '', $assignee = '', $milestone = 0, $labels = []) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/issues/%s?title=%s&body=%s&assignee=%s&state=%s&milestone=%s&labels=%s', $this->getOwner(), $this->getRepo(), $number, $title, $body, $assignee, $milestone, $labels),
 			Request::METHOD_PATCH
 		);

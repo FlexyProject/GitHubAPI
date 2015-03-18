@@ -16,8 +16,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listWatchers() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/subscribers', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/subscribers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -29,13 +29,13 @@ class Watching extends AbstractActivity {
 	 */
 	public function listSubscriptions($username = null) {
 		if (null !== $username) {
-			return $this->api->request(
-				sprintf('/users/%s/subscriptions', $this->activity->getOwner(), $this->activity->getRepo(), $username)
+			return $this->getApi()->request(
+				sprintf('/users/%s/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $username)
 			);
 		}
 
-		return $this->api->request(
-			sprintf('/user/subscriptions', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/user/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -45,8 +45,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function getRepositorySubscription() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/subscription', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -58,8 +58,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function setRepositorySubscription($subscribed = false, $ignored = false) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/subscription?subscribed=%s&ignored=%s', $this->activity->getOwner(), $this->activity->getRepo(), $subscribed, $ignored),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/subscription?subscribed=%s&ignored=%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $subscribed, $ignored),
 			Request::METHOD_PUT
 		);
 	}
@@ -70,8 +70,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function deleteRepositorySubscription() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/subscription', $this->activity->getOwner(), $this->activity->getRepo()),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 	}
@@ -82,8 +82,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function userSubscriptions() {
-		return $this->api->request(
-			sprintf('/user/subscriptions/%s/%s', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/user/subscriptions/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -93,8 +93,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function watchRepository() {
-		return $this->api->request(
-			sprintf('/user/subscriptions/%s/%s', $this->activity->getOwner(), $this->activity->getRepo()),
+		return $this->getApi()->request(
+			sprintf('/user/subscriptions/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
 	}
@@ -105,8 +105,8 @@ class Watching extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function stopWatchingRepository() {
-		return $this->api->request(
-			sprintf('/user/subscriptions/%s/%s', $this->activity->getOwner(), $this->activity->getRepo()),
+		return $this->getApi()->request(
+			sprintf('/user/subscriptions/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 	}

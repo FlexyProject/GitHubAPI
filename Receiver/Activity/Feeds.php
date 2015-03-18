@@ -14,7 +14,7 @@ class Feeds extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listFeeds() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/feeds')
 		);
 	}

@@ -9,8 +9,8 @@ class Statistics extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listContributors() {
-		return $this->api->request(
-			sprintf('/repos/:owner/:repo/stats/contributors', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/:owner/:repo/stats/contributors', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -20,8 +20,8 @@ class Statistics extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getCommitActivity() {
-		return $this->api->request(
-			sprintf('/repos/:owner/:repo/stats/commit_activity', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/:owner/:repo/stats/commit_activity', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -31,8 +31,8 @@ class Statistics extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getCodeFrequency() {
-		return $this->api->request(
-			sprintf('/repos/:owner/:repo/stats/code_frequency', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/:owner/:repo/stats/code_frequency', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -42,8 +42,8 @@ class Statistics extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getParticipation() {
-		return $this->api->request(
-			sprintf('/repos/:owner/:repo/stats/participation', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/:owner/:repo/stats/participation', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -53,8 +53,8 @@ class Statistics extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getPunchCard() {
-		return $this->api->request(
-			sprintf('/repos/:owner/:repo/stats/punch_card', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/:owner/:repo/stats/punch_card', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 }

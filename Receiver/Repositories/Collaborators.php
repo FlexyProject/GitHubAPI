@@ -11,8 +11,8 @@ class Collaborators extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listCollaborators() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/collaborators', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/collaborators', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -23,8 +23,8 @@ class Collaborators extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function checkUserIsACollaborator($username) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/collaborators/:%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $username)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/collaborators/:%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username)
 		);
 	}
 
@@ -35,8 +35,8 @@ class Collaborators extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function addUserAsCollaborator($username) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/collaborators/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $username),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/collaborators/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
 			Request::METHOD_PUT
 		);
 	}
@@ -48,8 +48,8 @@ class Collaborators extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function removeUserAsCollaborator($username) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/collaborators/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $username),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/collaborators/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
 			Request::METHOD_DELETE
 		);
 	}

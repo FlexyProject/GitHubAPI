@@ -17,7 +17,7 @@ class SearchIndexing extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function queueIndexingJob($target) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/staff/indexing_jobs?target=%s', $target),
 			Request::METHOD_POST
 		);

@@ -13,8 +13,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listIssueComments($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/comments', $this->getOwner(), $this->getRepo(), $number)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/comments', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -27,8 +27,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listRepositoryComments($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/comments?sort=%s&direction=%s&since=%s', $this->getOwner(), $this->getRepo(), $sort, $direction, $since)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/comments?sort=%s&direction=%s&since=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $sort, $direction, $since)
 		);
 	}
 
@@ -39,8 +39,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function getComment($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/comments/%s', $this->getOwner(), $this->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/comments/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
 		);
 	}
 
@@ -52,8 +52,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function createComment($number, $body) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/comments?body=%s', $this->getOwner(), $this->getRepo(), $number, $body),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/comments?body=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $body),
 			Request::METHOD_POST
 		);
 	}
@@ -66,8 +66,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function editComment($id, $body) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/comments/%s?body=%s', $this->getOwner(), $this->getRepo(), $id, $body),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/comments/%s?body=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id, $body),
 			Request::METHOD_PATCH
 		);
 	}
@@ -79,8 +79,8 @@ class Comments extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function deleteComment($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/comments/%s', $this->getOwner(), $this->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/comments/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

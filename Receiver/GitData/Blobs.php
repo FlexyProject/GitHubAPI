@@ -12,8 +12,8 @@ class Blobs extends AbstractGitData {
 	 * @return mixed
 	 */
 	public function getBlob($sha) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/git/blobs/%s', $this->getOwner(), $this->getRepo(), $sha)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/git/blobs/%s', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -25,8 +25,8 @@ class Blobs extends AbstractGitData {
 	 * @return mixed
 	 */
 	public function createBlob($content, $encoding) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/git/blobs', $this->getOwner(), $this->getRepo(), $content, $encoding),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/git/blobs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $content, $encoding),
 			Request::METHOD_POST
 		);
 	}

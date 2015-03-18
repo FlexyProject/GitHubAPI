@@ -13,8 +13,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listReleases() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -25,8 +25,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getSingleRelease($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -42,10 +42,10 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createRelease($tagName, $targetCommitish = AbstractApi::BRANCH_MASTER, $name, $body, $draft = false, $preRelease = false) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/releases?tag_name=%s&target_commitish=%s&name=%s&body=%s&draft=%s&prerelease=%s',
-				$this->repositories->getOwner(),
-				$this->repositories->getRepo(),
+				$this->getRepositories()->getOwner(),
+				$this->getRepositories()->getRepo(),
 				$tagName,
 				$targetCommitish,
 				$name,
@@ -69,11 +69,11 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function editRelease($id, $tagName, $targetCommitish = AbstractApi::BRANCH_MASTER, $name, $body, $draft = false, $preRelease = false) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/releases/%s?tag_name=%s&target_commitish=%s&name=%s&body=%s&draft=%s&prerelease=%s',
 				$id,
-				$this->repositories->getOwner(),
-				$this->repositories->getRepo(),
+				$this->getRepositories()->getOwner(),
+				$this->getRepositories()->getRepo(),
 				$tagName,
 				$targetCommitish,
 				$name,
@@ -91,8 +91,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function deleteRelease($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}
@@ -104,8 +104,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getReleaseAssets($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/%s/assets', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/%s/assets', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -118,8 +118,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function uploadReleaseAsset($id, $ContentType, $name) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/%s/assets?name=%s&content-type=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id, $name, $ContentType),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/%s/assets?name=%s&content-type=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $name, $ContentType),
 			Request::METHOD_POST,
 			AbstractApi::API_UPLOADS
 		);
@@ -132,8 +132,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getSingleReleaseAsset($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/assets/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/assets/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -146,8 +146,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function editReleaseAsset($id, $name, $label = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/assets/%s?name=%s&label=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id, $name, $label)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/assets/%s?name=%s&label=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $name, $label)
 		);
 	}
 
@@ -158,8 +158,8 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function deleteReleaseAsset($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/releases/assets/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/releases/assets/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

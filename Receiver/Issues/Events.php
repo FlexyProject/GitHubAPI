@@ -10,8 +10,8 @@ class Events extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listIssueEvents($issueNumber) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/events', $this->getOwner(), $this->getRepo(), $issueNumber)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $issueNumber)
 		);
 	}
 
@@ -21,8 +21,8 @@ class Events extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listRepositoryEvents() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/events', $this->getOwner(), $this->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -33,8 +33,8 @@ class Events extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function getEvent($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/events/%s', $this->getOwner(), $this->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/events/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
 		);
 	}
 } 

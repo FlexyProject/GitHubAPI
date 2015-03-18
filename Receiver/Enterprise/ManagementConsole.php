@@ -10,7 +10,7 @@ use Scion\Http\Request;
  */
 class ManagementConsole extends AbstractEnterprise {
 
-	/** Protected properties */
+	/** Properties */
 	protected $hostname;
 	protected $password;
 
@@ -61,9 +61,9 @@ class ManagementConsole extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function upload($license, $package, $settings = '') {
-		$this->api->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
+		$this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/start -F package=@%s -F license=@%s -F settings=<%s', $package, $license, $settings),
 			Request::METHOD_POST
 		);
@@ -77,9 +77,9 @@ class ManagementConsole extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function upgrade($license = '', $package = '') {
-		$this->api->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
+		$this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/upgrade -F package=@%s -F license=@%s', $package, $license),
 			Request::METHOD_POST
 		);
@@ -91,39 +91,39 @@ class ManagementConsole extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function checkConfigurationStatus() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/configcheck')
 		);
 	}
 
 	public function startConfigurationProcess() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/configure'),
 			Request::METHOD_POST
 		);
 	}
 
 	public function retrieveSettings() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/settings')
 		);
 	}
 
 	public function modifySettings($settings) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/settings'),
 			Request::METHOD_PUT
 		);
 	}
 
 	public function checkMaintenanceStatus() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/maintenance')
 		);
 	}
 
 	public function updateMaintenanceStatus($maintenance) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/maintenance'),
 			Request::METHOD_POST
 		);
@@ -136,14 +136,14 @@ class ManagementConsole extends AbstractEnterprise {
 	}
 
 	public function addNewAuthorizedSshKeys($authorizedKey) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf(' /setup/api/settings/authorized-keys'),
 			Request::METHOD_POST
 		);
 	}
 
 	public function removeAuthorizedSshKeys($authorizedKey) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys'),
 			Request::METHOD_DELETE
 		);

@@ -23,8 +23,8 @@ class Contents extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getContents($path = '', $ref = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/contents/%s?ref=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $path, $ref)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/contents/%s?ref=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, $ref)
 		);
 	}
 
@@ -38,8 +38,8 @@ class Contents extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createFile($path, $message, $content, $branch = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/contents/%s?message=%s&content=%s&branch=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $path, $message, $content, $branch),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/contents/%s?message=%s&content=%s&branch=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, $message, $content, $branch),
 			Request::METHOD_PUT
 		);
 	}
@@ -55,8 +55,8 @@ class Contents extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function updateFile($path, $message, $content, $sha, $branch = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/contents/%s?message=%s&content=%s&sha=%s&branch=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $path, $message, $content, $sha, $branch),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/contents/%s?message=%s&content=%s&sha=%s&branch=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, $message, $content, $sha, $branch),
 			Request::METHOD_PUT
 		);
 	}
@@ -71,8 +71,8 @@ class Contents extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function deleteFile($path, $message, $sha, $branch = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/contents/%s?message=%s&sha=%s&branch=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $path, $message, $sha, $branch),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/contents/%s?message=%s&sha=%s&branch=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, $message, $sha, $branch),
 			Request::METHOD_DELETE
 		);
 	}
@@ -85,8 +85,8 @@ class Contents extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getArchiveLink($archiveFormat = AbstractApi::ARCHIVE_TARBALL, $ref = AbstractApi::BRANCH_MASTER) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/%s/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $archiveFormat, $ref)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/%s/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref)
 		);
 	}
 }

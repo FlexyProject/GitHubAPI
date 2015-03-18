@@ -1,6 +1,8 @@
 <?php
 namespace Scion\GitHub;
 
+use Scion\GitHub\Event\EventInterface;
+
 class WebHook extends AbstractApi {
 
 	/** Constants */
@@ -9,10 +11,10 @@ class WebHook extends AbstractApi {
 	/**
 	 * Returns Event object
 	 * @param string $event
-	 * @return mixed
+	 * @return EventInterface
 	 */
 	public function getEvent($event) {
-		$class = __NAMESPACE__ . '\Event\\' . $event;
+		$class = sprintf('%s\Event\%s', __NAMESPACE__, $event);
 
 		return new $class($this);
 	}

@@ -14,8 +14,8 @@ class Commits extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listCommits($sha = '', $path = '', $author = '', $since = '', $until = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits?sha=%s&path=%s&author=%s&since=%s&until=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $sha, $path, $author, $since, $until)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits?sha=%s&path=%s&author=%s&since=%s&until=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha, $path, $author, $since, $until)
 		);
 	}
 
@@ -26,8 +26,8 @@ class Commits extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getSingleCommit($sha) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $sha)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha)
 		);
 	}
 
@@ -39,8 +39,8 @@ class Commits extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function compareTwoCommits($base, $head) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/compare/%s...%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $base, $head)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/compare/%s...%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $base, $head)
 		);
 	}
 } 

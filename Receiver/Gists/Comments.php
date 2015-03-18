@@ -12,7 +12,7 @@ class Comments extends AbstractGists {
 	 * @return mixed
 	 */
 	public function listComments($gistId) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/comments', $gistId)
 		);
 	}
@@ -25,7 +25,7 @@ class Comments extends AbstractGists {
 	 * @return mixed
 	 */
 	public function getSingleComment($gistId, $id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/comments/%s', $gistId, $id)
 		);
 	}
@@ -38,7 +38,7 @@ class Comments extends AbstractGists {
 	 * @return mixed
 	 */
 	public function createComment($gistId, $body) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/comments?body=%s', $gistId, $body),
 			Request::METHOD_POST
 		);
@@ -53,7 +53,7 @@ class Comments extends AbstractGists {
 	 * @return mixed
 	 */
 	public function editComment($gistId, $id, $body) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/comments/%s?body=%s', $gistId, $id, $body),
 			Request::METHOD_PATCH
 		);
@@ -67,7 +67,7 @@ class Comments extends AbstractGists {
 	 * @return mixed
 	 */
 	public function deleteComment($gistId, $id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/comments/%s', $gistId, $id),
 			Request::METHOD_DELETE
 		);

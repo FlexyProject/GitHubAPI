@@ -15,7 +15,7 @@ class AdminStats extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function getStatistics($type) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/enterprise/stats/%s', $type)
 		);
 	}

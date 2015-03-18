@@ -1,8 +1,8 @@
 <?php
 namespace Scion\GitHub\Receiver\Activity;
 
-use Scion\Http\Request;
 use Scion\GitHub\AbstractApi;
+use Scion\Http\Request;
 
 /**
  * Class Starring
@@ -17,8 +17,8 @@ class Starring extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listStargazers() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/stargazers', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -32,12 +32,12 @@ class Starring extends AbstractActivity {
 	 */
 	public function listRepositories($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $username = null) {
 		if (null !== $username) {
-			return $this->api->request(
+			return $this->getApi()->request(
 				sprintf('/users/%s/starred?sort=%s&direction=%s', $username, $sort, $direction)
 			);
 		}
 
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/starred?sort=%s&direction=%s', $sort, $direction)
 		);
 	}
@@ -48,8 +48,8 @@ class Starring extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function checkYouAreStarringRepository() {
-		return $this->api->request(
-			sprintf('/user/starred/%s/%s', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -59,8 +59,8 @@ class Starring extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function starRepository() {
-		return $this->api->request(
-			sprintf('/user/starred/%s/%s', $this->activity->getOwner(), $this->activity->getRepo()),
+		return $this->getApi()->request(
+			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
 	}
@@ -71,8 +71,8 @@ class Starring extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function unStarRepository() {
-		return $this->api->request(
-			sprintf('/user/starred/%s/%s', $this->activity->getOwner(), $this->activity->getRepo()),
+		return $this->getApi()->request(
+			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 	}
