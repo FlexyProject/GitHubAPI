@@ -8,11 +8,11 @@ This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github
 * [cURL](http://php.net/manual/en/book.curl.php) extension
 
 ## Dependencies
-* scion/crypt
-* scion/file
-* scion/http
-* scion/stdlib
-* scion/utils
+* [scion/crypt](https://github.com/Scion-Framework/Crypt)
+* [scion/file](https://github.com/Scion-Framework/File)
+* [scion/http](https://github.com/Scion-Framework/Http)
+* [scion/stdlib](https://github.com/Scion-Framework/Stdlib)
+* [scion/utils](https://github.com/Scion-Framework/Utils)
 
 ## Quick Start
 ```php
