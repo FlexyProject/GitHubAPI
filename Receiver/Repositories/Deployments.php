@@ -15,8 +15,8 @@ class Deployments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listDeployments($sha = '', $ref = '', $task = '', $environment = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/deployments?sha=%s&ref=%s&task=%s&environment=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $sha, $ref, $task, $environment)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/deployments?sha=%s&ref=%s&task=%s&environment=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha, $ref, $task, $environment)
 		);
 	}
 
@@ -33,8 +33,8 @@ class Deployments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createDeployement($ref, $task, $autoMerge = true, $requiredContexts = [], $payload = '', $environment = '', $description = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/deployments?ref=%s&task=%s&auto_merge=%s&required_contexts=%s&payload=%s&environement=%s&description=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $ref, $task, $autoMerge, $requiredContexts, $payload, $environment, $description),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/deployments?ref=%s&task=%s&auto_merge=%s&required_contexts=%s&payload=%s&environement=%s&description=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref, $task, $autoMerge, $requiredContexts, $payload, $environment, $description),
 			Request::METHOD_POST
 		);
 	}
@@ -46,8 +46,8 @@ class Deployments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listDeploymentStatus($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/deployments/%s/statuses', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/deployments/%s/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -61,8 +61,8 @@ class Deployments extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createDeploymentStatus($id, $state, $targetUrl = '', $description = '') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/deployments/%s/statuses?state=%s&target_url=%s&description=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id, $state, $targetUrl, $description),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/deployments/%s/statuses?state=%s&target_url=%s&description=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $state, $targetUrl, $description),
 			Request::METHOD_POST
 		);
 	}

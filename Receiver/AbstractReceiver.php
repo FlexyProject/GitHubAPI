@@ -29,7 +29,7 @@ abstract class AbstractReceiver {
 	/**
 	 * Set api
 	 * @param AbstractApi $api
-	 * @return Repositories
+	 * @return $this
 	 */
 	public function setApi(AbstractApi $api) {
 		$this->api = $api;
@@ -48,7 +48,7 @@ abstract class AbstractReceiver {
 	/**
 	 * Set owner
 	 * @param string $owner
-	 * @return Repositories
+	 * @return $this
 	 */
 	public function setOwner($owner) {
 		$this->owner = $owner;
@@ -67,7 +67,7 @@ abstract class AbstractReceiver {
 	/**
 	 * Set repository
 	 * @param string $repo
-	 * @return Repositories
+	 * @return $this
 	 */
 	public function setRepo($repo) {
 		$this->repo = $repo;

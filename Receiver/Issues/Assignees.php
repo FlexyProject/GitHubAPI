@@ -9,8 +9,8 @@ class Assignees extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listAssignees() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/assignees', $this->getOwner(), $this->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/assignees', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -21,8 +21,8 @@ class Assignees extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function checkAssignee($assignee) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/assignees/%s', $this->getOwner(), $this->getRepo(), $assignee)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/assignees/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $assignee)
 		);
 	}
 } 

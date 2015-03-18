@@ -18,12 +18,12 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listGists($username = null, $since = null) {
 		if (null !== $username) {
-			return $this->api->request(
+			return $this->getApi()->request(
 				sprintf('/users/%s/gists?since=%s', $username, (new DateTime($since))->format(DateTime::ISO8601))
 			);
 		}
 
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists?since=%s', (new DateTime($since))->format(DateTime::ISO8601))
 		);
 	}
@@ -35,7 +35,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listPublicGists($since = null) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/public?since=%s', (new DateTime($since))->format(DateTime::ISO8601))
 		);
 	}
@@ -47,7 +47,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listUsersStarredGists($since = null) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/starred?since=%s', (new DateTime($since))->format(DateTime::ISO8601))
 		);
 	}
@@ -59,7 +59,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function getGist($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s', $id)
 		);
 	}
@@ -73,7 +73,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function createGist($files, $description = '', $public = false) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists?files=%s&description=%s&public=%s', $files, $description, $public),
 			Request::METHOD_POST
 		);
@@ -90,7 +90,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function editGist($id, $description = '', $files = '{}', $content = '', $filename = '') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s?description=%s&files=%s&content=%s&content=%s&filename=%s', $id, $description, $files, $content, $filename)
 		);
 	}
@@ -102,7 +102,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listGistsCommits($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/commits', $id)
 		);
 	}
@@ -114,7 +114,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function starGist($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/star', $id),
 			Request::METHOD_PUT
 		);
@@ -127,7 +127,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function unStarGist($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/star', $id),
 			Request::METHOD_DELETE
 		);
@@ -140,7 +140,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function checkGistIsStarred($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/star', $id)
 		);
 	}
@@ -152,7 +152,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function forkGist($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s/forks', $id),
 			Request::METHOD_POST
 		);
@@ -165,7 +165,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listGistForks($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%S/forks', $id)
 		);
 	}
@@ -177,7 +177,7 @@ class Gists extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function deleteGist($id) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/gists/%s', $id),
 			Request::METHOD_DELETE
 		);

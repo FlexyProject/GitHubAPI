@@ -16,8 +16,8 @@ class Statuses extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createStatus($sha, $state, $targetUrl = '', $description = '', $context = 'default') {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/statuses/%s?state=%s&target_url=%s&descripton=%s&context=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $sha, $state, $targetUrl, $description, $context),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/statuses/%s?state=%s&target_url=%s&descripton=%s&context=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha, $state, $targetUrl, $description, $context),
 			Request::METHOD_POST
 		);
 	}
@@ -29,8 +29,8 @@ class Statuses extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listStatuses($ref) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits/%s/statuses', $this->repositories->getOwner(), $this->repositories->getRepo(), $ref)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits/%s/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 
@@ -41,8 +41,8 @@ class Statuses extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getCombinedStatus($ref) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/commits/%s/status', $this->repositories->getOwner(), $this->repositories->getRepo(), $ref)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/commits/%s/status', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 } 

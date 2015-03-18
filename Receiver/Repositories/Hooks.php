@@ -11,8 +11,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listHooks() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -23,8 +23,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getSingleHook($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -38,8 +38,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function createHook($name, $config, $events = [], $active = true) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks?name=%s&config=%s&events=%s&active=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $name, $config, $events, $active),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks?name=%s&config=%s&events=%s&active=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $name, $config, $events, $active),
 			Request::METHOD_POST
 		);
 	}
@@ -56,8 +56,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function editHook($id, $config, $events = [], $addEvents = [], $removeEvents = [], $active = true) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks/%s?config=%s&events=%s&add_events=%s&remove_events=%s&active=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id, $config, $events, $addEvents, $removeEvents, $active),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks/%s?config=%s&events=%s&add_events=%s&remove_events=%s&active=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $config, $events, $addEvents, $removeEvents, $active),
 			Request::METHOD_PATCH
 		);
 	}
@@ -69,8 +69,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function testPushHook($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks/%s/tests', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks/%s/tests', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST
 		);
 	}
@@ -82,8 +82,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function pingHook($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks/%s/pings', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks/%s/pings', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST
 		);
 	}
@@ -95,8 +95,8 @@ class Hooks extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function deleteHook($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/hooks/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/hooks/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

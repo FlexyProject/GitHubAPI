@@ -1,8 +1,8 @@
 <?php
 namespace Scion\GitHub\Receiver;
 
-use Scion\Http\Request;
 use Scion\GitHub\AbstractApi;
+use Scion\Http\Request;
 
 class Repositories extends AbstractReceiver {
 
@@ -30,7 +30,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listYourRepositories($type = AbstractApi::TYPE_ALL, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/user/repos?%s', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
 		);
 	}
@@ -45,7 +45,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listUserRepositories($username, $type = AbstractApi::TYPE_OWNER, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/repos?%s', $username, http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
 		);
 	}
@@ -58,7 +58,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listOrganizationRepositories($organization, $type = AbstractApi::TYPE_ALL) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/orgs/%s/repos?%', $organization, http_build_query(['type' => $type]))
 		);
 	}
@@ -70,7 +70,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listPublicRepositories($since = '') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repositories?%s', http_build_query(['since', $since]))
 		);
 	}
@@ -92,7 +92,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function createRepository($name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $teamId = 0, $autoInit = false, $gitignoreTemplate = '', $licenseTemplate = '') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/user/repos'),
 			Request::METHOD_POST,
 			[
@@ -129,7 +129,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function createOrganizationRepository($organization, $name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $teamId = 0, $autoInit = false, $gitignoreTemplate = '', $licenseTemplate = '') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/orgs/%s/repos?%s', $organization),
 			Request::METHOD_POST,
 			[
@@ -154,7 +154,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function get() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo())
 		);
 	}
@@ -173,7 +173,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function edit($name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $defaultBranch = '') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo(), http_build_query([
 				'name'           => $name,
 				'description'    => $description,
@@ -195,7 +195,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listContributors($anon = '0') {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/contributors?%s', $this->getOwner(), $this->getRepo(), http_build_query(['anon' => $anon]))
 		);
 	}
@@ -206,7 +206,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listLanguages() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/languages', $this->getOwner(), $this->getRepo())
 		);
 	}
@@ -217,7 +217,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listTeams() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/teams', $this->getOwner(), $this->getRepo())
 		);
 	}
@@ -228,7 +228,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listTags() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/tags', $this->getOwner(), $this->getRepo())
 		);
 	}
@@ -239,7 +239,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function listBranches() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/branches', $this->getOwner(), $this->getRepo())
 		);
 	}
@@ -251,7 +251,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function getBranch($branch) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/branches/%s', $this->getOwner(), $this->getRepo(), $branch)
 		);
 	}
@@ -262,7 +262,7 @@ class Repositories extends AbstractReceiver {
 	 * @return mixed
 	 */
 	public function deleteRepository() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo()),
 			Request::METHOD_DELETE
 		);

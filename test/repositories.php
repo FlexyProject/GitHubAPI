@@ -3,16 +3,15 @@ require 'bootstrap.php';
 
 // Client
 $client = new \Scion\Github\Client();
-//$client->setToken('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-//var_dump($client);
 
 // Repositories
+/** @return \Scion\GitHub\Receiver\Repositories */
 $repositories = $client->getReceiver(\Scion\GitHub\Client::REPOSITORIES);
 //$repositories->getOwner();
 //$repositories->setOwner('owner name');
 //$repositories->getRepo();
 //$repositories->setRepo('repo name');
-//$repositories->listYourRepositories();
+$repositories->listYourRepositories();
 //$repositories->listUserRepositories('username');
 //$repositories->listOrganizationRepositories('organization');
 //$repositories->listPublicRepositories();

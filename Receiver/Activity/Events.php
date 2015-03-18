@@ -14,7 +14,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listPublicEvents() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/events')
 		);
 	}
@@ -25,8 +25,8 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listRepositoryEvents() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/events', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -36,8 +36,8 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listIssueEvents() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/events', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -47,8 +47,8 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listPublicNetworkEvents() {
-		return $this->api->request(
-			sprintf('/networks/%s/%s/events', $this->activity->getOwner(), $this->activity->getRepo())
+		return $this->getApi()->request(
+			sprintf('/networks/%s/%s/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -59,7 +59,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listPublicOrganizationEvents($organization) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/orgs/%s/events', $organization)
 		);
 	}
@@ -71,7 +71,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listUserReceiveEvents($username) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/received_events', $username)
 		);
 	}
@@ -83,7 +83,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listPublicUserReceiveEvents($username) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/received_events/public', $username)
 		);
 	}
@@ -95,7 +95,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listUserPerformedEvents($username) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/events', $username)
 		);
 	}
@@ -107,7 +107,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listPublicUserPerformedEvents($username) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/events/public', $username)
 		);
 	}
@@ -120,7 +120,7 @@ class Events extends AbstractActivity {
 	 * @return mixed
 	 */
 	public function listOrganizationEvents($username, $organization) {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/users/%s/events/orgs/%s', $username, $organization)
 		);
 	}

@@ -19,7 +19,7 @@ class Client extends AbstractApi {
 	/**
 	 * Returns receiver object
 	 * @param string $receiver
-	 * @return mixed
+	 * @return object
 	 */
 	public function getReceiver($receiver) {
 		$class = sprintf('%s\Receiver\%s', __NAMESPACE__, $receiver);

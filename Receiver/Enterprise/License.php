@@ -14,7 +14,7 @@ class License extends AbstractEnterprise {
 	 * @return mixed
 	 */
 	public function getLicenseInformation() {
-		return $this->api->request(
+		return $this->getApi()->request(
 			sprintf('/enterprise/settings/license')
 		);
 	}

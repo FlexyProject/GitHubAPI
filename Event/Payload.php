@@ -4,10 +4,10 @@ namespace Scion\GitHub\Event;
 use Scion\Crypt\Hash;
 use Scion\Crypt\Hmac;
 use Scion\File\Parser\Json as JsonParser;
-use Scion\Http\Request;
 use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\Mapper\Commit as CommitMapper;
 use Scion\GitHub\WebHook;
+use Scion\Http\Request;
 
 class Payload implements EventInterface {
 
@@ -21,8 +21,27 @@ class Payload implements EventInterface {
 	 * @param WebHook $webHook
 	 */
 	public function __construct(WebHook $webHook) {
+		$this->setWebHook($webHook);
+		$this->setRawData((new Request())->getContent());
+	}
+
+	/**
+	 * Get webHook
+	 * @return mixed
+	 */
+	public function getWebHook() {
+		return $this->webHook;
+	}
+
+	/**
+	 * Set webHook
+	 * @param mixed $webHook
+	 * @return Payload
+	 */
+	public function setWebHook($webHook) {
 		$this->webHook = $webHook;
-		$this->rawData = (new Request())->getContent();
+
+		return $this;
 	}
 
 	/**
@@ -34,6 +53,14 @@ class Payload implements EventInterface {
 		$this->secret = Hmac::compute($secret, Hash::ALGO_SHA1, $this->rawData, Hmac::OUTPUT_STRING);
 
 		return $this;
+	}
+
+	/**
+	 * Get secret
+	 * @return null
+	 */
+	public function getSecret() {
+		return $this->secret;
 	}
 
 	/**
@@ -68,7 +95,7 @@ class Payload implements EventInterface {
 
 	/**
 	 * Parse returned data and returns an array
-	 * @return mixed
+	 * @return array
 	 * @throws BadSignatureException
 	 */
 	public function parse() {

@@ -11,8 +11,8 @@ class DeployKeys extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listDeployKeys() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/keys', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -23,8 +23,8 @@ class DeployKeys extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getDeployKey($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/keys/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/keys/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -36,8 +36,8 @@ class DeployKeys extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function addNewDeployKey($title, $key) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/keys?title=%s&key=%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $title, $key),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/keys?title=%s&key=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $title, $key),
 			Request::METHOD_POST
 		);
 	}
@@ -49,8 +49,8 @@ class DeployKeys extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function removeDeployKey($id) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/keys/%s', $this->repositories->getOwner(), $this->repositories->getRepo(), $id),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/keys/%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

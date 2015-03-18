@@ -1,6 +1,7 @@
 <?php
 namespace Scion\GitHub\Receiver\Activity;
 
+use Scion\GitHub\AbstractApi;
 use Scion\GitHub\Receiver\Activity;
 
 abstract class AbstractActivity {
@@ -13,7 +14,45 @@ abstract class AbstractActivity {
 	 * @param Activity $activity
 	 */
 	public function __construct(Activity $activity) {
+		$this->setActivity($activity);
+		$this->setApi($activity->getApi());
+	}
+
+	/**
+	 * Get activity
+	 * @return Activity
+	 */
+	public function getActivity() {
+		return $this->activity;
+	}
+
+	/**
+	 * Set activity
+	 * @param Activity $activity
+	 * @return $this
+	 */
+	public function setActivity($activity) {
 		$this->activity = $activity;
-		$this->api      = $activity->getApi();
+
+		return $this;
+	}
+
+	/**
+	 * Get api
+	 * @return AbstractApi
+	 */
+	public function getApi() {
+		return $this->api;
+	}
+
+	/**
+	 * Set api
+	 * @param AbstractApi $api
+	 * @return $this
+	 */
+	public function setApi(AbstractApi $api) {
+		$this->api = $api;
+
+		return $this;
 	}
 } 

@@ -11,8 +11,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listRepositoryLabels() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/labels', $this->getOwner(), $this->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -23,8 +23,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function getLabel($name) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/labels/%s', $this->getOwner(), $this->getRepo(), $name)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/labels/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 	}
 
@@ -36,8 +36,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function createLabel($name, $color) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/labels?name=%s&color=%s', $this->getOwner(), $this->getRepo(), $name, $color),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/labels?name=%s&color=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name, $color),
 			Request::METHOD_POST
 		);
 	}
@@ -50,8 +50,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function updateLabel($name, $color) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/labels/%s?color=%s', $this->getOwner(), $this->getRepo(), $name, $color),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/labels/%s?color=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name, $color),
 			Request::METHOD_PATCH
 		);
 	}
@@ -63,8 +63,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function deleteLabel($name) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/labels/%s', $this->getOwner(), $this->getRepo(), $name)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/labels/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 	}
 
@@ -75,8 +75,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function listIssueLabels($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/labels', $this->getOwner(), $this->getRepo(), $number)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -87,8 +87,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function addIssueLabels($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/labels', $this->getOwner(), $this->getRepo(), $number),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_POST
 		);
 	}
@@ -101,8 +101,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function removeIssueLabel($number, $name) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/labels/%s', $this->getOwner(), $this->getRepo(), $number, $name),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/labels/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $name),
 			Request::METHOD_DELETE
 		);
 	}
@@ -114,8 +114,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function replaceIssuesLabels($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/labels', $this->getOwner(), $this->getRepo(), $number),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_PUT
 		);
 	}
@@ -127,8 +127,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function removeIssueLabels($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/issues/%s/labels', $this->getOwner(), $this->getRepo(), $number),
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/issues/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_DELETE
 		);
 	}
@@ -140,8 +140,8 @@ class Labels extends AbstractIssues {
 	 * @return mixed
 	 */
 	public function getIssueLabelsInMilestone($number) {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/milestones/%s/labels', $this->getOwner(), $this->getRepo(), $number)
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/milestones/%s/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 } 

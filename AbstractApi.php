@@ -1,11 +1,11 @@
 <?php
 namespace Scion\GitHub;
 
+use Scion\File\Parser\Json as JsonParser;
 use Scion\Http\Client\Curl;
 use Scion\Http\Request;
-use Scion\File\Parser\Json as JsonParser;
 
-class AbstractApi {
+abstract class AbstractApi {
 
 	/** API version */
 	const API_VERSION = 'v3';
@@ -14,11 +14,16 @@ class AbstractApi {
 	const API_URL     = 'https://api.github.com';
 	const API_UPLOADS = 'https://uploads.github.com';
 	const API_RAW_URL = 'https://raw.github.com';
-	const USER_AGENT  = 'scion-framework.github-api';
+	const USER_AGENT  = 'scion.github-api';
 
 	/** Archive constants */
 	const ARCHIVE_TARBALL = 'tarball';
 	const ARCHIVE_ZIPBALL = 'zipball';
+
+	/** Authentication constants */
+	const OAUTH_AUTH             = 0;
+	const OAUTH2_HEADER_AUTH     = 1;
+	const OAUTH2_PARAMETERS_AUTH = 2;
 
 	/** Branch constants */
 	const BRANCH_MASTER  = 'master';
@@ -73,18 +78,38 @@ class AbstractApi {
 	const TYPE_USERS      = 'users';
 
 	/** Properties */
-	protected $apiUrl   = self::API_URL;
-	protected $timeout  = 240;
-	protected $success;
-	protected $failure;
+	protected $apiUrl         = self::API_URL;
+	protected $authentication = self::OAUTH_AUTH;
 	protected $clientId;
 	protected $clientSecret;
-	protected $httpAuth = ['username' => '', 'password' => ''];
+	protected $failure;
+	protected $httpAuth       = ['username' => '', 'password' => ''];
+	protected $success;
+	protected $timeout        = 240;
 	protected $token;
 
 	/**
+	 * Get authentication
+	 * @return int
+	 */
+	public function getAuthentication() {
+		return $this->authentication;
+	}
+
+	/**
+	 * Set authentication
+	 * @param int $authentication
+	 * @return $this
+	 */
+	public function setAuthentication($authentication) {
+		$this->authentication = $authentication;
+
+		return $this;
+	}
+
+	/**
 	 * Get apiUrl
-	 * @return mixed
+	 * @return string
 	 */
 	public function getApiUrl() {
 		return $this->apiUrl;
@@ -93,7 +118,7 @@ class AbstractApi {
 	/**
 	 * Set apiUrl
 	 * @param mixed $apiUrl
-	 * @return AbstractApi
+	 * @return $this
 	 */
 	public function setApiUrl($apiUrl) {
 		$this->apiUrl = $apiUrl;
@@ -103,7 +128,7 @@ class AbstractApi {
 
 	/**
 	 * Get clientId
-	 * @return mixed
+	 * @return null|int
 	 */
 	public function getClientId() {
 		return $this->clientId;
@@ -112,7 +137,7 @@ class AbstractApi {
 	/**
 	 * Set clientId
 	 * @param mixed $clientId
-	 * @return AbstractApi
+	 * @return $this
 	 */
 	public function setClientId($clientId) {
 		$this->clientId = $clientId;
@@ -122,7 +147,7 @@ class AbstractApi {
 
 	/**
 	 * Get clientSecret
-	 * @return mixed
+	 * @return null|string
 	 */
 	public function getClientSecret() {
 		return $this->clientSecret;
@@ -131,7 +156,7 @@ class AbstractApi {
 	/**
 	 * Set clientSecret
 	 * @param mixed $clientSecret
-	 * @return AbstractApi
+	 * @return $this
 	 */
 	public function setClientSecret($clientSecret) {
 		$this->clientSecret = $clientSecret;
@@ -149,11 +174,13 @@ class AbstractApi {
 
 	/**
 	 * Set httpAuth
-	 * @param array $httpAuth
-	 * @return AbstractApi
+	 * @param string $username
+	 * @param string $password
+	 * @return $this
 	 */
-	public function setHttpAuth(array $httpAuth) {
-		$this->httpAuth = $httpAuth;
+	public function setHttpAuth($username, $password = '') {
+		$this->httpAuth['username'] = $username;
+		$this->httpAuth['password'] = $password;
 
 		return $this;
 	}
@@ -169,10 +196,31 @@ class AbstractApi {
 	/**
 	 * Set token
 	 * @param string $token
-	 * @return AbstractApi
+	 * @param int    $authentication
+	 * @return $this
 	 */
-	public function setToken($token) {
+	public function setToken($token, $authentication = self::OAUTH_AUTH) {
 		$this->token = $token;
+		$this->setAuthentication($authentication);
+
+		return $this;
+	}
+
+	/**
+	 * Get timeout
+	 * @return int
+	 */
+	public function getTimeout() {
+		return $this->timeout;
+	}
+
+	/**
+	 * Set timeout
+	 * @param int $timeout
+	 * @return $this
+	 */
+	public function setTimeout($timeout) {
+		$this->timeout = $timeout;
 
 		return $this;
 	}
@@ -182,15 +230,27 @@ class AbstractApi {
 	 * @param string $url
 	 * @param string $method
 	 * @param array  $postFields
-	 * @return mixed
+	 * @return string
 	 */
 	public function request($url, $method = Request::METHOD_GET, $postFields = []) {
-
 		/** Building url */
 		$url = $this->getApiUrl() . $url;
-		if (null !== $this->clientId && null !== $this->clientSecret) {
+
+		/**
+		 * OAuth2 Key/Secret authentication
+		 * @see https://developer.github.com/v3/#oauth2-keysecret
+		 */
+		if (null !== $this->getClientId() && null !== $this->getClientSecret()) {
 			$url .= (strstr($url, '?') !== false ? '&' : '?');
-			$url .= http_build_query(['client_id' => $this->clientId, 'client_secret' => $this->clientSecret]);
+			$url .= http_build_query(['client_id' => $this->getClientId(), 'client_secret' => $this->getClientSecret()]);
+		}
+
+		/**
+		 * Basic authentication via OAuth2 Token (sent as a parameter)
+		 * @see https://developer.github.com/v3/#oauth2-token-sent-as-a-parameter
+		 */
+		else if ($this->getAuthentication() === self::OAUTH2_PARAMETERS_AUTH) {
+			$url .= http_build_query(['access_token' => $this->getToken()]);
 		}
 
 		/** Call curl */
@@ -198,7 +258,7 @@ class AbstractApi {
 		$curl->setOption([
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_USERAGENT      => self::USER_AGENT,
-			CURLOPT_TIMEOUT        => $this->timeout,
+			CURLOPT_TIMEOUT        => $this->getTimeout(),
 			CURLOPT_HEADER         => false,
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_SSL_VERIFYPEER => 0,
@@ -215,21 +275,41 @@ class AbstractApi {
 		 * @see https://developer.github.com/v3/auth/#via-username-and-password
 		 */
 		if (!empty($this->getHttpAuth())) {
-			$curl->setOption([
-				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-				CURLOPT_USERPWD  => $this->getHttpAuth()['username'] . ':' . $this->getHttpAuth()['password']
-			]);
+			if (!isset($this->getHttpAuth()['password']) || empty($this->getHttpAuth()['password'])) {
+				$curl->setOption([
+					CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+					CURLOPT_USERPWD  => $this->getHttpAuth()['username']
+				]);
+			}
+			else {
+				$curl->setOption([
+					CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+					CURLOPT_USERPWD  => sprintf('%s:%s', $this->getHttpAuth()['username'], $this->getHttpAuth()['password'])
+				]);
+			}
 		}
 
-		/**
-		 * Basic authentication via OAuth token
-		 * @see https://developer.github.com/v3/auth/#via-oauth-tokens
-		 **/
-		if (!empty($this->getToken())) {
-			$curl->setOption([
-				CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-				CURLOPT_USERPWD  => $this->getToken() . ':x-oauth-basic'
-			]);
+		if (!empty($this->getToken()) && $this->getAuthentication() !== self::OAUTH2_PARAMETERS_AUTH) {
+			/**
+			 * Basic authentication via OAuth token
+			 * @see https://developer.github.com/v3/auth/#via-oauth-tokens
+			 **/
+			if ($this->getAuthentication() === self::OAUTH_AUTH) {
+				$curl->setOption([
+					CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
+					CURLOPT_USERPWD  => sprintf('%s:x-oauth-basic', $this->getToken())
+				]);
+			}
+			/**
+			 * Basic authentication via OAuth2 Token (sent in a header)
+			 * @see https://developer.github.com/v3/#oauth2-token-sent-in-a-header
+			 */
+			else if ($this->getAuthentication() === self::OAUTH2_HEADER_AUTH) {
+				$curl->setOption([
+					CURLOPT_HTTPAUTH   => CURLAUTH_BASIC,
+					CURLOPT_HTTPHEADER => [sprintf('Authorization: token %s', $this->getToken())]
+				]);
+			}
 		}
 
 		/** Methods */
@@ -292,5 +372,4 @@ class AbstractApi {
 
 		return $this->success;
 	}
-
-} 
+}

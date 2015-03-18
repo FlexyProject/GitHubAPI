@@ -9,8 +9,8 @@ class Pages extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function getInformation() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/pages', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/pages', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -20,8 +20,8 @@ class Pages extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listPagesBuilds() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/pages/builds', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/pages/builds', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -31,8 +31,8 @@ class Pages extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function listLatestPagesBuilds() {
-		return $this->api->request(
-			sprintf('/repos/%s/%s/pages/builds/latest', $this->repositories->getOwner(), $this->repositories->getRepo())
+		return $this->getApi()->request(
+			sprintf('/repos/%s/%s/pages/builds/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 }
