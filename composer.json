@@ -16,6 +16,11 @@
   ],
   "require": {
     "php": ">=5.6.1",
-    "ext-curl": "*"
+    "lib-curl": "*",
+    "scion/crypt": "*",
+    "scion/file": "*",
+    "scion/http": "*",
+    "scion/stdlib": "*",
+    "scion/utils": "*"
   }
 }
