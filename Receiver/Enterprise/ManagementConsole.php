@@ -96,6 +96,11 @@ class ManagementConsole extends AbstractEnterprise {
 		);
 	}
 
+	/**
+	 * Start a configuration process
+	 * @see https://developer.github.com/v3/enterprise/management_console/#start-a-configuration-process
+	 * @return string
+	 */
 	public function startConfigurationProcess() {
 		return $this->getApi()->request(
 			sprintf('/setup/api/configure'),
@@ -103,48 +108,87 @@ class ManagementConsole extends AbstractEnterprise {
 		);
 	}
 
+	/**
+	 * Retrieve settings
+	 * @see https://developer.github.com/v3/enterprise/management_console/#retrieve-settings
+	 * @return string
+	 */
 	public function retrieveSettings() {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings')
 		);
 	}
 
+	/**
+	 * Modify settings
+	 * @see https://developer.github.com/v3/enterprise/management_console/#modify-settings
+	 * @param $settings
+	 * @return string
+	 */
 	public function modifySettings($settings) {
 		return $this->getApi()->request(
-			sprintf('/setup/api/settings'),
+			sprintf('/setup/api/settings settings=%s', $settings),
 			Request::METHOD_PUT
 		);
 	}
 
+	/**
+	 * Check maintenance status
+	 * @see https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
+	 * @return string
+	 */
 	public function checkMaintenanceStatus() {
 		return $this->getApi()->request(
 			sprintf('/setup/api/maintenance')
 		);
 	}
 
+	/**
+	 * Enable or disable maintenance mode
+	 * @see https://developer.github.com/v3/enterprise/management_console/#enable-or-disable-maintenance-mode
+	 * @param $maintenance
+	 * @return string
+	 */
 	public function updateMaintenanceStatus($maintenance) {
 		return $this->getApi()->request(
-			sprintf('/setup/api/maintenance'),
+			sprintf('/setup/api/maintenance -d maintenance=%s', $maintenance),
 			Request::METHOD_POST
 		);
 	}
 
+	/**
+	 * Retrieve authorized SSH keys
+	 * @see https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
+	 * @return string
+	 */
 	public function retrieveAuthorizedSshKeys() {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys')
 		);
 	}
 
+	/**
+	 * Add a new authorized SSH key
+	 * @see https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
+	 * @param $authorizedKey
+	 * @return string
+	 */
 	public function addNewAuthorizedSshKeys($authorizedKey) {
 		return $this->getApi()->request(
-			sprintf(' /setup/api/settings/authorized-keys'),
+			sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s', $authorizedKey),
 			Request::METHOD_POST
 		);
 	}
 
+	/**
+	 * Remove an authorized SSH key
+	 * @see https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
+	 * @param $authorizedKey
+	 * @return string
+	 */
 	public function removeAuthorizedSshKeys($authorizedKey) {
 		return $this->getApi()->request(
-			sprintf('/setup/api/settings/authorized-keys'),
+			sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s', $authorizedKey),
 			Request::METHOD_DELETE
 		);
 	}

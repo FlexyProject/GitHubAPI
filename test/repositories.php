@@ -11,7 +11,7 @@ $repositories = $client->getReceiver(\Scion\GitHub\Client::REPOSITORIES);
 //$repositories->setOwner('owner name');
 //$repositories->getRepo();
 //$repositories->setRepo('repo name');
-$repositories->listYourRepositories();
+//$repositories->listYourRepositories();
 //$repositories->listUserRepositories('username');
 //$repositories->listOrganizationRepositories('organization');
 //$repositories->listPublicRepositories();
@@ -52,12 +52,12 @@ $commits = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::COMMI
 
 // Repositories\Contents
 $contents = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::CONTENTS);
-//$readme   = $contents->getReadme();
-//$list     = $contents->getContents();
-//$create   = $contents->createFile('notes/hello.txt', 'my commit message', 'bXkgbmV3IGZpbGUgY29udGVudHM=');
-//$update   = $contents->updateFile('notes/hello.txt', 'my commit message', 'bXkgbmV3IGZpbGUgY29udGVudHM=', '95b966ae1c166bd92f8ae7d1c313e738c731dfc3');
-//$delete   = $contents->deleteFile('notes/hello.txt', 'my commit message', '95b966ae1c166bd92f8ae7d1c313e738c731dfc3');
-//$archive  = $contents->getArchiveLink();
+//$contents->getReadme();
+//$contents->getContents();
+//$contents->createFile('notes/hello.txt', 'my commit message', 'bXkgbmV3IGZpbGUgY29udGVudHM=');
+//$contents->updateFile('notes/hello.txt', 'my commit message', 'bXkgbmV3IGZpbGUgY29udGVudHM=', '95b966ae1c166bd92f8ae7d1c313e738c731dfc3');
+//$contents->deleteFile('notes/hello.txt', 'my commit message', '95b966ae1c166bd92f8ae7d1c313e738c731dfc3');
+//$contents->getArchiveLink();
 
 // Repositories\DeployKeys
 $deploy_keys = $repositories->getReceiver(\Scion\GitHub\Receiver\Repositories::DEPLOY_KEYS);

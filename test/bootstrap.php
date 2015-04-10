@@ -37,6 +37,8 @@ require '../Receiver/Activity.php';
 
 /** GitHub Enterprise Receiver */
 require '../Receiver/Enterprise.php';
+require '../Receiver/Miscellaneous/AbstractMiscellaneous.php';
+require '../Receiver/Miscellaneous/Emojis.php';
 
 /** GitHub Gists Receiver */
 require '../Receiver/Gists.php';

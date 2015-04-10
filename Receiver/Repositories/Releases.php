@@ -1,9 +1,9 @@
 <?php
 namespace Scion\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
 use Scion\GitHub\AbstractApi;
 use Scion\GitHub\Receiver\Repositories;
+use Scion\Http\Request;
 
 class Releases extends AbstractRepositories {
 
@@ -118,10 +118,11 @@ class Releases extends AbstractRepositories {
 	 * @return mixed
 	 */
 	public function uploadReleaseAsset($id, $ContentType, $name) {
+		$this->getApi()->setApiUrl(AbstractApi::API_UPLOADS);
+
 		return $this->getApi()->request(
 			sprintf('/repos/%s/%s/releases/%s/assets?name=%s&content-type=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $name, $ContentType),
-			Request::METHOD_POST,
-			AbstractApi::API_UPLOADS
+			Request::METHOD_POST
 		);
 	}
 

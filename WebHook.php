@@ -3,6 +3,11 @@ namespace Scion\GitHub;
 
 use Scion\GitHub\Event\EventInterface;
 
+/**
+ * Webhooks allow you to build or set up integrations which subscribe to certain events on GitHub.com.
+ * Complete documentation is available at https://developer.github.com/webhooks/.
+ * @package Scion\GitHub
+ */
 class WebHook extends AbstractApi {
 
 	/** Constants */

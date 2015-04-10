@@ -11,10 +11,11 @@ abstract class AbstractApi {
 	const API_VERSION = 'v3';
 
 	/** API constants */
-	const API_URL     = 'https://api.github.com';
-	const API_UPLOADS = 'https://uploads.github.com';
-	const API_RAW_URL = 'https://raw.github.com';
-	const USER_AGENT  = 'scion.github-api';
+	const API_URL        = 'https://api.github.com';
+	const API_UPLOADS    = 'https://uploads.github.com';
+	const API_RAW_URL    = 'https://raw.github.com';
+	const USER_AGENT     = 'scion.github-api';
+	const DEFAULT_ACCEPT = 'application/vnd.github.' . self::API_VERSION . '+json';
 
 	/** Archive constants */
 	const ARCHIVE_TARBALL = 'tarball';
@@ -227,14 +228,18 @@ abstract class AbstractApi {
 
 	/**
 	 * Curl request
-	 * @param string $url
-	 * @param string $method
-	 * @param array  $postFields
+	 * @param string      $url
+	 * @param string      $method
+	 * @param array       $postFields
+	 * @param null|string $apiUrl
 	 * @return string
 	 */
-	public function request($url, $method = Request::METHOD_GET, $postFields = []) {
+	public function request($url, $method = Request::METHOD_GET, $postFields = [], $apiUrl = null) {
 		/** Building url */
-		$url = $this->getApiUrl() . $url;
+		if (null === $apiUrl) {
+			$apiUrl = $this->getApiUrl();
+		}
+		$url = $apiUrl . $url;
 
 		/**
 		 * OAuth2 Key/Secret authentication
@@ -264,7 +269,7 @@ abstract class AbstractApi {
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_HTTPHEADER     => [
-				'Accept: application/vnd.github.' . self::API_VERSION . '+json',
+				'Accept: ' . self::DEFAULT_ACCEPT,
 				'Content-Type: application/json'
 			],
 			CURLOPT_URL            => $url
