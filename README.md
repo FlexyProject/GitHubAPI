@@ -6,8 +6,7 @@ This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github
 ## Requirements
 * PHP >= 5.6.1
 * [cURL](http://php.net/manual/en/book.curl.php) extension
-
-## Dependencies
+* [scion/designpatterns](https://github.com/Scion-Framework/DesignPatterns)
 * [scion/crypt](https://github.com/Scion-Framework/Crypt)
 * [scion/file](https://github.com/Scion-Framework/File)
 * [scion/http](https://github.com/Scion-Framework/Http)
