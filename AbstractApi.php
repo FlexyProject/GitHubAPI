@@ -14,8 +14,9 @@ abstract class AbstractApi {
 	const API_URL        = 'https://api.github.com';
 	const API_UPLOADS    = 'https://uploads.github.com';
 	const API_RAW_URL    = 'https://raw.github.com';
-	const USER_AGENT     = 'scion.github-api';
+	const CONTENT_TYPE   = 'application/json';
 	const DEFAULT_ACCEPT = 'application/vnd.github.' . self::API_VERSION . '+json';
+	const USER_AGENT     = 'scion.github-api';
 
 	/** Archive constants */
 	const ARCHIVE_TARBALL = 'tarball';
@@ -270,7 +271,7 @@ abstract class AbstractApi {
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_HTTPHEADER     => [
 				'Accept: ' . self::DEFAULT_ACCEPT,
-				'Content-Type: application/json'
+				'Content-Type: ' . self::CONTENT_TYPE
 			],
 			CURLOPT_URL            => $url
 		]);
