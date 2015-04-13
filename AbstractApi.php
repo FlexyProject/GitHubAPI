@@ -42,6 +42,12 @@ abstract class AbstractApi {
 	const FILTER_MENTIONED  = 'mentioned';
 	const FILTER_SUBSCRIBED = 'subscribed';
 
+	/** Media types constants */
+	const MEDIA_TYPE_JSON = 'json';
+	const MEDIA_TYPE_RAW  = 'raw';
+	const MEDIA_TYPE_FULL = 'full';
+	const MEDIA_TYPE_TEXT = 'text';
+
 	/** Sort constants */
 	const SORT_COMPLETENESS = 'completeness';
 	const SORT_CREATED      = 'created';
@@ -80,15 +86,39 @@ abstract class AbstractApi {
 	const TYPE_USERS      = 'users';
 
 	/** Properties */
+	protected $accept         = self::DEFAULT_ACCEPT;
 	protected $apiUrl         = self::API_URL;
 	protected $authentication = self::OAUTH_AUTH;
 	protected $clientId;
 	protected $clientSecret;
+	protected $contentType    = self::CONTENT_TYPE;
 	protected $failure;
 	protected $httpAuth       = ['username' => '', 'password' => ''];
 	protected $success;
 	protected $timeout        = 240;
 	protected $token;
+
+	/**
+	 * Get accept
+	 * @return mixed
+	 */
+	public function getAccept() {
+		return $this->accept;
+	}
+
+	/**
+	 * Set accept
+	 * @param array|string $accept
+	 * @return AbstractApi
+	 */
+	public function setAccept($accept) {
+		if (!is_array($accept)) {
+			$accept = [$accept];
+		}
+		$this->accept = sprintf('application/vnd.github.%s+%s', self::API_VERSION, implode('+', $accept));
+
+		return $this;
+	}
 
 	/**
 	 * Get authentication
@@ -228,6 +258,25 @@ abstract class AbstractApi {
 	}
 
 	/**
+	 * Get contentType
+	 * @return string
+	 */
+	public function getContentType() {
+		return $this->contentType;
+	}
+
+	/**
+	 * Set contentType
+	 * @param string $contentType
+	 * @return AbstractApi
+	 */
+	public function setContentType($contentType) {
+		$this->contentType = $contentType;
+
+		return $this;
+	}
+
+	/**
 	 * Curl request
 	 * @param string      $url
 	 * @param string      $method
@@ -270,8 +319,8 @@ abstract class AbstractApi {
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_HTTPHEADER     => [
-				'Accept: ' . self::DEFAULT_ACCEPT,
-				'Content-Type: ' . self::CONTENT_TYPE
+				'Accept: ' . $this->getAccept(),
+				'Content-Type: ' . $this->getContentType()
 			],
 			CURLOPT_URL            => $url
 		]);
