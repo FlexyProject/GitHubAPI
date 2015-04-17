@@ -4,6 +4,7 @@ namespace Scion\GitHub;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\Http\Client\Curl;
 use Scion\Http\Request;
+use Scion\Validator\Json as JsonValidator;
 
 abstract class AbstractApi {
 
@@ -47,6 +48,10 @@ abstract class AbstractApi {
 	const MEDIA_TYPE_RAW  = 'raw';
 	const MEDIA_TYPE_FULL = 'full';
 	const MEDIA_TYPE_TEXT = 'text';
+
+	/** Modes constants */
+	const MODE_MARKDOWN = 'markdown';
+	const MODE_GFM      = 'gfm';
 
 	/** Sort constants */
 	const SORT_COMPLETENESS = 'completeness';
@@ -112,10 +117,7 @@ abstract class AbstractApi {
 	 * @return AbstractApi
 	 */
 	public function setAccept($accept) {
-		if (!is_array($accept)) {
-			$accept = [$accept];
-		}
-		$this->accept = sprintf('application/vnd.github.%s+%s', self::API_VERSION, implode('+', $accept));
+		$this->accept = $accept;
 
 		return $this;
 	}
@@ -418,13 +420,21 @@ abstract class AbstractApi {
 		}
 
 		$curl->success(function ($instance) {
-			$this->success = JsonParser::decode($instance->response);
+			$this->success = $instance->response;
+			$validator     = new JsonValidator();
+			if ($validator->isValid($instance->response)) {
+				$this->success = JsonParser::decode($instance->response);
+			}
 		});
 		$curl->error(function ($instance) {
-			$this->failure = JsonParser::decode($instance->response);
+			$this->failure = $instance->response;
+			$validator     = new JsonValidator();
+			if ($validator->isValid($instance->response)) {
+				$this->failure = JsonParser::decode($instance->response);
+			}
 		});
 		$curl->perform();
 
-		return $this->success;
+		return (null != $this->success ? $this->success : $this->failure);
 	}
 }
