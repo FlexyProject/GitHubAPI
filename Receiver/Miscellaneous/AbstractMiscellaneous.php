@@ -1,6 +1,7 @@
 <?php
 namespace Scion\GitHub\Receiver\Miscellaneous;
 
+use Scion\GitHub\AbstractApi;
 use Scion\GitHub\Receiver\Miscellaneous;
 
 abstract class AbstractMiscellaneous {
@@ -39,7 +40,7 @@ abstract class AbstractMiscellaneous {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return AbstractApi
 	 */
 	public function getApi() {
 		return $this->api;
@@ -47,7 +48,7 @@ abstract class AbstractMiscellaneous {
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param AbstractApi $api
 	 * @return AbstractMiscellaneous
 	 */
 	public function setApi($api) {
