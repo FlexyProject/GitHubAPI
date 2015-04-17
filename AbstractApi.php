@@ -48,6 +48,10 @@ abstract class AbstractApi {
 	const MEDIA_TYPE_FULL = 'full';
 	const MEDIA_TYPE_TEXT = 'text';
 
+	/** Modes constants */
+	const MODE_MARKDOWN = 'markdown';
+	const MODE_GFM      = 'gfm';
+
 	/** Sort constants */
 	const SORT_COMPLETENESS = 'completeness';
 	const SORT_CREATED      = 'created';
@@ -112,10 +116,11 @@ abstract class AbstractApi {
 	 * @return AbstractApi
 	 */
 	public function setAccept($accept) {
-		if (!is_array($accept)) {
-			$accept = [$accept];
-		}
-		$this->accept = sprintf('application/vnd.github.%s+%s', self::API_VERSION, implode('+', $accept));
+//		if (!is_array($accept)) {
+//			$accept = [$accept];
+//		}
+//		$this->accept = sprintf('application/vnd.github.%s+%s', self::API_VERSION, implode('+', $accept));
+		$this->accept = $accept;
 
 		return $this;
 	}
