@@ -11,20 +11,12 @@ use Scion\GitHub\Receiver\Miscellaneous;
 class Licenses extends AbstractMiscellaneous {
 
 	/**
-	 * Constructor
-	 * @param Miscellaneous $miscellaneous
-	 */
-	public function __construct(Miscellaneous $miscellaneous) {
-		parent::__construct($miscellaneous);
-		$this->getApi()->setAccept('application/vnd.github.drax-preview+json');
-	}
-
-	/**
 	 * List all licenses
 	 * @link https://developer.github.com/v3/licenses/#list-all-licenses
 	 * @return string
 	 */
 	public function listAllLicenses() {
+		$this->getApi()->setAccept('application/vnd.github.drax-preview+json');
 		return $this->getApi()->request('/licenses');
 	}
 
@@ -35,6 +27,7 @@ class Licenses extends AbstractMiscellaneous {
 	 * @return string
 	 */
 	public function getIndividualLicense($license) {
+		$this->getApi()->setAccept('application/vnd.github.drax-preview+json');
 		return $this->getApi()->request(sprintf('/licenses/%s', $license));
 	}
 }
