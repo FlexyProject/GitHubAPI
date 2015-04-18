@@ -4,6 +4,7 @@ namespace Scion\GitHub;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\Http\Client\Curl;
 use Scion\Http\Request;
+use Scion\Utils\String;
 use Scion\Validator\Json as JsonValidator;
 
 abstract class AbstractApi {
@@ -100,8 +101,16 @@ abstract class AbstractApi {
 	protected $failure;
 	protected $httpAuth       = ['username' => '', 'password' => ''];
 	protected $success;
+	protected $string;
 	protected $timeout        = 240;
 	protected $token;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->string = new String();
+	}
 
 	/**
 	 * Get accept
@@ -276,6 +285,14 @@ abstract class AbstractApi {
 		$this->contentType = $contentType;
 
 		return $this;
+	}
+
+	/**
+	 * Get string
+	 * @return \Scion\Utils\String
+	 */
+	public function getString() {
+		return $this->string;
 	}
 
 	/**
