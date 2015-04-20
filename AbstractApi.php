@@ -99,6 +99,7 @@ abstract class AbstractApi {
 	protected $clientSecret;
 	protected $contentType    = self::CONTENT_TYPE;
 	protected $failure;
+	protected $headers        = [];
 	protected $httpAuth       = ['username' => '', 'password' => ''];
 	protected $success;
 	protected $string;
@@ -296,6 +297,14 @@ abstract class AbstractApi {
 	}
 
 	/**
+	 * Get headers
+	 * @return array
+	 */
+	public function getHeaders() {
+		return $this->headers;
+	}
+
+	/**
 	 * Curl request
 	 * @param string      $url
 	 * @param string      $method
@@ -330,13 +339,11 @@ abstract class AbstractApi {
 		/** Call curl */
 		$curl = new Curl();
 		$curl->setOption([
-			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_USERAGENT      => self::USER_AGENT,
 			CURLOPT_TIMEOUT        => $this->getTimeout(),
-			CURLOPT_HEADER         => false,
 			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => false,
 			CURLOPT_HTTPHEADER     => [
 				'Accept: ' . $this->getAccept(),
 				'Content-Type: ' . $this->getContentType()
@@ -437,6 +444,7 @@ abstract class AbstractApi {
 		}
 
 		$curl->success(function ($instance) {
+			$this->headers = $instance->getHeaders();
 			$this->success = $instance->response;
 			$validator     = new JsonValidator();
 			if ($validator->isValid($instance->response)) {
@@ -444,6 +452,7 @@ abstract class AbstractApi {
 			}
 		});
 		$curl->error(function ($instance) {
+			$this->headers = $instance->getHeaders();
 			$this->failure = $instance->response;
 			$validator     = new JsonValidator();
 			if ($validator->isValid($instance->response)) {
