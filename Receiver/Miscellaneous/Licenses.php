@@ -16,9 +16,7 @@ class Licenses extends AbstractMiscellaneous {
 	 * @return string
 	 */
 	public function listAllLicenses() {
-		$this->getApi()->setAccept('application/vnd.github.drax-preview+json');
-
-		return $this->getApi()->request('/licenses');
+		return $this->getApi()->setAccept('application/vnd.github.drax-preview+json')->request('/licenses');
 	}
 
 	/**
@@ -28,8 +26,6 @@ class Licenses extends AbstractMiscellaneous {
 	 * @return string
 	 */
 	public function getIndividualLicense($license) {
-		$this->getApi()->setAccept('application/vnd.github.drax-preview+json');
-
-		return $this->getApi()->request($this->getApi()->getString()->sprintf('/licenses/:license', $license));
+		return $this->getApi()->setAccept('application/vnd.github.drax-preview+json')->request($this->getApi()->getString()->sprintf('/licenses/:license', $license));
 	}
 }
