@@ -402,7 +402,7 @@ abstract class AbstractApi {
 				$curl->setOption([
 					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_POST          => true,
-					CURLOPT_POSTFIELDS    => json_encode($postFields)
+					CURLOPT_POSTFIELDS    => json_encode(array_filter($postFields))
 				]);
 				break;
 
@@ -423,7 +423,7 @@ abstract class AbstractApi {
 			case Request::METHOD_POST:
 				$curl->setOption([
 					CURLOPT_POST       => true,
-					CURLOPT_POSTFIELDS => json_encode($postFields)
+					CURLOPT_POSTFIELDS => json_encode(array_filter($postFields))
 				]);
 				break;
 
