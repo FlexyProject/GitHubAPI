@@ -12,6 +12,7 @@ This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github
 * [scion/http](https://github.com/Scion-Framework/Http)
 * [scion/stdlib](https://github.com/Scion-Framework/Stdlib)
 * [scion/utils](https://github.com/Scion-Framework/Utils)
+* [scion/validator](https://github.com/Scion-Framework/Validator)
 
 ## Quick Start
 ```php
