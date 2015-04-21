@@ -1,28 +1,34 @@
 <?php
 namespace Scion\GitHub\Receiver\Repositories;
 
+use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
+/**
+ * The Deployments API class provides access to repository's deployments.
+ * @link    https://developer.github.com/v3/repos/deployments/
+ * @package Scion\GitHub\Receiver\Repositories
+ */
 class Deployments extends AbstractRepositories {
 
 	/**
 	 * List Deployments
-	 * @see https://developer.github.com/v3/repos/deployments/#list-deployments
+	 * @link https://developer.github.com/v3/repos/deployments/#list-deployments
 	 * @param string $sha
 	 * @param string $ref
 	 * @param string $task
 	 * @param string $environment
 	 * @return mixed
 	 */
-	public function listDeployments($sha = '', $ref = '', $task = '', $environment = '') {
+	public function listDeployments($sha = null, $ref = null, $task = null, $environment = null) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/deployments?sha=%s&ref=%s&task=%s&environment=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha, $ref, $task, $environment)
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query(['sha' => $sha, 'ref' => $ref, 'task' => $task, 'environment' => $environment]))
 		);
 	}
 
 	/**
 	 * Create a Deployment
-	 * @see https://developer.github.com/v3/repos/deployments/#create-a-deployment
+	 * @link https://developer.github.com/v3/repos/deployments/#create-a-deployment
 	 * @param string $ref
 	 * @param string $task
 	 * @param bool   $autoMerge
@@ -32,28 +38,37 @@ class Deployments extends AbstractRepositories {
 	 * @param string $description
 	 * @return mixed
 	 */
-	public function createDeployement($ref, $task, $autoMerge = true, $requiredContexts = [], $payload = '', $environment = '', $description = '') {
+	public function createDeployement($ref, $task = AbstractApi::TASK_DEPLOY, $autoMerge = true, $requiredContexts = [], $payload = '', $environment = AbstractApi::ENVIRONMENT_PRODUCTION, $description = '') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/deployments?ref=%s&task=%s&auto_merge=%s&required_contexts=%s&payload=%s&environement=%s&description=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref, $task, $autoMerge, $requiredContexts, $payload, $environment, $description),
-			Request::METHOD_POST
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			Request::METHOD_POST,
+			[
+				'ref'               => $ref,
+				'task'              => $task,
+				'auto_merge'        => $autoMerge,
+				'required_contexts' => $requiredContexts,
+				'payload'           => $payload,
+				'environment'       => $environment,
+				'description'       => $description
+			]
 		);
 	}
 
 	/**
 	 * List Deployment Statuses
-	 * @see https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
+	 * @link https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 	 * @param int $id
 	 * @return mixed
 	 */
 	public function listDeploymentStatus($id) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/deployments/%s/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
 	/**
 	 * Create a Deployment Status
-	 * @see https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
+	 * @link https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 	 * @param int    $id
 	 * @param string $state
 	 * @param string $targetUrl
@@ -62,8 +77,13 @@ class Deployments extends AbstractRepositories {
 	 */
 	public function createDeploymentStatus($id, $state, $targetUrl = '', $description = '') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/deployments/%s/statuses?state=%s&target_url=%s&description=%s', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, $state, $targetUrl, $description),
-			Request::METHOD_POST
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			Request::METHOD_POST,
+			[
+				'state'       => $state,
+				'target_url'  => $targetUrl,
+				'description' => $description
+			]
 		);
 	}
 } 
