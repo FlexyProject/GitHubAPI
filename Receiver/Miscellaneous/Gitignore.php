@@ -24,6 +24,6 @@ class Gitignore extends AbstractMiscellaneous {
 	 * @return array
 	 */
 	public function getSingleTemplate($name) {
-		return $this->getApi()->request(sprintf('/gitignore/templates/%s', $name));
+		return $this->getApi()->request($this->getApi()->getString()->sprintf('/gitignore/templates/:name', $name));
 	}
 } 

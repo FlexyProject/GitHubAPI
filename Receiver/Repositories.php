@@ -4,6 +4,11 @@ namespace Scion\GitHub\Receiver;
 use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
+/**
+ * Repositories API class
+ * @link    https://developer.github.com/v3/repos/
+ * @package Scion\GitHub\Receiver
+ */
 class Repositories extends AbstractReceiver {
 
 	/** Available sub-Receiver */
@@ -23,7 +28,7 @@ class Repositories extends AbstractReceiver {
 
 	/**
 	 * List repositories for the authenticated user.
-	 * @see https://developer.github.com/v3/repos/#list-your-repositories
+	 * @link https://developer.github.com/v3/repos/#list-your-repositories
 	 * @param string $type
 	 * @param string $sort
 	 * @param string $direction
@@ -31,13 +36,13 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function listYourRepositories($type = AbstractApi::TYPE_ALL, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
 		return $this->getApi()->request(
-			sprintf('/user/repos?%s', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
+			$this->getApi()->getString()->sprintf('/user/repos?:args', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
 	/**
 	 * List public repositories for the specified user.
-	 * @see https://developer.github.com/v3/repos/#list-user-repositories
+	 * @link https://developer.github.com/v3/repos/#list-user-repositories
 	 * @param string $username
 	 * @param string $type
 	 * @param string $sort
@@ -46,26 +51,26 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function listUserRepositories($username, $type = AbstractApi::TYPE_OWNER, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
 		return $this->getApi()->request(
-			sprintf('/users/%s/repos?%s', $username, http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
+			$this->getApi()->getString()->sprintf('/users/:username/repos?:args', $username, http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
 	/**
 	 * List repositories for the specified org.
-	 * @see https://developer.github.com/v3/repos/#list-organization-repositories
+	 * @link https://developer.github.com/v3/repos/#list-organization-repositories
 	 * @param string $organization
 	 * @param string $type
 	 * @return mixed
 	 */
 	public function listOrganizationRepositories($organization, $type = AbstractApi::TYPE_ALL) {
 		return $this->getApi()->request(
-			sprintf('/orgs/%s/repos?%', $organization, http_build_query(['type' => $type]))
+			$this->getApi()->getString()->sprintf('/orgs/:org/repos?:args', $organization, http_build_query(['type' => $type]))
 		);
 	}
 
 	/**
 	 * List all public repositories
-	 * @see https://developer.github.com/v3/repos/#list-all-public-repositories
+	 * @link https://developer.github.com/v3/repos/#list-all-public-repositories
 	 * @param string $since
 	 * @return mixed
 	 */
@@ -77,7 +82,7 @@ class Repositories extends AbstractReceiver {
 
 	/**
 	 * Create a new repository for the authenticated user.
-	 * @see https://developer.github.com/v3/repos/#create
+	 * @link https://developer.github.com/v3/repos/#create
 	 * @param string $name
 	 * @param string $description
 	 * @param string $homepage
@@ -113,7 +118,7 @@ class Repositories extends AbstractReceiver {
 
 	/**
 	 * Create a new repository in this organization. The authenticated user must be a member of the specified organization.
-	 * @see https://developer.github.com/v3/repos/#create
+	 * @link https://developer.github.com/v3/repos/#create
 	 * @param string $organization
 	 * @param string $name
 	 * @param string $description
@@ -130,7 +135,7 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function createOrganizationRepository($organization, $name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $teamId = 0, $autoInit = false, $gitignoreTemplate = '', $licenseTemplate = '') {
 		return $this->getApi()->request(
-			sprintf('/orgs/%s/repos?%s', $organization),
+			$this->getApi()->getString()->sprintf('/orgs/:org/repos', $organization),
 			Request::METHOD_POST,
 			[
 				'name'               => $name,
@@ -150,18 +155,18 @@ class Repositories extends AbstractReceiver {
 
 	/**
 	 * Get
-	 * @see https://developer.github.com/v3/repos/#get
+	 * @link https://developer.github.com/v3/repos/#get
 	 * @return mixed
 	 */
 	public function get() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo', $this->getOwner(), $this->getRepo())
 		);
 	}
 
 	/**
 	 * Edit
-	 * @see https://developer.github.com/v3/repos/#edit
+	 * @link https://developer.github.com/v3/repos/#edit
 	 * @param string $name
 	 * @param string $description
 	 * @param string $homepage
@@ -174,7 +179,9 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function edit($name, $description = '', $homepage = '', $private = false, $hasIssues = true, $hasWiki = true, $hasDownloads = true, $defaultBranch = '') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo(), http_build_query([
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo', $this->getOwner(), $this->getRepo()),
+			Request::METHOD_PATCH,
+			[
 				'name'           => $name,
 				'description'    => $description,
 				'homepage'       => $homepage,
@@ -183,87 +190,86 @@ class Repositories extends AbstractReceiver {
 				'has_wiki'       => $hasWiki,
 				'has_downloads'  => $hasDownloads,
 				'default_branch' => $defaultBranch
-			])),
-			Request::METHOD_PATCH
+			]
 		);
 	}
 
 	/**
 	 * List contributors
-	 * @see https://developer.github.com/v3/repos/#list-contributors
+	 * @link https://developer.github.com/v3/repos/#list-contributors
 	 * @param string $anon
 	 * @return mixed
 	 */
 	public function listContributors($anon = '0') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/contributors?%s', $this->getOwner(), $this->getRepo(), http_build_query(['anon' => $anon]))
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contributors?:args', $this->getOwner(), $this->getRepo(), http_build_query(['anon' => $anon]))
 		);
 	}
 
 	/**
 	 * List languages
-	 * @see https://developer.github.com/v3/repos/#list-languages
+	 * @link https://developer.github.com/v3/repos/#list-languages
 	 * @return mixed
 	 */
 	public function listLanguages() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/languages', $this->getOwner(), $this->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/languages', $this->getOwner(), $this->getRepo())
 		);
 	}
 
 	/**
 	 * List Teams
-	 * @see https://developer.github.com/v3/repos/#list-teams
+	 * @link https://developer.github.com/v3/repos/#list-teams
 	 * @return mixed
 	 */
 	public function listTeams() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/teams', $this->getOwner(), $this->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/teams', $this->getOwner(), $this->getRepo())
 		);
 	}
 
 	/**
 	 * List Tags
-	 * @see https://developer.github.com/v3/repos/#list-tags
+	 * @link https://developer.github.com/v3/repos/#list-tags
 	 * @return mixed
 	 */
 	public function listTags() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/tags', $this->getOwner(), $this->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/tags', $this->getOwner(), $this->getRepo())
 		);
 	}
 
 	/**
 	 * List Branches
-	 * @see https://developer.github.com/v3/repos/#list-branches
+	 * @link https://developer.github.com/v3/repos/#list-branches
 	 * @return mixed
 	 */
 	public function listBranches() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/branches', $this->getOwner(), $this->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/branches', $this->getOwner(), $this->getRepo())
 		);
 	}
 
 	/**
 	 * Get Branch
-	 * @see https://developer.github.com/v3/repos/#get-branch
+	 * @link https://developer.github.com/v3/repos/#get-branch
 	 * @param string $branch
 	 * @return mixed
 	 */
 	public function getBranch($branch) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/branches/%s', $this->getOwner(), $this->getRepo(), $branch)
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/branches/:branch', $this->getOwner(), $this->getRepo(), $branch)
 		);
 	}
 
 	/**
 	 * Delete a Repository
-	 * @see https://developer.github.com/v3/repos/#delete-a-repository
+	 * @link https://developer.github.com/v3/repos/#delete-a-repository
 	 * @return mixed
 	 */
 	public function deleteRepository() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s', $this->getOwner(), $this->getRepo()),
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo', $this->getOwner(), $this->getRepo()),
 			Request::METHOD_DELETE
 		);
 	}

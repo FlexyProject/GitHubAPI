@@ -4,6 +4,7 @@ namespace Scion\GitHub;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\Http\Client\Curl;
 use Scion\Http\Request;
+use Scion\Utils\String;
 use Scion\Validator\Json as JsonValidator;
 
 abstract class AbstractApi {
@@ -98,10 +99,19 @@ abstract class AbstractApi {
 	protected $clientSecret;
 	protected $contentType    = self::CONTENT_TYPE;
 	protected $failure;
+	protected $headers        = [];
 	protected $httpAuth       = ['username' => '', 'password' => ''];
 	protected $success;
+	protected $string;
 	protected $timeout        = 240;
 	protected $token;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->string = new String();
+	}
 
 	/**
 	 * Get accept
@@ -279,6 +289,22 @@ abstract class AbstractApi {
 	}
 
 	/**
+	 * Get string
+	 * @return \Scion\Utils\String
+	 */
+	public function getString() {
+		return $this->string;
+	}
+
+	/**
+	 * Get headers
+	 * @return array
+	 */
+	public function getHeaders() {
+		return $this->headers;
+	}
+
+	/**
 	 * Curl request
 	 * @param string      $url
 	 * @param string      $method
@@ -313,13 +339,11 @@ abstract class AbstractApi {
 		/** Call curl */
 		$curl = new Curl();
 		$curl->setOption([
-			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_USERAGENT      => self::USER_AGENT,
 			CURLOPT_TIMEOUT        => $this->getTimeout(),
-			CURLOPT_HEADER         => false,
 			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => false,
 			CURLOPT_HTTPHEADER     => [
 				'Accept: ' . $this->getAccept(),
 				'Content-Type: ' . $this->getContentType()
@@ -378,7 +402,7 @@ abstract class AbstractApi {
 				$curl->setOption([
 					CURLOPT_CUSTOMREQUEST => $method,
 					CURLOPT_POST          => true,
-					CURLOPT_POSTFIELDS    => json_encode($postFields)
+					CURLOPT_POSTFIELDS    => json_encode(array_filter($postFields))
 				]);
 				break;
 
@@ -399,7 +423,7 @@ abstract class AbstractApi {
 			case Request::METHOD_POST:
 				$curl->setOption([
 					CURLOPT_POST       => true,
-					CURLOPT_POSTFIELDS => json_encode($postFields)
+					CURLOPT_POSTFIELDS => json_encode(array_filter($postFields))
 				]);
 				break;
 
@@ -420,6 +444,7 @@ abstract class AbstractApi {
 		}
 
 		$curl->success(function ($instance) {
+			$this->headers = $instance->getHeaders();
 			$this->success = $instance->response;
 			$validator     = new JsonValidator();
 			if ($validator->isValid($instance->response)) {
@@ -427,6 +452,7 @@ abstract class AbstractApi {
 			}
 		});
 		$curl->error(function ($instance) {
+			$this->headers = $instance->getHeaders();
 			$this->failure = $instance->response;
 			$validator     = new JsonValidator();
 			if ($validator->isValid($instance->response)) {
