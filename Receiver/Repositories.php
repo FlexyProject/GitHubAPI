@@ -36,7 +36,7 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function listYourRepositories($type = AbstractApi::TYPE_ALL, $sort = AbstractApi::SORT_FULL_NAME, $direction = AbstractApi::DIRECTION_DESC) {
 		return $this->getApi()->request(
-			sprintf('/user/repos?%s', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
+			$this->getApi()->getString()->sprintf('/user/repos?:args', http_build_query(['type' => $type, 'sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
