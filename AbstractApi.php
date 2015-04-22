@@ -37,6 +37,11 @@ abstract class AbstractApi {
 	const DIRECTION_ASC  = 'asc';
 	const DIRECTION_DESC = 'desc';
 
+	/** Environment constants */
+	const ENVIRONMENT_PRODUCTION = 'production';
+	const ENVIRONMENT_STAGING    = 'staging';
+	const ENVIRONMENT_QA         = 'qa';
+
 	/** Filter constants */
 	const FILTER_ALL        = 'all';
 	const FILTER_ASSIGNED   = 'assigned';
@@ -73,6 +78,10 @@ abstract class AbstractApi {
 	const STATE_OPEN    = 'open';
 	const STATE_PENDING = 'pending';
 	const STATE_SUCCESS = 'success';
+
+	/** Task constants */
+	const TASK_DEPLOY            = 'deploy';
+	const TASK_DEPLOY_MIGRATIONS = 'deploy:migrations';
 
 	/** Type constants */
 	const TYPE_ALL        = 'all';
