@@ -1,6 +1,11 @@
 <?php
 namespace Scion\GitHub\Receiver;
 
+/**
+ * Class GitData
+ * @link https://developer.github.com/v3/git/
+ * @package Scion\GitHub\Receiver
+ */
 class GitData extends AbstractReceiver {
 
 	/** Available sub-Receiver */
@@ -9,5 +14,4 @@ class GitData extends AbstractReceiver {
 	const REFERENCES = 'References';
 	const TAGS       = 'Tags';
 	const TREES      = 'Trees';
-
-} 
+}
