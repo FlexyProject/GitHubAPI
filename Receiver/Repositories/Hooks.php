@@ -42,7 +42,7 @@ class Hooks extends AbstractRepositories {
 	 * @param bool   $active
 	 * @return mixed
 	 */
-	public function createHook($name, $config, $events = [], $active = true) {
+	public function createHook($name, $config, $events = ['push'], $active = true) {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
@@ -66,7 +66,7 @@ class Hooks extends AbstractRepositories {
 	 * @param bool   $active
 	 * @return mixed
 	 */
-	public function editHook($id, $config, $events = [], $addEvents = [], $removeEvents = [], $active = true) {
+	public function editHook($id, $config, $events = ['push'], $addEvents = [], $removeEvents = [], $active = true) {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_PATCH,
@@ -97,37 +97,25 @@ class Hooks extends AbstractRepositories {
 	 * Ping a hook
 	 * @link https://developer.github.com/v3/repos/hooks/#ping-a-hook
 	 * @param int $id
-	 * @return boolean
+	 * @return mixed
 	 */
 	public function pingHook($id) {
-		$this->getApi()->request(
+		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id/pings', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST
 		);
-
-		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
 	 * Delete a hook
 	 * @link https://developer.github.com/v3/repos/hooks/#delete-a-hook
 	 * @param int $id
-	 * @return boolean
+	 * @return mixed
 	 */
 	public function deleteHook($id) {
-		$this->getApi()->request(
+		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
-
-		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
-			return true;
-		}
-
-		return false;
 	}
 }
