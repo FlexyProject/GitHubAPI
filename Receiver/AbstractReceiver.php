@@ -2,6 +2,7 @@
 namespace Scion\GitHub\Receiver;
 
 use Scion\GitHub\AbstractApi;
+use Scion\Stdlib\Exception\Exception;
 
 abstract class AbstractReceiver {
 
@@ -82,8 +83,13 @@ abstract class AbstractReceiver {
 	 */
 	public function getReceiver($name) {
 		$classPath = explode('\\', get_called_class());
-		$class     = sprintf('%s\%s\%s', __NAMESPACE__, end($classPath), $name);
+		$class     = (string)$this->getApi()->getString()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
 
-		return new $class($this);
+		try {
+			return new $class($this);
+		}
+		catch (Exception $e) {
+			return null;
+		}
 	}
 } 
