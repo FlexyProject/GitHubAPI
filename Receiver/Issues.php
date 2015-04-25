@@ -6,7 +6,7 @@ use Scion\Http\Request;
 use Scion\Stdlib\DateTime;
 
 /**
- * Class Issues
+ * This class provides access to Issues API.
  * @link    https://developer.github.com/v3/issues/
  * @package Scion\GitHub\Receiver
  */

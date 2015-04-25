@@ -2,7 +2,7 @@
 namespace Scion\GitHub\Receiver;
 
 /**
- * Class Activity
+ * This class serving up the ‘social’ in Social Coding, this is a set of APIs providing access to notifications, subscriptions, and timelines.
  * @link    https://developer.github.com/v3/activity/
  * @package Scion\GitHub\Receiver
  */

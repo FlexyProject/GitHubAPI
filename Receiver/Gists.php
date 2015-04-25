@@ -5,7 +5,7 @@ use Scion\Http\Request;
 use Scion\Stdlib\DateTime;
 
 /**
- * Class Gists
+ * This class provides access to Gists API.
  * @link    https://developer.github.com/v3/gists/
  * @package Scion\GitHub\Receiver
  */
