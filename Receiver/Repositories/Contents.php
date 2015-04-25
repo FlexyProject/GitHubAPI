@@ -79,8 +79,13 @@ class Contents extends AbstractRepositories {
 	 */
 	public function deleteFile($path, $message, $sha, $branch = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'sha' => $sha, 'branch' => $branch])),
-			Request::METHOD_DELETE
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path),
+			Request::METHOD_DELETE,
+			[
+				'message' => $message,
+				'sha'     => $sha,
+				'branch'  => $branch
+			]
 		);
 	}
 

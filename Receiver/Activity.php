@@ -1,6 +1,11 @@
 <?php
 namespace Scion\GitHub\Receiver;
 
+/**
+ * This class serving up the ‘social’ in Social Coding, this is a set of APIs providing access to notifications, subscriptions, and timelines.
+ * @link    https://developer.github.com/v3/activity/
+ * @package Scion\GitHub\Receiver
+ */
 class Activity extends AbstractReceiver {
 
 	/** Available sub-Receiver */
@@ -9,5 +14,4 @@ class Activity extends AbstractReceiver {
 	const NOTIFICATIONS = 'Notifications';
 	const STARRING      = 'Starring';
 	const WATCHING      = 'Watching';
-
 }

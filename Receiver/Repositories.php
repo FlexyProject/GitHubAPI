@@ -5,7 +5,7 @@ use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
 /**
- * Repositories API class
+ * This class give you access to the Repository API.
  * @link    https://developer.github.com/v3/repos/
  * @package Scion\GitHub\Receiver
  */
@@ -76,7 +76,7 @@ class Repositories extends AbstractReceiver {
 	 */
 	public function listPublicRepositories($since = '') {
 		return $this->getApi()->request(
-			sprintf('/repositories?%s', http_build_query(['since', $since]))
+			$this->getApi()->getString()->sprintf('/repositories?:arg', http_build_query(['since', $since]))
 		);
 	}
 
