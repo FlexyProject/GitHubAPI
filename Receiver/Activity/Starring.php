@@ -6,25 +6,25 @@ use Scion\Http\Request;
 
 /**
  * Class Starring
- * @see     https://developer.github.com/v3/activity/starring/
+ * @link    https://developer.github.com/v3/activity/starring/
  * @package GitHub\Receiver\Activity
  */
 class Starring extends AbstractActivity {
 
 	/**
 	 * List Stargazers
-	 * @see https://developer.github.com/v3/activity/starring/#list-stargazers
+	 * @link https://developer.github.com/v3/activity/starring/#list-stargazers
 	 * @return mixed
 	 */
 	public function listStargazers() {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
 	/**
 	 * List repositories being starred
-	 * @see https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
+	 * @link https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 	 * @param string $sort
 	 * @param string $direction
 	 * @param null   $username
@@ -33,47 +33,65 @@ class Starring extends AbstractActivity {
 	public function listRepositories($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $username = null) {
 		if (null !== $username) {
 			return $this->getApi()->request(
-				sprintf('/users/%s/starred?sort=%s&direction=%s', $username, $sort, $direction)
+				$this->getApi()->getString()->sprintf('/users/:username/starred?:args', $username, http_build_query(['sort' => $sort, 'direction' => $direction]))
 			);
 		}
 
 		return $this->getApi()->request(
-			sprintf('/users/starred?sort=%s&direction=%s', $sort, $direction)
+			$this->getApi()->getString()->sprintf('/user/starred?:args', http_build_query(['sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
 	/**
 	 * Check if you are starring a repository
-	 * @see https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
-	 * @return mixed
+	 * @link https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
+	 * @return boolean
 	 */
 	public function checkYouAreStarringRepository() {
-		return $this->getApi()->request(
-			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+		$this->getApi()->request(
+			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
+
+		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Star a repository
-	 * @see https://developer.github.com/v3/activity/starring/#star-a-repository
-	 * @return mixed
+	 * @link https://developer.github.com/v3/activity/starring/#star-a-repository
+	 * @return boolean
 	 */
 	public function starRepository() {
-		return $this->getApi()->request(
-			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+		$this->getApi()->request(
+			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
+
+		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
 	 * Unstar a repository
-	 * @see https://developer.github.com/v3/activity/starring/#unstar-a-repository
-	 * @return mixed
+	 * @link https://developer.github.com/v3/activity/starring/#unstar-a-repository
+	 * @return boolean
 	 */
 	public function unStarRepository() {
-		return $this->getApi()->request(
-			sprintf('/user/starred/%s/%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+		$this->getApi()->request(
+			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
+
+		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
+			return true;
+		}
+
+		return false;
 	}
 }
