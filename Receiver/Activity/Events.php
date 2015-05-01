@@ -2,7 +2,7 @@
 namespace Scion\GitHub\Receiver\Activity;
 
 /**
- * Class Events
+ * The Events API class provide a read-only interface to all the event types that power the various activity streams on GitHub.
  * @link    https://developer.github.com/v3/activity/events/
  * @package GitHub\Receiver\Activity
  */

@@ -5,7 +5,7 @@ use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
 /**
- * Class Starring
+ * The Starring API class provide a feature that lets users bookmark repositories.
  * @link    https://developer.github.com/v3/activity/starring/
  * @package GitHub\Receiver\Activity
  */

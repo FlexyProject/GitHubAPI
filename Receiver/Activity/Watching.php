@@ -4,7 +4,7 @@ namespace Scion\GitHub\Receiver\Activity;
 use Scion\Http\Request;
 
 /**
- * Class Watching
+ * The Watching API class registers the user to receive notifications on new discussions, as well as events in the user’s activity feed.
  * @link    https://developer.github.com/v3/activity/watching/
  * @package GitHub\Receiver\Activity
  */

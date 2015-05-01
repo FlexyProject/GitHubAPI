@@ -5,7 +5,7 @@ use Scion\Http\Request;
 use Scion\Stdlib\DateTime;
 
 /**
- * Class Notifications
+ * The Notifications API class lets your view notifications of new comments are delivered to users and mark them as read.
  * @link    https://developer.github.com/v3/activity/notifications/
  * @package GitHub\Receiver\Activity
  */
