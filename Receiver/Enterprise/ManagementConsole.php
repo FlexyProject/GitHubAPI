@@ -4,8 +4,8 @@ namespace Scion\GitHub\Receiver\Enterprise;
 use Scion\Http\Request;
 
 /**
- * Class ManagementConsole
- * @see     https://developer.github.com/v3/enterprise/management_console/
+ * The Management Console API helps you manage your GitHub Enterprise installation.
+ * @link    https://developer.github.com/v3/enterprise/management_console/
  * @package GitHub\Receiver\Enterprise
  */
 class ManagementConsole extends AbstractEnterprise {
@@ -54,7 +54,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Upload a license and software package for the first time
-	 * @see https://developer.github.com/v3/enterprise/management_console/#upload-a-license-and-software-package-for-the-first-time
+	 * @link https://developer.github.com/v3/enterprise/management_console/#upload-a-license-and-software-package-for-the-first-time
 	 * @param string $license
 	 * @param string $package
 	 * @param string $settings
@@ -71,7 +71,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Upgrade a license or software package
-	 * @see https://developer.github.com/v3/enterprise/management_console/#upgrade-a-license-or-software-package
+	 * @link https://developer.github.com/v3/enterprise/management_console/#upgrade-a-license-or-software-package
 	 * @param string $license
 	 * @param string $package
 	 * @return mixed
@@ -87,7 +87,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Check configuration status
-	 * @see https://developer.github.com/v3/enterprise/management_console/#check-configuration-status
+	 * @link https://developer.github.com/v3/enterprise/management_console/#check-configuration-status
 	 * @return mixed
 	 */
 	public function checkConfigurationStatus() {
@@ -98,7 +98,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Start a configuration process
-	 * @see https://developer.github.com/v3/enterprise/management_console/#start-a-configuration-process
+	 * @link https://developer.github.com/v3/enterprise/management_console/#start-a-configuration-process
 	 * @return string
 	 */
 	public function startConfigurationProcess() {
@@ -110,7 +110,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Retrieve settings
-	 * @see https://developer.github.com/v3/enterprise/management_console/#retrieve-settings
+	 * @link https://developer.github.com/v3/enterprise/management_console/#retrieve-settings
 	 * @return string
 	 */
 	public function retrieveSettings() {
@@ -121,7 +121,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Modify settings
-	 * @see https://developer.github.com/v3/enterprise/management_console/#modify-settings
+	 * @link https://developer.github.com/v3/enterprise/management_console/#modify-settings
 	 * @param $settings
 	 * @return string
 	 */
@@ -134,7 +134,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Check maintenance status
-	 * @see https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
+	 * @link https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
 	 * @return string
 	 */
 	public function checkMaintenanceStatus() {
@@ -145,7 +145,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Enable or disable maintenance mode
-	 * @see https://developer.github.com/v3/enterprise/management_console/#enable-or-disable-maintenance-mode
+	 * @link https://developer.github.com/v3/enterprise/management_console/#enable-or-disable-maintenance-mode
 	 * @param $maintenance
 	 * @return string
 	 */
@@ -158,7 +158,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Retrieve authorized SSH keys
-	 * @see https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
+	 * @link https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
 	 * @return string
 	 */
 	public function retrieveAuthorizedSshKeys() {
@@ -169,7 +169,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Add a new authorized SSH key
-	 * @see https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
+	 * @link https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
 	 * @param $authorizedKey
 	 * @return string
 	 */
@@ -182,7 +182,7 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Remove an authorized SSH key
-	 * @see https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
+	 * @link https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
 	 * @param $authorizedKey
 	 * @return string
 	 */
