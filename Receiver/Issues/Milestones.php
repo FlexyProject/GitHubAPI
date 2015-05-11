@@ -5,11 +5,16 @@ use Scion\Http\Request;
 use Scion\GitHub\AbstractApi;
 use Scion\Stdlib\DateTime;
 
+/**
+ * The Trees API class provides access to Issues's milestones.
+ * @link    https://developer.github.com/v3/issues/milestones/
+ * @package Scion\GitHub\Receiver\Issues
+ */
 class Milestones extends AbstractIssues {
 
 	/**
 	 * List milestones for a repository
-	 * @see https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
+	 * @link https://developer.github.com/v3/issues/milestones/#list-milestones-for-a-repository
 	 * @param string $state
 	 * @param string $sort
 	 * @param string $direction
@@ -17,25 +22,29 @@ class Milestones extends AbstractIssues {
 	 */
 	public function listMilestones($state = AbstractApi::STATE_OPEN, $sort = AbstractApi::SORT_DUE_DATE, $direction = AbstractApi::DIRECTION_ASC) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/milestones?state=%s&sort=%s&direction=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $state, $sort, $direction)
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones?:args', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
+				'state'     => $state,
+				'sort'      => $sort,
+				'direction' => $direction
+			]))
 		);
 	}
 
 	/**
 	 * Get a single milestone
-	 * @see https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
+	 * @link https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 	 * @param int $number
 	 * @return mixed
 	 */
 	public function getMilestone($number) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/milestones/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
 	/**
 	 * Create a milestone
-	 * @see https://developer.github.com/v3/issues/milestones/#create-a-milestone
+	 * @link https://developer.github.com/v3/issues/milestones/#create-a-milestone
 	 * @param string $title
 	 * @param string $state
 	 * @param string $description
@@ -44,14 +53,20 @@ class Milestones extends AbstractIssues {
 	 */
 	public function createMilestone($title, $state = AbstractApi::STATE_OPEN, $description = '', $dueOn = '') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/milestones?title=%s&state=%s&description=%s&due_one=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $title, $state, $description, (new DateTime($dueOn))->format(DateTime::ISO8601)),
-			Request::METHOD_POST
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
+			Request::METHOD_POST,
+			[
+				'title'       => $title,
+				'state'       => $state,
+				'description' => $description,
+				'due_on'      => (new DateTime($dueOn))->format(DateTime::ISO8601)
+			]
 		);
 	}
 
 	/**
 	 * Update a milestone
-	 * @see https://developer.github.com/v3/issues/milestones/#update-a-milestone
+	 * @link https://developer.github.com/v3/issues/milestones/#update-a-milestone
 	 * @param int    $number
 	 * @param string $title
 	 * @param string $state
@@ -61,21 +76,33 @@ class Milestones extends AbstractIssues {
 	 */
 	public function updateMilestone($number, $title = '', $state = AbstractApi::STATE_OPEN, $description = '', $dueOn = '') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/milestones/%s?title=%s&state=%s&description=%s&due_one=%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $title, $state, $description, (new DateTime($dueOn))->format(DateTime::ISO8601)),
-			Request::METHOD_PATCH
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			Request::METHOD_PATCH,
+			[
+				'title'       => $title,
+				'state'       => $state,
+				'description' => $description,
+				'due_on'      => (new DateTime($dueOn))->format(DateTime::ISO8601)
+			]
 		);
 	}
 
 	/**
 	 * Delete a milestone
-	 * @see https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+	 * @link https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 	 * @param int $number
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function deleteMilestone($number) {
-		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/milestones/%s', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+		$this->getApi()->request(
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_DELETE
 		);
+
+		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
+			return true;
+		}
+
+		return false;
 	}
 } 
