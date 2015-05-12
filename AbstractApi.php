@@ -71,6 +71,7 @@ abstract class AbstractApi {
 	const SORT_UPDATED      = 'updated';
 
 	/** State constants */
+	const STATE_ACTIVE  = 'active';
 	const STATE_ALL     = 'all';
 	const STATE_CLOSED  = 'closed';
 	const STATE_ERROR   = 'error';
