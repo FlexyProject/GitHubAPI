@@ -59,6 +59,11 @@ abstract class AbstractApi {
 	const MODE_MARKDOWN = 'markdown';
 	const MODE_GFM      = 'gfm';
 
+	/** Permissions constants */
+	const PERMISSION_ADMIN = 'admin';
+	const PERMISSION_PULL  = 'pull';
+	const PERMISSION_PUSH  = 'push';
+
 	/** Sort constants */
 	const SORT_COMPLETENESS = 'completeness';
 	const SORT_CREATED      = 'created';
