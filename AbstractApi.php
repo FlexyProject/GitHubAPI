@@ -43,8 +43,9 @@ abstract class AbstractApi {
 	const ENVIRONMENT_QA         = 'qa';
 
 	/** Events constants */
-	const EVENTS_PULL = 'pull';
-	const EVENTS_PUSH = 'push';
+	const EVENTS_PULL         = 'pull';
+	const EVENTS_PULL_REQUEST = 'pull_request';
+	const EVENTS_PUSH         = 'push';
 
 	/** Filter constants */
 	const FILTER_ALL        = 'all';
