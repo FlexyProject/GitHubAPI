@@ -42,6 +42,11 @@ abstract class AbstractApi {
 	const ENVIRONMENT_STAGING    = 'staging';
 	const ENVIRONMENT_QA         = 'qa';
 
+	/** Events constants */
+	const EVENTS_PULL         = 'pull';
+	const EVENTS_PULL_REQUEST = 'pull_request';
+	const EVENTS_PUSH         = 'push';
+
 	/** Filter constants */
 	const FILTER_ALL        = 'all';
 	const FILTER_ASSIGNED   = 'assigned';
@@ -59,6 +64,11 @@ abstract class AbstractApi {
 	const MODE_MARKDOWN = 'markdown';
 	const MODE_GFM      = 'gfm';
 
+	/** Permissions constants */
+	const PERMISSION_ADMIN = 'admin';
+	const PERMISSION_PULL  = 'pull';
+	const PERMISSION_PUSH  = 'push';
+
 	/** Sort constants */
 	const SORT_COMPLETENESS = 'completeness';
 	const SORT_CREATED      = 'created';
@@ -71,6 +81,7 @@ abstract class AbstractApi {
 	const SORT_UPDATED      = 'updated';
 
 	/** State constants */
+	const STATE_ACTIVE  = 'active';
 	const STATE_ALL     = 'all';
 	const STATE_CLOSED  = 'closed';
 	const STATE_ERROR   = 'error';

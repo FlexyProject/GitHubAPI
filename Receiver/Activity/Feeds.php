@@ -2,15 +2,15 @@
 namespace Scion\GitHub\Receiver\Activity;
 
 /**
- * Class Feeds
- * @see     https://developer.github.com/v3/activity/feeds/
+ * The Atom feeds API class provide access to a list of Atom feeds available for the authenticated user.
+ * @link    https://developer.github.com/v3/activity/feeds/
  * @package GitHub\Receiver\Activity
  */
 class Feeds extends AbstractActivity {
 
 	/**
 	 * List Feeds
-	 * @see https://developer.github.com/v3/activity/feeds/#list-feeds
+	 * @link https://developer.github.com/v3/activity/feeds/#list-feeds
 	 * @return mixed
 	 */
 	public function listFeeds() {

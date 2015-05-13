@@ -5,106 +5,120 @@ use Scion\Http\Request;
 use Scion\Stdlib\DateTime;
 
 /**
- * Class Notifications
- * @see     https://developer.github.com/v3/activity/notifications/
+ * The Notifications API class lets your view notifications of new comments are delivered to users and mark them as read.
+ * @link    https://developer.github.com/v3/activity/notifications/
  * @package GitHub\Receiver\Activity
  */
 class Notifications extends AbstractActivity {
 
 	/**
 	 * List your notifications
-	 * @see https://developer.github.com/v3/activity/notifications/#list-your-notifications
+	 * @link https://developer.github.com/v3/activity/notifications/#list-your-notifications
 	 * @param bool   $all
 	 * @param bool   $participating
 	 * @param string $since
+	 * @param string $before
 	 * @return mixed
+	 * @throws \Exception
 	 */
-	public function listNotifications($all = false, $participating = false, $since = 'now') {
+	public function listNotifications($all = false, $participating = false, $since = 'now', $before = null) {
 		return $this->getApi()->request(
-			sprintf('/notifications?all=%s&participating=%s&since=%s', $all, $participating, (new DateTime($since))->format(DateTime::ISO8601))
+			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query([
+				'all'           => $all,
+				'participating' => $participating,
+				'since'         => (new DateTime($since))->format(DateTime::ISO8601),
+				'before'        => (new DateTime($before))->format(DateTime::ISO8601)
+			]))
 		);
 	}
 
 	/**
 	 * List your notifications in a repository
-	 * @see https://developer.github.com/v3/activity/notifications/#list-your-notifications-in-a-repository
+	 * @link https://developer.github.com/v3/activity/notifications/#list-your-notifications-in-a-repository
 	 * @param bool   $all
 	 * @param bool   $participating
 	 * @param string $since
+	 * @param string $before
 	 * @return mixed
+	 * @throws \Exception
 	 */
-	public function listRepositoryNotifications($all = false, $participating = false, $since = 'now') {
+	public function listRepositoryNotifications($all = false, $participating = false, $since = 'now', $before = null) {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/notifications?all=%s&participating=%s&since=%s', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $all, $participating, (new DateTime($since))->format(DateTime::ISO8601))
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', http_build_query([
+				'all'           => $all,
+				'participating' => $participating,
+				'since'         => (new DateTime($since))->format(DateTime::ISO8601),
+				'before'        => (new DateTime($before))->format(DateTime::ISO8601)
+			]))
 		);
 	}
 
 	/**
 	 * Mark as read
-	 * @see https://developer.github.com/v3/activity/notifications/#mark-as-read
+	 * @link https://developer.github.com/v3/activity/notifications/#mark-as-read
 	 * @param string $lastReadAt
 	 * @return mixed
 	 */
 	public function markAsRead($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			sprintf('/notifications?last_read_at=%s', (new DateTime($lastReadAt))->format(DateTime::ISO8601)),
+			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ISO8601)])),
 			Request::METHOD_PUT
 		);
 	}
 
 	/**
 	 * Mark notifications as read in a repository
-	 * @see https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
+	 * @link https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read-in-a-repository
 	 * @param string $lastReadAt
 	 * @return mixed
 	 */
 	public function markAsReadInRepository($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			sprintf('/repos/%s/%s/notifications', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), (new DateTime($lastReadAt))->format(DateTime::ISO8601)),
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ISO8601)])),
 			Request::METHOD_PUT
 		);
 	}
 
 	/**
 	 *View a single thread
-	 * @see https://developer.github.com/v3/activity/notifications/#view-a-single-thread
+	 * @link https://developer.github.com/v3/activity/notifications/#view-a-single-thread
 	 * @param int $id
 	 * @return mixed
 	 */
 	public function viewThread($id) {
 		return $this->getApi()->request(
-			sprintf('/notifications/threads/%s', $id)
+			$this->getApi()->getString()->sprintf('/notifications/threads/:id', (string)$id)
 		);
 	}
 
 	/**
 	 * Mark a thread as read
-	 * @see https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
+	 * @link https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 	 * @param int $id
 	 * @return mixed
 	 */
 	public function markThreadAsRead($id) {
 		return $this->getApi()->request(
-			sprintf('/notifications/threads/%s', $id),
+			$this->getApi()->getString()->sprintf('/notifications/threads/:id', (string)$id),
 			Request::METHOD_PATCH
 		);
 	}
 
 	/**
 	 * Get a Thread Subscription
-	 * @see https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
+	 * @link https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
 	 * @param int $id
 	 * @return mixed
 	 */
 	public function getThreadSubscription($id) {
 		return $this->getApi()->request(
-			sprintf('/notifications/threads/%s/subscription', $id)
+			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription', (string)$id)
 		);
 	}
 
 	/**
 	 * Set a Thread Subscription
-	 * @see https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
+	 * @link https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 	 * @param int  $id
 	 * @param bool $subscribed
 	 * @param bool $ignored
@@ -112,21 +126,27 @@ class Notifications extends AbstractActivity {
 	 */
 	public function setThreadSubscription($id, $subscribed = false, $ignored = false) {
 		return $this->getApi()->request(
-			sprintf('/notifications/threads/%s/subscription?subscribed=%s&ignored=%s', $id, $subscribed, $ignored),
+			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription?:args', $id, http_build_query(['subscribed' => $subscribed, 'ignored' => $ignored])),
 			Request::METHOD_PUT
 		);
 	}
 
 	/**
 	 * Delete a Thread Subscription
-	 * @see https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
+	 * @link https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 	 * @param int $id
-	 * @return mixed
+	 * @return boolean
 	 */
 	public function deleteThreadSubscription($id) {
-		return $this->getApi()->request(
-			sprintf('/notifications/threads/%s/subscription', $id),
+		$this->getApi()->request(
+			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription', (string)$id),
 			Request::METHOD_DELETE
 		);
+
+		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
+			return true;
+		}
+
+		return false;
 	}
 }

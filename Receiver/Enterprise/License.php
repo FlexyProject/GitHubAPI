@@ -2,15 +2,15 @@
 namespace Scion\GitHub\Receiver\Enterprise;
 
 /**
- * Class License
- * @see     https://developer.github.com/v3/enterprise/license/
+ * The License API provides information on your Enterprise license.
+ * @link    https://developer.github.com/v3/enterprise/license/
  * @package GitHub\Receiver\Enterprise
  */
 class License extends AbstractEnterprise {
 
 	/**
 	 * Get license information
-	 * @see https://developer.github.com/v3/enterprise/license/#get-license-information
+	 * @link https://developer.github.com/v3/enterprise/license/#get-license-information
 	 * @return mixed
 	 */
 	public function getLicenseInformation() {
