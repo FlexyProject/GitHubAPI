@@ -4,6 +4,10 @@ namespace Scion\GitHub\Receiver\Organizations;
 use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
+/**
+ * Members API class gives you access to the available organization's members.
+ * @package Scion\GitHub\Receiver\Organizations
+ */
 class Members extends AbstractOrganizations {
 
 	/**

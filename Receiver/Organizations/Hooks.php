@@ -4,6 +4,10 @@ namespace Scion\GitHub\Receiver\Organizations;
 use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
+/**
+ * Hooks API class allow you to receive HTTP POST payloads whenever certain events happen within the organization.
+ * @package Scion\GitHub\Receiver\Organizations
+ */
 class Hooks extends AbstractOrganizations {
 
 	/**
