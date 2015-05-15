@@ -4,6 +4,10 @@ namespace Scion\GitHub\Receiver\Organizations;
 use Scion\GitHub\AbstractApi;
 use Scion\Http\Request;
 
+/**
+ * Teams API class gives you access to the available organization's teams.
+ * @package Scion\GitHub\Receiver\Organizations
+ */
 class Teams extends AbstractOrganizations {
 
 	/**
