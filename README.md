@@ -1,5 +1,6 @@
 # Scion: Wrapper for GitHub API v3
-This is a Client and WebHook wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP5.  
+This is a simple Object Oriented wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP5.  
+This library works with cURL and provides all documented functionality as described in the official documentation including [Client](https://developer.github.com/v3/) and [WebHooks](https://developer.github.com/webhooks/).
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/)
 [![Build Status](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/badges/build.png?b=master)](https://scrutinizer-ci.com/g/Scion-Framework/GitHubAPI/build-status/master)
 
