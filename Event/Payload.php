@@ -126,7 +126,7 @@ class Payload implements EventInterface {
 	 */
 	private function _checkSignature() {
 		if (null !== $this->secret) {
-			if (in_array('HTTP_X_HUB_SIGNATURE', Headers::getInstance()->getHttpHeaders())) {
+			if (array_key_exists('HTTP_X_HUB_SIGNATURE', Headers::getInstance()->getHttpHeaders())) {
 				/**
 				 * Split signature into algorithm and hash
 				 * @link http://isometriks.com/verify-github-webhooks-with-php
