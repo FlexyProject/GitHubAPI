@@ -7,6 +7,7 @@ use Scion\File\Parser\Json as JsonParser;
 use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\Mapper\Commit as CommitMapper;
 use Scion\GitHub\WebHook;
+use Scion\Http\Headers;
 use Scion\Http\Request;
 
 class Payload implements EventInterface {
@@ -125,8 +126,12 @@ class Payload implements EventInterface {
 	 */
 	private function _checkSignature() {
 		if (null !== $this->secret) {
-			if (isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
-				list($hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
+			if (Headers::getInstance()->getHttpHeaders()['HTTP_X_HUB_SIGNATURE']) {
+				/**
+				 * Split signature into algorithm and hash
+				 * @link http://isometriks.com/verify-github-webhooks-with-php
+				 */
+				list(, $hash) = explode('=', Headers::getInstance()->getHttpHeaders()['HTTP_X_HUB_SIGNATURE'], 2);
 
 				return $this->secret == $hash;
 			}
