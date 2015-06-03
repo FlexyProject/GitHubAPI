@@ -5,7 +5,6 @@ use Scion\Crypt\Hash;
 use Scion\Crypt\Hmac;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\GitHub\Exception\BadSignatureException;
-use Scion\GitHub\Mapper\Commit as CommitMapper;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
@@ -106,17 +105,7 @@ class Payload implements EventInterface {
 		}
 
 		/** Decode json data */
-		$data = JsonParser::decode($this->getRawData());
-
-		$array = [];
-		if (property_exists($data, 'commits')) {
-			foreach ($data->commits as $obj) {
-				$commit  = new CommitMapper();
-				$array[] = $commit->map($obj);
-			}
-		}
-
-		return $array;
+		return JsonParser::decode($this->getRawData());
 	}
 
 	/**
