@@ -5,8 +5,8 @@ use Scion\Crypt\Hash;
 use Scion\Crypt\Hmac;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\GitHub\Exception\BadSignatureException;
-use Scion\GitHub\Mapper\Commit as CommitMapper;
 use Scion\GitHub\WebHook;
+use Scion\Http\Headers;
 use Scion\Http\Request;
 
 class Payload implements EventInterface {
@@ -105,17 +105,7 @@ class Payload implements EventInterface {
 		}
 
 		/** Decode json data */
-		$data = JsonParser::decode($this->getRawData());
-
-		$array = [];
-		if (property_exists($data, 'commits')) {
-			foreach ($data->commits as $obj) {
-				$commit  = new CommitMapper();
-				$array[] = $commit->map($obj);
-			}
-		}
-
-		return $array;
+		return JsonParser::decode($this->getRawData());
 	}
 
 	/**
@@ -125,8 +115,12 @@ class Payload implements EventInterface {
 	 */
 	private function _checkSignature() {
 		if (null !== $this->secret) {
-			if (isset($_SERVER['HTTP_X_HUB_SIGNATURE'])) {
-				list($hash) = explode('=', $_SERVER['HTTP_X_HUB_SIGNATURE'], 2);
+			if (array_key_exists('HTTP_X_HUB_SIGNATURE', Headers::getInstance()->getHttpHeaders())) {
+				/**
+				 * Split signature into algorithm and hash
+				 * @link http://isometriks.com/verify-github-webhooks-with-php
+				 */
+				list(, $hash) = explode('=', Headers::getInstance()->getHttpHeaders()['HTTP_X_HUB_SIGNATURE'], 2);
 
 				return $this->secret == $hash;
 			}

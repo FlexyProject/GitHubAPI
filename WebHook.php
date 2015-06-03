@@ -5,7 +5,7 @@ use Scion\GitHub\Event\EventInterface;
 
 /**
  * Webhooks allow you to build or set up integrations which subscribe to certain events on GitHub.com.
- * Complete documentation is available at https://developer.github.com/webhooks/.
+ * @link    https://developer.github.com/webhooks/
  * @package Scion\GitHub
  */
 class WebHook extends AbstractApi {
@@ -19,7 +19,7 @@ class WebHook extends AbstractApi {
 	 * @return EventInterface
 	 */
 	public function getEvent($event) {
-		$class = sprintf('%s\Event\%s', __NAMESPACE__, $event);
+		$class = $this->getString()->sprintf(':namespace\Event\:event', __NAMESPACE__, $event);
 
 		return new $class($this);
 	}
