@@ -12,8 +12,8 @@ interface EventInterface {
 	public function __construct(WebHook $webHook);
 
 	/**
-	 * Parse returned data and returns an array
-	 * @return array
+	 * Parse raw data
+	 * @return Payload
 	 */
 	public function parse();
 }

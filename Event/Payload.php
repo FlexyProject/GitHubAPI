@@ -8,7 +8,7 @@ use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
-use Scion\Validator\Json as Jsonvalidator;
+use Scion\Validator\Json as JsonValidator;
 
 class Payload implements EventInterface {
 
@@ -29,7 +29,7 @@ class Payload implements EventInterface {
 
 	/**
 	 * Get webHook
-	 * @return mixed
+	 * @return null|WebHook
 	 */
 	public function getWebHook() {
 		return $this->webHook;
@@ -49,7 +49,7 @@ class Payload implements EventInterface {
 	/**
 	 * Set secret, encode this secret with Hmac, SHA1 method
 	 * @param string $secret
-	 * @return $this
+	 * @return Payload
 	 */
 	public function setSecret($secret) {
 		$this->secret = Hmac::compute($secret, Hash::ALGO_SHA1, $this->rawData, Hmac::OUTPUT_STRING);
@@ -59,7 +59,7 @@ class Payload implements EventInterface {
 
 	/**
 	 * Get secret
-	 * @return null
+	 * @return null|string
 	 */
 	public function getSecret() {
 		return $this->secret;
@@ -98,7 +98,7 @@ class Payload implements EventInterface {
 	 * @return Payload
 	 */
 	protected function setParsedData($parsedData) {
-		if ((new Jsonvalidator())->isValid($parsedData)) {
+		if ((new JsonValidator())->isValid($parsedData)) {
 			$this->parsedData = JsonParser::decode($parsedData);
 		}
 
@@ -117,8 +117,8 @@ class Payload implements EventInterface {
 	}
 
 	/**
-	 * Parse returned data and returns an array
-	 * @return array
+	 * Parse raw data
+	 * @return Payload
 	 * @throws BadSignatureException
 	 * @throws \Exception
 	 */
