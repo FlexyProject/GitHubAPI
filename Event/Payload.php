@@ -97,15 +97,29 @@ class Payload implements EventInterface {
 	 * Parse returned data and returns an array
 	 * @return array
 	 * @throws BadSignatureException
+	 * @throws \Exception
 	 */
 	public function parse() {
 		/** Check signature from header */
 		if (!$this->_checkSignature()) {
-			throw new BadSignatureException('Bad signature');
+			throw new BadSignatureException('Hook secret does not match.');
 		}
 
-		/** Decode json data */
-		return JsonParser::decode($this->getRawData());
+		/** Get data from different locations according to content-type */
+		switch ($_SERVER['CONTENT_TYPE']) {
+			case 'application/json':
+				$data = $this->getRawData();
+				break;
+
+			case 'application/x-www-form-urlencoded':
+				$data = $_POST['payload'];
+				break;
+
+			default:
+				throw new \Exception('Unsupported content type: "' . $_SERVER['CONTENT_TYPE'] . '"');
+		}
+
+		return !isset($data) ?: JsonParser::decode($data);
 	}
 
 	/**
@@ -125,7 +139,7 @@ class Payload implements EventInterface {
 				return $this->secret == $hash;
 			}
 
-			throw new BadSignatureException('No signature send to the header');
+			throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');
 		}
 
 		return true;
