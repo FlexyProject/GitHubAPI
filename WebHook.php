@@ -16,11 +16,15 @@ class WebHook extends AbstractApi {
 	/**
 	 * Returns Event object
 	 * @param string $event
-	 * @return EventInterface
+	 * @return null|EventInterface
 	 */
 	public function getEvent($event) {
-		$class = $this->getString()->sprintf(':namespace\Event\:event', __NAMESPACE__, $event);
+		$class = (string)$this->getString()->sprintf(':namespace\Event\:event', __NAMESPACE__, $event);
 
-		return new $class($this);
+		if (class_exists($class)) {
+			return new $class($this);
+		}
+
+		return null;
 	}
 } 
