@@ -1,5 +1,6 @@
 <?php
 namespace Scion\GitHub;
+use Scion\GitHub\Receiver\AbstractReceiver;
 
 /**
  * Client API v3
@@ -24,12 +25,16 @@ class Client extends AbstractApi {
 	/**
 	 * Returns receiver object
 	 * @param string $receiver
-	 * @return object
+	 * @return null|AbstractReceiver
 	 */
 	public function getReceiver($receiver) {
-		$class = $this->getString()->sprintf(':namespace\Receiver\:receiver', __NAMESPACE__, $receiver);
+		$class = (string)$this->getString()->sprintf(':namespace\Receiver\:receiver', __NAMESPACE__, $receiver);
 
-		return new $class($this);
+		if (class_exists($class)) {
+			return new $class($this);
+		}
+
+		return null;
 	}
 
 } 

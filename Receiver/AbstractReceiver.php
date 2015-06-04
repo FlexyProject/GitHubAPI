@@ -79,17 +79,16 @@ abstract class AbstractReceiver {
 	/**
 	 * Get a sub-receiver
 	 * @param string $name
-	 * @return mixed
+	 * @return null|object
 	 */
 	public function getReceiver($name) {
 		$classPath = explode('\\', get_called_class());
 		$class     = (string)$this->getApi()->getString()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
 
-		try {
+		if (class_exists($class)) {
 			return new $class($this);
 		}
-		catch (Exception $e) {
-			return null;
-		}
+
+		return null;
 	}
 } 
