@@ -8,6 +8,7 @@ use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
+use Scion\Validator\Json as JsonValidator;
 
 class Payload implements EventInterface {
 
@@ -97,15 +98,29 @@ class Payload implements EventInterface {
 	 * Parse returned data and returns an array
 	 * @return array
 	 * @throws BadSignatureException
+	 * @throws \Exception
 	 */
 	public function parse() {
 		/** Check signature from header */
 		if (!$this->_checkSignature()) {
-			throw new BadSignatureException('Bad signature');
+			throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');
 		}
 
-		/** Decode json data */
-		return JsonParser::decode($this->getRawData());
+		/** Get data from different locations according to content-type */
+		switch ($_SERVER['CONTENT_TYPE']) {
+			case 'application/json':
+				$data = $this->getRawData();
+				break;
+
+			case 'application/x-www-form-urlencoded':
+				$data = $_POST['payload'];
+				break;
+
+			default:
+				throw new \Exception('Unsupported content type: "' . $_SERVER['CONTENT_TYPE'] . '"');
+		}
+
+		return !isset($data) ?: JsonParser::decode($data);
 	}
 
 	/**
