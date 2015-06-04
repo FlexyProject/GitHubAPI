@@ -8,6 +8,7 @@ use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
+use Scion\Validator\Json as Jsonvalidator;
 
 class Payload implements EventInterface {
 
@@ -15,6 +16,7 @@ class Payload implements EventInterface {
 	protected $webHook;
 	protected $secret = null;
 	protected $rawData;
+	protected $parsedData;
 
 	/**
 	 * Constructor, pass a WebHook object
@@ -83,6 +85,27 @@ class Payload implements EventInterface {
 	}
 
 	/**
+	 * Get parsedData
+	 * @return mixed
+	 */
+	public function getData() {
+		return $this->parsedData;
+	}
+
+	/**
+	 * Set parsedData
+	 * @param mixed $parsedData
+	 * @return Payload
+	 */
+	protected function setParsedData($parsedData) {
+		if ((new Jsonvalidator())->isValid($parsedData)) {
+			$this->parsedData = JsonParser::decode($parsedData);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Debugger
 	 * @return resource|string
 	 */
@@ -118,8 +141,9 @@ class Payload implements EventInterface {
 			default:
 				throw new \Exception('Unsupported content type: "' . $_SERVER['CONTENT_TYPE'] . '"');
 		}
+		$this->setParsedData($data);
 
-		return !isset($data) ?: JsonParser::decode($data);
+		return $this;
 	}
 
 	/**
