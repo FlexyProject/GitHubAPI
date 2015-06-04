@@ -8,7 +8,6 @@ use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
-use Scion\Validator\Json as JsonValidator;
 
 class Payload implements EventInterface {
 
@@ -103,7 +102,7 @@ class Payload implements EventInterface {
 	public function parse() {
 		/** Check signature from header */
 		if (!$this->_checkSignature()) {
-			throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');
+			throw new BadSignatureException('Hook secret does not match.');
 		}
 
 		/** Get data from different locations according to content-type */
@@ -140,7 +139,7 @@ class Payload implements EventInterface {
 				return $this->secret == $hash;
 			}
 
-			throw new BadSignatureException('No signature send to the header');
+			throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');
 		}
 
 		return true;
