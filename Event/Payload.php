@@ -8,6 +8,7 @@ use Scion\GitHub\Exception\BadSignatureException;
 use Scion\GitHub\WebHook;
 use Scion\Http\Headers;
 use Scion\Http\Request;
+use Scion\Validator\Json as JsonValidator;
 
 class Payload implements EventInterface {
 
@@ -15,6 +16,7 @@ class Payload implements EventInterface {
 	protected $webHook;
 	protected $secret = null;
 	protected $rawData;
+	protected $parsedData;
 
 	/**
 	 * Constructor, pass a WebHook object
@@ -27,7 +29,7 @@ class Payload implements EventInterface {
 
 	/**
 	 * Get webHook
-	 * @return mixed
+	 * @return null|WebHook
 	 */
 	public function getWebHook() {
 		return $this->webHook;
@@ -47,7 +49,7 @@ class Payload implements EventInterface {
 	/**
 	 * Set secret, encode this secret with Hmac, SHA1 method
 	 * @param string $secret
-	 * @return $this
+	 * @return Payload
 	 */
 	public function setSecret($secret) {
 		$this->secret = Hmac::compute($secret, Hash::ALGO_SHA1, $this->rawData, Hmac::OUTPUT_STRING);
@@ -57,7 +59,7 @@ class Payload implements EventInterface {
 
 	/**
 	 * Get secret
-	 * @return null
+	 * @return null|string
 	 */
 	public function getSecret() {
 		return $this->secret;
@@ -83,6 +85,27 @@ class Payload implements EventInterface {
 	}
 
 	/**
+	 * Get parsedData
+	 * @return mixed
+	 */
+	public function getData() {
+		return $this->parsedData;
+	}
+
+	/**
+	 * Set parsedData
+	 * @param mixed $parsedData
+	 * @return Payload
+	 */
+	protected function setParsedData($parsedData) {
+		if ((new JsonValidator())->isValid($parsedData)) {
+			$this->parsedData = JsonParser::decode($parsedData);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Debugger
 	 * @return resource|string
 	 */
@@ -94,8 +117,8 @@ class Payload implements EventInterface {
 	}
 
 	/**
-	 * Parse returned data and returns an array
-	 * @return array
+	 * Parse raw data
+	 * @return Payload
 	 * @throws BadSignatureException
 	 * @throws \Exception
 	 */
@@ -118,8 +141,9 @@ class Payload implements EventInterface {
 			default:
 				throw new \Exception('Unsupported content type: "' . $_SERVER['CONTENT_TYPE'] . '"');
 		}
+		$this->setParsedData($data);
 
-		return !isset($data) ?: JsonParser::decode($data);
+		return $this;
 	}
 
 	/**
