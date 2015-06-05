@@ -121,6 +121,7 @@ abstract class AbstractApi {
 	protected $failure;
 	protected $headers        = [];
 	protected $httpAuth       = ['username' => '', 'password' => ''];
+	protected $jsonValidator;
 	protected $success;
 	protected $string;
 	protected $timeout        = 240;
@@ -130,7 +131,8 @@ abstract class AbstractApi {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->string = new String();
+		$this->string        = new String();
+		$this->jsonValidator = new JsonValidator();
 	}
 
 	/**
@@ -463,20 +465,18 @@ abstract class AbstractApi {
 				break;
 		}
 
-		$curl->success(function ($instance) {
+		$curl->success(function (Curl $instance) {
 			$this->headers = $instance->getHeaders();
-			$this->success = $instance->response;
-			$validator     = new JsonValidator();
-			if ($validator->isValid($instance->response)) {
-				$this->success = JsonParser::decode($instance->response);
+			$this->success = $instance->getResponse();
+			if ($this->jsonValidator->isValid($this->success)) {
+				$this->success = JsonParser::decode($this->success);
 			}
 		});
-		$curl->error(function ($instance) {
+		$curl->error(function (Curl $instance) {
 			$this->headers = $instance->getHeaders();
-			$this->failure = $instance->response;
-			$validator     = new JsonValidator();
-			if ($validator->isValid($instance->response)) {
-				$this->failure = JsonParser::decode($instance->response);
+			$this->failure = $instance->getResponse();
+			if ($this->jsonValidator->isValid($this->failure)) {
+				$this->failure = JsonParser::decode($this->failure);
 			}
 		});
 		$curl->perform();

@@ -63,7 +63,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function updateFile($path, $message, $content, $sha, $branch = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
 			Request::METHOD_PUT
 		);
 	}
