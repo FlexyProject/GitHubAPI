@@ -465,18 +465,18 @@ abstract class AbstractApi {
 				break;
 		}
 
-		$curl->success(function ($instance) {
+		$curl->success(function (Curl $instance) {
 			$this->headers = $instance->getHeaders();
-			$this->success = $instance->response;
-			if ($this->jsonValidator->isValid($instance->response)) {
-				$this->success = JsonParser::decode($instance->response);
+			$this->success = $instance->getResponse();
+			if ($this->jsonValidator->isValid($this->success)) {
+				$this->success = JsonParser::decode($this->success);
 			}
 		});
-		$curl->error(function ($instance) {
+		$curl->error(function (Curl $instance) {
 			$this->headers = $instance->getHeaders();
-			$this->failure = $instance->response;
-			if ($this->jsonValidator->isValid($instance->response)) {
-				$this->failure = JsonParser::decode($instance->response);
+			$this->failure = $instance->getResponse();
+			if ($this->jsonValidator->isValid($this->failure)) {
+				$this->failure = JsonParser::decode($this->failure);
 			}
 		});
 		$curl->perform();
