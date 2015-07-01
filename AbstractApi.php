@@ -4,7 +4,7 @@ namespace Scion\GitHub;
 use Scion\File\Parser\Json as JsonParser;
 use Scion\Http\Client\Curl;
 use Scion\Http\Request;
-use Scion\Utils\String;
+use Scion\Utils\Strings;
 use Scion\Validator\Json as JsonValidator;
 
 abstract class AbstractApi {
@@ -131,7 +131,7 @@ abstract class AbstractApi {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->string        = new String();
+		$this->string        = new Strings();
 		$this->jsonValidator = new JsonValidator();
 	}
 
@@ -312,7 +312,7 @@ abstract class AbstractApi {
 
 	/**
 	 * Get string
-	 * @return \Scion\Utils\String
+	 * @return \Scion\Utils\Strings
 	 */
 	public function getString() {
 		return $this->string;
