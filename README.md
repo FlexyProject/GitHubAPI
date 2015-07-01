@@ -18,7 +18,7 @@ This library works with cURL and provides all documented functionality as descri
 ## Quick Start
 ```php
 // Create a client object
-$client = new \Scion\Github\Client();
+$client = new \Scion\GitHub\Client();
 
 // Miscellaneous
 $miscellaneous = $client->getReceiver(\Scion\GitHub\Client::MISCELLANEOUS);
