@@ -23,5 +23,8 @@
 		"scion/stdlib": "*",
 		"scion/utils": "*",
 		"scion/validator": "*"
+	},
+	"autoload": {
+		"psr-4": {"Scion\\GitHub\\": "./"}
 	}
 }
