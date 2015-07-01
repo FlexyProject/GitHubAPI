@@ -363,6 +363,7 @@ abstract class AbstractApi {
 		$curl->setOption([
 			CURLOPT_USERAGENT      => self::USER_AGENT,
 			CURLOPT_TIMEOUT        => $this->getTimeout(),
+			CURLOPT_HEADER         => false, // Use $client->getHeaders() to get full header
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_SSL_VERIFYPEER => false,
 			CURLOPT_SSL_VERIFYHOST => false,
