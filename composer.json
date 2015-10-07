@@ -25,6 +25,8 @@
 		"scion/validator": "*"
 	},
 	"autoload": {
-		"psr-4": {"Scion\\GitHub\\": "./"}
+		"psr-4": {
+			"Scion\\GitHub\\": "./"
+		}
 	}
 }
