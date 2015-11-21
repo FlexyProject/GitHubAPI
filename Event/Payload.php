@@ -160,7 +160,7 @@ class Payload implements EventInterface {
 				 */
 				list(, $hash) = explode('=', Headers::getInstance()->getHttpHeaders()['HTTP_X_HUB_SIGNATURE'], 2);
 
-				return $this->secret == $hash;
+				return hash_equals($this->secret, $hash);
 			}
 
 			throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');
