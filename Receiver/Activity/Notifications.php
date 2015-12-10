@@ -26,8 +26,8 @@ class Notifications extends AbstractActivity {
 			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query([
 				'all'           => $all,
 				'participating' => $participating,
-				'since'         => (new DateTime($since))->format(DateTime::ISO8601),
-				'before'        => (new DateTime($before))->format(DateTime::ISO8601)
+				'since'         => (new DateTime($since))->format(DateTime::ATOM),
+				'before'        => (new DateTime($before))->format(DateTime::ATOM)
 			]))
 		);
 	}
@@ -47,8 +47,8 @@ class Notifications extends AbstractActivity {
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', http_build_query([
 				'all'           => $all,
 				'participating' => $participating,
-				'since'         => (new DateTime($since))->format(DateTime::ISO8601),
-				'before'        => (new DateTime($before))->format(DateTime::ISO8601)
+				'since'         => (new DateTime($since))->format(DateTime::ATOM),
+				'before'        => (new DateTime($before))->format(DateTime::ATOM)
 			]))
 		);
 	}
@@ -61,7 +61,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function markAsRead($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ISO8601)])),
+			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
 			Request::METHOD_PUT
 		);
 	}
@@ -74,7 +74,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function markAsReadInRepository($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ISO8601)])),
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
 			Request::METHOD_PUT
 		);
 	}

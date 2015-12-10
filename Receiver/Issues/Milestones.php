@@ -59,7 +59,7 @@ class Milestones extends AbstractIssues {
 				'title'       => $title,
 				'state'       => $state,
 				'description' => $description,
-				'due_on'      => (new DateTime($dueOn))->format(DateTime::ISO8601)
+				'due_on'      => (new DateTime($dueOn))->format(DateTime::ATOM)
 			]
 		);
 	}
@@ -82,7 +82,7 @@ class Milestones extends AbstractIssues {
 				'title'       => $title,
 				'state'       => $state,
 				'description' => $description,
-				'due_on'      => (new DateTime($dueOn))->format(DateTime::ISO8601)
+				'due_on'      => (new DateTime($dueOn))->format(DateTime::ATOM)
 			]
 		);
 	}

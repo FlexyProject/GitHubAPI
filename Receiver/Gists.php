@@ -28,7 +28,7 @@ class Gists extends AbstractReceiver {
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ISO8601)]))
+			$this->getApi()->getString()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -40,7 +40,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listPublicGists($since = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ISO8601)]))
+			$this->getApi()->getString()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -52,7 +52,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listUsersStarredGists($since = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ISO8601)]))
+			$this->getApi()->getString()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 

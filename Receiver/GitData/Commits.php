@@ -45,7 +45,7 @@ class Commits extends AbstractGitData {
 				'parents' => $parents,
 				'name'    => $name,
 				'email'   => $email,
-				'date'    => (new DateTime($date))->format(DateTime::ISO8601)
+				'date'    => (new DateTime($date))->format(DateTime::ATOM)
 			]
 		);
 	}

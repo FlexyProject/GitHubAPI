@@ -39,7 +39,7 @@ class ReviewComments extends AbstractPullRequests {
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/comments?:args', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), http_build_query([
 				'sort'      => $sort,
 				'direction' => $direction,
-				'since'     => (new DateTime($since))->format(DateTime::ISO8601)
+				'since'     => (new DateTime($since))->format(DateTime::ATOM)
 			]))
 		);
 	}
