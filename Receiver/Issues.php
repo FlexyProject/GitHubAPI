@@ -32,7 +32,16 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/issues?:args', http_build_query(['filter' => $filter, 'state' => $state, 'labels' => $labels, 'sort' => $sort, 'direction' => $direction, 'since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->getString()->sprintf('/issues?:args',
+				http_build_query([
+					'filter'    => $filter,
+					'state'     => $state,
+					'labels'    => $labels,
+					'sort'      => $sort,
+					'direction' => $direction,
+					'since'     => (new DateTime($since))->format(DateTime::ATOM)
+				])
+			)
 		);
 	}
 
@@ -49,7 +58,16 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listUserIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/issues?:args', http_build_query(['filter' => $filter, 'state' => $state, 'labels' => $labels, 'sort' => $sort, 'direction' => $direction, 'since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->getString()->sprintf('/user/issues?:args',
+				http_build_query([
+					'filter'    => $filter,
+					'state'     => $state,
+					'labels'    => $labels,
+					'sort'      => $sort,
+					'direction' => $direction,
+					'since'     => (new DateTime($since))->format(DateTime::ATOM)
+				])
+			)
 		);
 	}
 
@@ -67,7 +85,16 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listOrganizationIssues($organization, $filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/issues', $organization, http_build_query(['filter' => $filter, 'state' => $state, 'labels' => $labels, 'sort' => $sort, 'direction' => $direction, 'since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->getString()->sprintf('/orgs/:org/issues?:args', $organization,
+				http_build_query([
+					'filter'    => $filter,
+					'state'     => $state,
+					'labels'    => $labels,
+					'sort'      => $sort,
+					'direction' => $direction,
+					'since'     => (new DateTime($since))->format(DateTime::ATOM)
+				])
+			)
 		);
 	}
 
@@ -87,7 +114,19 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listRepositoryIssues($milestone = '*', $state = AbstractApi::STATE_OPEN, $assignee = '*', $creator = '', $mentioned = '', $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(), $this->getRepo(), http_build_query(['milestone' => $milestone, 'state' => $state, 'assignee' => $assignee, 'creator' => $creator, 'mentioned' => $mentioned, 'labels' => $labels, 'sort' => $sort, 'direction' => $direction, 'since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
+				http_build_query([
+					'milestone' => $milestone,
+					'state'     => $state,
+					'assignee'  => $assignee,
+					'creator'   => $creator,
+					'mentioned' => $mentioned,
+					'labels'    => $labels,
+					'sort'      => $sort,
+					'direction' => $direction,
+					'since'     => (new DateTime($since))->format(DateTime::ATOM)
+				])
+			)
 		);
 	}
 
