@@ -21,7 +21,7 @@ class Gists extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listGists($username = null, $since = null) {
+	public function listGists($username = null, $since = '1970-01-01') {
 		$url = '/gists';
 		if (null !== $username) {
 			$url = '/users/:username/gists';
@@ -38,7 +38,7 @@ class Gists extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listPublicGists($since = null) {
+	public function listPublicGists($since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
@@ -50,7 +50,7 @@ class Gists extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listUsersStarredGists($since = null) {
+	public function listUsersStarredGists($since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);

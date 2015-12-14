@@ -74,7 +74,7 @@ class Repositories extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listPublicRepositories($since = '') {
+	public function listPublicRepositories($since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repositories?:arg', http_build_query(['since', $since]))
 		);

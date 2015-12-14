@@ -30,7 +30,7 @@ class Issues extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
+	public function listIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/issues?:args',
 				http_build_query([
@@ -56,7 +56,7 @@ class Issues extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listUserIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
+	public function listUserIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/user/issues?:args',
 				http_build_query([
@@ -83,7 +83,7 @@ class Issues extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listOrganizationIssues($organization, $filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
+	public function listOrganizationIssues($organization, $filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/orgs/:org/issues?:args', $organization,
 				http_build_query([
@@ -112,7 +112,7 @@ class Issues extends AbstractReceiver {
 	 * @param string $since
 	 * @return mixed
 	 */
-	public function listRepositoryIssues($milestone = '*', $state = AbstractApi::STATE_OPEN, $assignee = '*', $creator = '', $mentioned = '', $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '') {
+	public function listRepositoryIssues($milestone = '*', $state = AbstractApi::STATE_OPEN, $assignee = '*', $creator = '', $mentioned = '', $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
 			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
 				http_build_query([
