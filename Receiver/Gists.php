@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class provides access to Gists API.
  * @link    https://developer.github.com/v3/gists/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Gists extends AbstractReceiver {
 
@@ -28,7 +28,7 @@ class Gists extends AbstractReceiver {
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -40,7 +40,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listPublicGists($since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -52,7 +52,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listUsersStarredGists($since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -64,7 +64,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function getGist($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id)
+			$this->getApi()->sprintf('/gists/:id', $id)
 		);
 	}
 
@@ -78,7 +78,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function getGistRevision($id, $sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/:sha', $id, $sha)
+			$this->getApi()->sprintf('/gists/:id/:sha', $id, $sha)
 		);
 	}
 
@@ -92,7 +92,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function createGist($files, $description = null, $public = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists'),
+			$this->getApi()->sprintf('/gists'),
 			Request::METHOD_POST,
 			[
 				'file'        => $files,
@@ -114,7 +114,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function editGist($id, $description = '', $files = '{}', $content = '', $filename = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id),
+			$this->getApi()->sprintf('/gists/:id', $id),
 			Request::METHOD_PATCH,
 			[
 				'description' => $description,
@@ -133,7 +133,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listGistsCommits($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/commits', $id)
+			$this->getApi()->sprintf('/gists/:id/commits', $id)
 		);
 	}
 
@@ -145,7 +145,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function starGist($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id),
+			$this->getApi()->sprintf('/gists/:id/star', $id),
 			Request::METHOD_PUT
 		);
 
@@ -164,7 +164,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function unStarGist($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id),
+			$this->getApi()->sprintf('/gists/:id/star', $id),
 			Request::METHOD_DELETE
 		);
 
@@ -183,7 +183,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function checkGistIsStarred($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id)
+			$this->getApi()->sprintf('/gists/:id/star', $id)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -201,7 +201,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function forkGist($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/forks', $id),
+			$this->getApi()->sprintf('/gists/:id/forks', $id),
 			Request::METHOD_POST
 		);
 	}
@@ -214,7 +214,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function listGistForks($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/forks', $id)
+			$this->getApi()->sprintf('/gists/:id/forks', $id)
 		);
 	}
 
@@ -226,7 +226,7 @@ class Gists extends AbstractReceiver {
 	 */
 	public function deleteGist($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id),
+			$this->getApi()->sprintf('/gists/:id', $id),
 			Request::METHOD_DELETE
 		);
 

@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Gists;
+namespace FlexyProject\GitHub\Receiver\Gists;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Comments API class provides access to gists's comments.
  * @link    https://developer.github.com/v3/gists/comments/
- * @package Scion\GitHub\Receiver\Gists
+ * @package FlexyProject\GitHub\Receiver\Gists
  */
 class Comments extends AbstractGists {
 
@@ -18,7 +18,7 @@ class Comments extends AbstractGists {
 	 */
 	public function listComments($gistId) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments', (string)$gistId)
+			$this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId)
 		);
 	}
 
@@ -31,7 +31,7 @@ class Comments extends AbstractGists {
 	 */
 	public function getSingleComment($gistId, $id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id)
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id)
 		);
 	}
 
@@ -44,7 +44,7 @@ class Comments extends AbstractGists {
 	 */
 	public function createComment($gistId, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments', (string)$gistId),
+			$this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId),
 			Request::METHOD_POST,
 			[
 				'body' => $body
@@ -62,7 +62,7 @@ class Comments extends AbstractGists {
 	 */
 	public function editComment($gistId, $id, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'body' => $body
@@ -79,7 +79,7 @@ class Comments extends AbstractGists {
 	 */
 	public function deleteComment($gistId, $id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
 			Request::METHOD_DELETE
 		);
 

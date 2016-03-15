@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The DeployKeys API class provides access to repository's deploy keys.
  * @link    https://developer.github.com/v3/repos/keys/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class DeployKeys extends AbstractRepositories {
 
@@ -17,7 +17,7 @@ class DeployKeys extends AbstractRepositories {
 	 */
 	public function listDeployKeys() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -29,7 +29,7 @@ class DeployKeys extends AbstractRepositories {
 	 */
 	public function getDeployKey($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -42,7 +42,7 @@ class DeployKeys extends AbstractRepositories {
 	 */
 	public function addNewDeployKey($title, $key) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title' => $title,
@@ -59,7 +59,7 @@ class DeployKeys extends AbstractRepositories {
 	 */
 	public function removeDeployKey($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Exception;
+namespace FlexyProject\GitHub\Exception;
 
-use Scion\Stdlib\Exception\Exception;
+use Exception;
 
 class BadSignatureException extends Exception {
 

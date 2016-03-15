@@ -1,11 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
-use Scion\GitHub\AbstractApi;
+namespace FlexyProject\GitHub\Receiver\Repositories;
+
+use FlexyProject\GitHub\AbstractApi;
 
 /**
  * The Commits API class provides access to repository's commits.
  * @link    https://developer.github.com/v3/repos/commits/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Commits extends AbstractRepositories {
 
@@ -21,7 +22,7 @@ class Commits extends AbstractRepositories {
 	 */
 	public function listCommits($sha = AbstractApi::BRANCH_MASTER, $path = null, $author = null, $since = null, $until = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query([$sha, $path, $author, $since, $until]))
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query([$sha, $path, $author, $since, $until]))
 		);
 	}
 
@@ -33,7 +34,7 @@ class Commits extends AbstractRepositories {
 	 */
 	public function getSingleCommit($sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits/:sha', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits/:sha', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha)
 		);
 	}
 
@@ -46,7 +47,7 @@ class Commits extends AbstractRepositories {
 	 */
 	public function compareTwoCommits($base, $head) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/compare/:base...:head', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $base, $head)
+			$this->getApi()->sprintf('/repos/:owner/:repo/compare/:base...:head', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $base, $head)
 		);
 	}
 } 

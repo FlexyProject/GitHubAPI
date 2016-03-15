@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Members API class gives you access to the available organization's members.
- * @package Scion\GitHub\Receiver\Organizations
+ * @package FlexyProject\GitHub\Receiver\Organizations
  */
 class Members extends AbstractOrganizations {
 
@@ -22,7 +22,7 @@ class Members extends AbstractOrganizations {
 		$this->getApi()->setAccept('application/vnd.github.moondragon+json');
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/members?:args', $org, http_build_query(['filter' => $filter, 'role' => $role]))
+			$this->getApi()->sprintf('/orgs/:org/members?:args', $org, http_build_query(['filter' => $filter, 'role' => $role]))
 		);
 	}
 
@@ -36,7 +36,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function checkMembership($org, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/members/:username', $org, $username)
+			$this->getApi()->sprintf('/orgs/:org/members/:username', $org, $username)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -56,7 +56,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function removeMember($org, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/members/:username', $org, $username),
+			$this->getApi()->sprintf('/orgs/:org/members/:username', $org, $username),
 			Request::METHOD_DELETE
 		);
 
@@ -76,7 +76,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function listPublicMembers($org) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/public_members', $org)
+			$this->getApi()->sprintf('/orgs/:org/public_members', $org)
 		);
 	}
 
@@ -90,7 +90,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function checkPublicMembership($org, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/public_members/:username', $org, $username)
+			$this->getApi()->sprintf('/orgs/:org/public_members/:username', $org, $username)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -110,7 +110,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function publicizeUsersMembership($org, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/public_members/:username', $org, $username),
+			$this->getApi()->sprintf('/orgs/:org/public_members/:username', $org, $username),
 			Request::METHOD_PUT
 		);
 
@@ -131,7 +131,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function concealUsersMembership($org, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/public_members/:username', $org, $username),
+			$this->getApi()->sprintf('/orgs/:org/public_members/:username', $org, $username),
 			Request::METHOD_DELETE
 		);
 
@@ -154,7 +154,7 @@ class Members extends AbstractOrganizations {
 		$this->getApi()->setAccept('application/vnd.github.moondragon+json');
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/memberships/:username', $org, $username)
+			$this->getApi()->sprintf('/orgs/:org/memberships/:username', $org, $username)
 		);
 	}
 
@@ -171,7 +171,7 @@ class Members extends AbstractOrganizations {
 		$this->getApi()->setAccept('application/vnd.github.moondragon+json');
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/memberships/:username?:args', $org, $username, http_build_query(['role' => $role])),
+			$this->getApi()->sprintf('/orgs/:org/memberships/:username?:args', $org, $username, http_build_query(['role' => $role])),
 			Request::METHOD_PUT
 		);
 	}
@@ -188,7 +188,7 @@ class Members extends AbstractOrganizations {
 		$this->getApi()->setAccept('application/vnd.github.moondragon+json');
 
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/memberships/:username', $org, $username),
+			$this->getApi()->sprintf('/orgs/:org/memberships/:username', $org, $username),
 			Request::METHOD_DELETE
 		);
 
@@ -208,7 +208,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function listYourOrganizationMembership($state = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/memberships/orgs?:args', http_build_query(['state' => $state]))
+			$this->getApi()->sprintf('/user/memberships/orgs?:args', http_build_query(['state' => $state]))
 		);
 	}
 
@@ -221,7 +221,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function getYourOrganizationMembership($org) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/memberships/orgs/:org', $org)
+			$this->getApi()->sprintf('/user/memberships/orgs/:org', $org)
 		);
 	}
 
@@ -235,7 +235,7 @@ class Members extends AbstractOrganizations {
 	 */
 	public function editYourOrganizationMembership($org, $state = AbstractApi::STATE_ACTIVE) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/memberships/orgs/:org', $org),
+			$this->getApi()->sprintf('/user/memberships/orgs/:org', $org),
 			Request::METHOD_PATCH,
 			[
 				'state' => $state

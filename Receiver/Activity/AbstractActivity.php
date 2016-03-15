@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Activity;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Activity;
 
 abstract class AbstractActivity {
 

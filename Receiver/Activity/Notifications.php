@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Notifications API class lets your view notifications of new comments are delivered to users and mark them as read.
@@ -23,7 +23,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function listNotifications($all = false, $participating = false, $since = 'now', $before = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query([
+			$this->getApi()->sprintf('/notifications?:args', http_build_query([
 				'all'           => $all,
 				'participating' => $participating,
 				'since'         => (new DateTime($since))->format(DateTime::ATOM),
@@ -44,7 +44,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function listRepositoryNotifications($all = false, $participating = false, $since = 'now', $before = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/notifications?:args', http_build_query([
 				'all'           => $all,
 				'participating' => $participating,
 				'since'         => (new DateTime($since))->format(DateTime::ATOM),
@@ -61,7 +61,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function markAsRead($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications?:args', http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
+			$this->getApi()->sprintf('/notifications?:args', http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
 			Request::METHOD_PUT
 		);
 	}
@@ -74,7 +74,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function markAsReadInRepository($lastReadAt = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/notifications?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/notifications?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query(['last_read_at' => (new DateTime($lastReadAt))->format(DateTime::ATOM)])),
 			Request::METHOD_PUT
 		);
 	}
@@ -87,7 +87,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function viewThread($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications/threads/:id', (string)$id)
+			$this->getApi()->sprintf('/notifications/threads/:id', (string)$id)
 		);
 	}
 
@@ -99,7 +99,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function markThreadAsRead($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications/threads/:id', (string)$id),
+			$this->getApi()->sprintf('/notifications/threads/:id', (string)$id),
 			Request::METHOD_PATCH
 		);
 	}
@@ -112,7 +112,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function getThreadSubscription($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription', (string)$id)
+			$this->getApi()->sprintf('/notifications/threads/:id/subscription', (string)$id)
 		);
 	}
 
@@ -126,7 +126,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function setThreadSubscription($id, $subscribed = false, $ignored = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription?:args', $id, http_build_query(['subscribed' => $subscribed, 'ignored' => $ignored])),
+			$this->getApi()->sprintf('/notifications/threads/:id/subscription?:args', $id, http_build_query(['subscribed' => $subscribed, 'ignored' => $ignored])),
 			Request::METHOD_PUT
 		);
 	}
@@ -139,7 +139,7 @@ class Notifications extends AbstractActivity {
 	 */
 	public function deleteThreadSubscription($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/notifications/threads/:id/subscription', (string)$id),
+			$this->getApi()->sprintf('/notifications/threads/:id/subscription', (string)$id),
 			Request::METHOD_DELETE
 		);
 

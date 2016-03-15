@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Search Indexing API allows you to queue up a variety of search indexing tasks.

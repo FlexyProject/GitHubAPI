@@ -1,8 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Stdlib\Exception\Exception;
+use FlexyProject\GitHub\AbstractApi;
 
 abstract class AbstractReceiver {
 
@@ -83,7 +82,7 @@ abstract class AbstractReceiver {
 	 */
 	public function getReceiver($name) {
 		$classPath = explode('\\', get_called_class());
-		$class     = (string)$this->getApi()->getString()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
+		$class     = (string)$this->getApi()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
 
 		if (class_exists($class)) {
 			return new $class($this);

@@ -1,14 +1,14 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class provides access to Issues API.
  * @link    https://developer.github.com/v3/issues/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Issues extends AbstractReceiver {
 
@@ -32,7 +32,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/issues?:args',
+			$this->getApi()->sprintf('/issues?:args',
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -58,7 +58,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listUserIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/issues?:args',
+			$this->getApi()->sprintf('/user/issues?:args',
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -85,7 +85,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listOrganizationIssues($organization, $filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/issues?:args', $organization,
+			$this->getApi()->sprintf('/orgs/:org/issues?:args', $organization,
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -114,7 +114,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function listRepositoryIssues($milestone = '*', $state = AbstractApi::STATE_OPEN, $assignee = '*', $creator = '', $mentioned = '', $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
 				http_build_query([
 					'milestone' => $milestone,
 					'state'     => $state,
@@ -138,7 +138,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function getIssue($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
 
@@ -154,7 +154,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function createIssue($title, $body = '', $assignee = '', $milestone = 0, $labels = []) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(), $this->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(), $this->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title'     => $title,
@@ -179,7 +179,7 @@ class Issues extends AbstractReceiver {
 	 */
 	public function editIssue($number, $title = '', $body = '', $assignee = '', $milestone = 0, $labels = []) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number),
 			Request::METHOD_PATCH,
 			[
 				'title'     => $title,

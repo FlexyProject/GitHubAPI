@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Repositories;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Repositories;
 
 abstract class AbstractRepositories {
 

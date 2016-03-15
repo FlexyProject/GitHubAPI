@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Users;
+namespace FlexyProject\GitHub\Receiver\Users;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Followers API class provide access to manage followers.
  * @link    https://developer.github.com/v3/users/followers/
- * @package Scion\GitHub\Receiver\Users
+ * @package FlexyProject\GitHub\Receiver\Users
  */
 class Followers extends AbstractUsers {
 
@@ -20,7 +20,7 @@ class Followers extends AbstractUsers {
 	public function listFollowers($username = null) {
 		$url = '/user/followers';
 		if (null !== $username) {
-			$url = $this->getApi()->getString()->sprintf('/users/:username/followers', $username);
+			$url = $this->getApi()->sprintf('/users/:username/followers', $username);
 		}
 
 		return $this->getApi()->request($url);
@@ -36,7 +36,7 @@ class Followers extends AbstractUsers {
 	public function listUsersFollowedBy($username = null) {
 		$url = '/user/following';
 		if (null !== $username) {
-			$url = $this->getApi()->getString()->sprintf('/users/:username/following', $username);
+			$url = $this->getApi()->sprintf('/users/:username/following', $username);
 		}
 
 		return $this->getApi()->request($url);
@@ -51,7 +51,7 @@ class Followers extends AbstractUsers {
 	 */
 	public function checkFollowingUser($username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/following/:username', $username)
+			$this->getApi()->sprintf('/user/following/:username', $username)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -71,7 +71,7 @@ class Followers extends AbstractUsers {
 	 */
 	public function checkUserFollowsAnother($username, $targetUser) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/following/:target_user', $username, $targetUser)
+			$this->getApi()->sprintf('/users/:username/following/:target_user', $username, $targetUser)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -90,7 +90,7 @@ class Followers extends AbstractUsers {
 	 */
 	public function followUser($username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/following/:username', $username),
+			$this->getApi()->sprintf('/user/following/:username', $username),
 			Request::METHOD_PUT
 		);
 
@@ -110,7 +110,7 @@ class Followers extends AbstractUsers {
 	 */
 	public function unfollowUser($username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/following/:username', $username),
+			$this->getApi()->sprintf('/user/following/:username', $username),
 			Request::METHOD_DELETE
 		);
 

@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
 /**
  * The Events API class provide a read-only interface to all the event types that power the various activity streams on GitHub.
@@ -26,7 +26,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listRepositoryEvents() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -37,7 +37,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listIssueEvents() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -48,7 +48,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listPublicNetworkEvents() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/networks/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/networks/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -60,7 +60,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listPublicOrganizationEvents($organization) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/events', $organization)
+			$this->getApi()->sprintf('/orgs/:org/events', $organization)
 		);
 	}
 
@@ -72,7 +72,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listUserReceiveEvents($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/received_events', $username)
+			$this->getApi()->sprintf('/users/:username/received_events', $username)
 		);
 	}
 
@@ -84,7 +84,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listPublicUserReceiveEvents($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/received_events/public', $username)
+			$this->getApi()->sprintf('/users/:username/received_events/public', $username)
 		);
 	}
 
@@ -96,7 +96,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listUserPerformedEvents($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events', $username)
+			$this->getApi()->sprintf('/users/:username/events', $username)
 		);
 	}
 
@@ -108,7 +108,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listPublicUserPerformedEvents($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events/public', $username)
+			$this->getApi()->sprintf('/users/:username/events/public', $username)
 		);
 	}
 
@@ -121,7 +121,7 @@ class Events extends AbstractActivity {
 	 */
 	public function listOrganizationEvents($username, $organization) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events/orgs/:org', $username, $organization)
+			$this->getApi()->sprintf('/users/:username/events/orgs/:org', $username, $organization)
 		);
 	}
 } 

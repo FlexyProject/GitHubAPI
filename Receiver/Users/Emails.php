@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Users;
+namespace FlexyProject\GitHub\Receiver\Users;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Emails API class provide access to manage email addresses.
  * @link    https://developer.github.com/v3/users/emails/
- * @package Scion\GitHub\Receiver\Users
+ * @package FlexyProject\GitHub\Receiver\Users
  */
 class Emails extends AbstractUsers {
 
@@ -18,7 +18,7 @@ class Emails extends AbstractUsers {
 	 */
 	public function listEmailAddresses() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/emails')
+			$this->getApi()->sprintf('/user/emails')
 		);
 	}
 
@@ -31,7 +31,7 @@ class Emails extends AbstractUsers {
 	 */
 	public function addEmailAddress($addresses = []) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/emails'),
+			$this->getApi()->sprintf('/user/emails'),
 			Request::METHOD_POST,
 			$addresses
 		);
@@ -46,7 +46,7 @@ class Emails extends AbstractUsers {
 	 */
 	public function deleteEmailAddress($addresses = []) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/emails'),
+			$this->getApi()->sprintf('/user/emails'),
 			Request::METHOD_DELETE,
 			$addresses
 		);

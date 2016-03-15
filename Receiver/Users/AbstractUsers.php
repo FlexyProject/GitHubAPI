@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\Users;
+namespace FlexyProject\GitHub\Receiver\Users;
 
-use Scion\GitHub\Receiver\Users;
+use FlexyProject\GitHub\Receiver\Users;
 
 class AbstractUsers {
 
@@ -39,7 +39,7 @@ class AbstractUsers {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return \FlexyProject\GitHub\AbstractApi
 	 */
 	public function getApi() {
 		return $this->api;
@@ -47,7 +47,7 @@ class AbstractUsers {
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param \FlexyProject\GitHub\AbstractApi $api
 	 * @return AbstractUsers
 	 */
 	public function setApi($api) {

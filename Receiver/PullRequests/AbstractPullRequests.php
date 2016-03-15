@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\PullRequests;
+namespace FlexyProject\GitHub\Receiver\PullRequests;
 
-use Scion\GitHub\Receiver\PullRequests;
+use FlexyProject\GitHub\Receiver\PullRequests;
 
 abstract class AbstractPullRequests {
 
@@ -39,7 +39,7 @@ abstract class AbstractPullRequests {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return \FlexyProject\GitHub\AbstractApi
 	 */
 	public function getApi() {
 		return $this->api;
@@ -47,7 +47,7 @@ abstract class AbstractPullRequests {
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param \FlexyProject\GitHub\AbstractApi $api
 	 * @return AbstractPullRequests
 	 */
 	public function setApi($api) {

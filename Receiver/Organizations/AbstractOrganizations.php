@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Organizations;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Organizations;
 
 abstract class AbstractOrganizations {
 

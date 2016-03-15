@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Miscellaneous;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Miscellaneous;
 
 abstract class AbstractMiscellaneous {
 

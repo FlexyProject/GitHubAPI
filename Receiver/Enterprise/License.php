@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
 /**
  * The License API provides information on your Enterprise license.

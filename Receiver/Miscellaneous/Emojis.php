@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
  * This Emojis API class lets you list all the emojis available to use on GitHub.
  * @link    https://developer.github.com/v3/emojis/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Emojis extends AbstractMiscellaneous {
 

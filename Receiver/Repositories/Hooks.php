@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Hooks API class provides access to repository's hooks.
  * @link    https://developer.github.com/v3/repos/hooks/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Hooks extends AbstractRepositories {
 
@@ -17,7 +17,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function listHooks() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -29,7 +29,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function getSingleHook($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -44,7 +44,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function createHook($name, $config, $events = ['push'], $active = true) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'name'   => $name,
@@ -68,7 +68,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function editHook($id, $config, $events = ['push'], $addEvents = [], $removeEvents = [], $active = true) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_PATCH,
 			[
 				'config'        => $config,
@@ -88,7 +88,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function testPushHook($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id/tests', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id/tests', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST
 		);
 	}
@@ -101,7 +101,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function pingHook($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id/pings', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id/pings', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST
 		);
 	}
@@ -114,7 +114,7 @@ class Hooks extends AbstractRepositories {
 	 */
 	public function deleteHook($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

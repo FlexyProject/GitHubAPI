@@ -1,14 +1,14 @@
 <?php
-namespace Scion\GitHub\Receiver\PullRequests;
+namespace FlexyProject\GitHub\Receiver\PullRequests;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Stdlib\DateTime;
-use Scion\Http\Request;
+use DateTime;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Pull Request API class Review Comments are comments on a portion of the unified diff.
  * @link    https://developer.github.com/v3/pulls/comments/
- * @package Scion\GitHub\Receiver\PullRequests
+ * @package FlexyProject\GitHub\Receiver\PullRequests
  */
 class ReviewComments extends AbstractPullRequests {
 
@@ -21,7 +21,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function listCommentsPullRequest($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/comments', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/comments', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
 		);
 	}
 
@@ -36,7 +36,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function listCommentsRepository($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/comments?:args', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments?:args', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), http_build_query([
 				'sort'      => $sort,
 				'direction' => $direction,
 				'since'     => (new DateTime($since))->format(DateTime::ATOM)
@@ -53,7 +53,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function getSingleComment($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
 		);
 	}
 
@@ -70,7 +70,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function createComment($number, $body, $commitId, $path, $position) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/comments', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/comments', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number),
 			Request::METHOD_POST,
 			[
 				'body'      => $body,
@@ -91,7 +91,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function editComment($number, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number),
 			Request::METHOD_PATCH,
 			[
 				'body' => $body
@@ -108,7 +108,7 @@ class ReviewComments extends AbstractPullRequests {
 	 */
 	public function deleteComment($number) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number', $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {

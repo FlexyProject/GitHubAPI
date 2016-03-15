@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Markdown API class lets you render Markdown documents.
  * @link    https://developer.github.com/v3/markdown/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Markdown extends AbstractMiscellaneous {
 

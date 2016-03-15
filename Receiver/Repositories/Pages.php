@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
 /**
  * The Pages API class provides access to repository's pages.
  * @link    https://developer.github.com/v3/repos/pages/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Pages extends AbstractRepositories {
 
@@ -15,7 +15,7 @@ class Pages extends AbstractRepositories {
 	 */
 	public function getInformation() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -26,7 +26,7 @@ class Pages extends AbstractRepositories {
 	 */
 	public function listPagesBuilds() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages/builds', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages/builds', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -37,7 +37,7 @@ class Pages extends AbstractRepositories {
 	 */
 	public function listLatestPagesBuilds() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages/builds/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages/builds/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 }

@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The References API class provides access to GitData's references
  * @link    https://developer.github.com/v3/git/refs/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class References extends AbstractGitData {
 
@@ -19,7 +19,7 @@ class References extends AbstractGitData {
 	 */
 	public function get($branch) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/heads/:branch', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $branch)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/heads/:branch', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $branch)
 		);
 	}
 
@@ -31,7 +31,7 @@ class References extends AbstractGitData {
 	 */
 	public function getAll() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo())
 		);
 	}
 
@@ -45,7 +45,7 @@ class References extends AbstractGitData {
 	 */
 	public function create($ref, $sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'ref' => $ref,
@@ -65,7 +65,7 @@ class References extends AbstractGitData {
 	 */
 	public function update($ref, $sha, $force = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
 			Request::METHOD_POST,
 			[
 				'sha'   => $sha,
@@ -83,7 +83,7 @@ class References extends AbstractGitData {
 	 */
 	public function delete($ref) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
 			Request::METHOD_DELETE
 		);
 

@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Starring API class provide a feature that lets users bookmark repositories.
@@ -18,7 +18,7 @@ class Starring extends AbstractActivity {
 	 */
 	public function listStargazers() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -33,12 +33,12 @@ class Starring extends AbstractActivity {
 	public function listRepositories($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $username = null) {
 		if (null !== $username) {
 			return $this->getApi()->request(
-				$this->getApi()->getString()->sprintf('/users/:username/starred?:args', $username, http_build_query(['sort' => $sort, 'direction' => $direction]))
+				$this->getApi()->sprintf('/users/:username/starred?:args', $username, http_build_query(['sort' => $sort, 'direction' => $direction]))
 			);
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred?:args', http_build_query(['sort' => $sort, 'direction' => $direction]))
+			$this->getApi()->sprintf('/user/starred?:args', http_build_query(['sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
@@ -49,7 +49,7 @@ class Starring extends AbstractActivity {
 	 */
 	public function checkYouAreStarringRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -66,7 +66,7 @@ class Starring extends AbstractActivity {
 	 */
 	public function starRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
 
@@ -84,7 +84,7 @@ class Starring extends AbstractActivity {
 	 */
 	public function unStarRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 

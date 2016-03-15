@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Contents API class provides access to repository's contents.
  * @link    https://developer.github.com/v3/repos/contents/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Contents extends AbstractRepositories {
 
@@ -18,7 +18,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function getReadme() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/readme', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/readme', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -31,7 +31,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function getContents($path = '', $ref = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['ref' => $ref]))
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['ref' => $ref]))
 		);
 	}
 
@@ -46,7 +46,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function createFile($path, $message, $content, $branch = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
 			Request::METHOD_PUT
 		);
 	}
@@ -63,7 +63,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function updateFile($path, $message, $content, $sha, $branch = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
 			Request::METHOD_PUT
 		);
 	}
@@ -79,7 +79,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function deleteFile($path, $message, $sha, $branch = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path),
 			Request::METHOD_DELETE,
 			[
 				'message' => $message,
@@ -98,7 +98,7 @@ class Contents extends AbstractRepositories {
 	 */
 	public function getArchiveLink($archiveFormat = AbstractApi::ARCHIVE_TARBALL, $ref = AbstractApi::BRANCH_MASTER) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/:archive_format/:ref', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref)
+			$this->getApi()->sprintf('/repos/:owner/:repo/:archive_format/:ref', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref)
 		);
 	}
 }

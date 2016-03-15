@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use Scion\GitHub\Receiver\Miscellaneous;
+use FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
  * The Licenses API class returns information about open source licenses or under what license, if any a given project is distributed.
  * @link    https://developer.github.com/v3/licenses/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Licenses extends AbstractMiscellaneous {
 
@@ -26,6 +26,6 @@ class Licenses extends AbstractMiscellaneous {
 	 * @return string
 	 */
 	public function getIndividualLicense($license) {
-		return $this->getApi()->setAccept('application/vnd.github.drax-preview+json')->request($this->getApi()->getString()->sprintf('/licenses/:license', $license));
+		return $this->getApi()->setAccept('application/vnd.github.drax-preview+json')->request($this->getApi()->sprintf('/licenses/:license', $license));
 	}
 }

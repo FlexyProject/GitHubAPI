@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Users;
+namespace FlexyProject\GitHub\Receiver\Users;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The PublicKeys API class provide access to manage public keys.
  * @link    https://developer.github.com/v3/users/keys/
- * @package Scion\GitHub\Receiver\Users
+ * @package FlexyProject\GitHub\Receiver\Users
  */
 class PublicKeys extends AbstractUsers {
 
@@ -19,7 +19,7 @@ class PublicKeys extends AbstractUsers {
 	 */
 	public function listUserPublicKeys($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/keys', $username)
+			$this->getApi()->sprintf('/users/:username/keys', $username)
 		);
 	}
 
@@ -31,7 +31,7 @@ class PublicKeys extends AbstractUsers {
 	 */
 	public function listYourPublicKeys() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/keys')
+			$this->getApi()->sprintf('/user/keys')
 		);
 	}
 
@@ -44,7 +44,7 @@ class PublicKeys extends AbstractUsers {
 	 */
 	public function getSinglePublicKey($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/keys/:id', (string)$id)
+			$this->getApi()->sprintf('/user/keys/:id', (string)$id)
 		);
 	}
 
@@ -56,7 +56,7 @@ class PublicKeys extends AbstractUsers {
 	 */
 	public function createPublicKey() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/keys'),
+			$this->getApi()->sprintf('/user/keys'),
 			Request::METHOD_POST
 		);
 	}
@@ -70,7 +70,7 @@ class PublicKeys extends AbstractUsers {
 	 */
 	public function deletePublicKey($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/keys/:id', (string)$id),
+			$this->getApi()->sprintf('/user/keys/:id', (string)$id),
 			Request::METHOD_DELETE
 		);
 	}

@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class give you access to the organizations API.
  * @link    https://developer.github.com/v3/orgs/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Organizations extends AbstractReceiver {
 
@@ -23,7 +23,7 @@ class Organizations extends AbstractReceiver {
 	 */
 	public function listOrganizations() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/orgs')
+			$this->getApi()->sprintf('/user/orgs')
 		);
 	}
 
@@ -36,7 +36,7 @@ class Organizations extends AbstractReceiver {
 	 */
 	public function listUserOrganizations($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/orgs', $username)
+			$this->getApi()->sprintf('/users/:username/orgs', $username)
 		);
 	}
 
@@ -49,7 +49,7 @@ class Organizations extends AbstractReceiver {
 	 */
 	public function get($org) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org', $org)
+			$this->getApi()->sprintf('/orgs/:org', $org)
 		);
 	}
 
@@ -68,7 +68,7 @@ class Organizations extends AbstractReceiver {
 	 */
 	public function edit($org, $billingEmail = null, $company = null, $email = null, $location = null, $name = null, $description = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org', $org),
+			$this->getApi()->sprintf('/orgs/:org', $org),
 			Request::METHOD_PATCH,
 			[
 				'billing_email' => $billingEmail,

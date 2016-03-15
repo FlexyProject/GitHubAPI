@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Comments API class provides access to repository's comments.
  * @link    https://developer.github.com/v3/repos/comments/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Comments extends AbstractRepositories {
 
@@ -17,7 +17,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function listComments() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -29,7 +29,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function listCommitComments($ref) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits/:ref/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 
@@ -44,7 +44,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function addCommitComment($sha, $body, $path = '', $position = 0) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits/:sha/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha),
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits/:sha/comments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha),
 			Request::METHOD_POST,
 			[
 				'body'     => $body,
@@ -62,7 +62,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function getCommitComment($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id)
 		);
 	}
 
@@ -76,7 +76,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function updateCommitComment($id, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'body' => $body
@@ -92,7 +92,7 @@ class Comments extends AbstractRepositories {
 	 */
 	public function deleteCommitComment($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/comments/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
 			Request::METHOD_DELETE
 		);
 	}

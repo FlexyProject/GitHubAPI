@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
  * The Rate Limit API class lets you check your current rate limit status at any time.
  * @link    https://developer.github.com/v3/rate_limit/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class RateLimit extends AbstractMiscellaneous {
 

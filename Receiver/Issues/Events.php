@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
 /**
  * The Trees API class provides access to Issues's events.
  * @link https://developer.github.com/v3/issues/events/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Events extends AbstractIssues {
 
@@ -16,7 +16,7 @@ class Events extends AbstractIssues {
 	 */
 	public function listIssueEvents($issueNumber) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:issue_number/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $issueNumber)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:issue_number/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $issueNumber)
 		);
 	}
 
@@ -27,7 +27,7 @@ class Events extends AbstractIssues {
 	 */
 	public function listRepositoryEvents() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/events', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -39,7 +39,7 @@ class Events extends AbstractIssues {
 	 */
 	public function getEvent($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/events/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/events/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
 		);
 	}
 } 

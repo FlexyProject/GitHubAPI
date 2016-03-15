@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Trees API class provides access to Issues's labels.
  * @link    https://developer.github.com/v3/issues/labels/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Labels extends AbstractIssues {
 
@@ -17,7 +17,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function listRepositoryLabels() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -29,7 +29,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function getLabel($name) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 	}
 
@@ -42,7 +42,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function createLabel($name, $color) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'name'  => $name,
@@ -60,7 +60,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function updateLabel($name, $color) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name),
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name),
 			Request::METHOD_PATCH,
 			[
 				'color' => $color
@@ -76,7 +76,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function deleteLabel($name) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -94,7 +94,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function listIssueLabels($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -106,7 +106,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function addIssueLabels($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_POST
 		);
 	}
@@ -120,7 +120,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function removeIssueLabel($number, $name) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $name),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $name),
 			Request::METHOD_DELETE
 		);
 
@@ -139,7 +139,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function replaceIssuesLabels($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_PUT
 		);
 	}
@@ -152,7 +152,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function removeIssueLabels($number) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_DELETE
 		);
 
@@ -171,7 +171,7 @@ class Labels extends AbstractIssues {
 	 */
 	public function getIssueLabelsInMilestone($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 } 

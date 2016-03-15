@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This tags API only deals with tag objects - so only annotated tags, not lightweight tags.
  * @link    https://developer.github.com/v3/git/tags/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class Tags extends AbstractGitData {
 
@@ -19,7 +19,7 @@ class Tags extends AbstractGitData {
 	 */
 	public function get($sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/tags/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/tags/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -36,7 +36,7 @@ class Tags extends AbstractGitData {
 	 */
 	public function create($tag, $message, $object, $type, $tagger = []) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/tags', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/tags', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'tag'     => $tag,

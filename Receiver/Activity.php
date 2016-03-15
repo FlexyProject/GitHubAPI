@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
 /**
- * This class serving up the ‘social’ in Social Coding, this is a set of APIs providing access to notifications, subscriptions, and timelines.
+ * This class serving up the ï¿½socialï¿½ in Social Coding, this is a set of APIs providing access to notifications, subscriptions, and timelines.
  * @link    https://developer.github.com/v3/activity/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Activity extends AbstractReceiver {
 

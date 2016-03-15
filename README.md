@@ -18,13 +18,13 @@ This library works with cURL and provides all documented functionality as descri
 ## Quick Start
 ```php
 // Create a client object
-$client = new \Scion\GitHub\Client();
+$client = new \FlexyProject\GitHub\Client();
 
 // Miscellaneous
-$miscellaneous = $client->getReceiver(\Scion\GitHub\Client::MISCELLANEOUS);
+$miscellaneous = $client->getReceiver(\FlexyProject\GitHub\Client::MISCELLANEOUS);
 
 // Lists all the emojis available to use on GitHub.
-$emojis = $miscellaneous->getReceiver(\Scion\GitHub\Receiver\Miscellaneous::EMOJIS);
+$emojis = $miscellaneous->getReceiver(\FlexyProject\GitHub\Receiver\Miscellaneous::EMOJIS);
 $emojis->get();
 ```
 

@@ -1,11 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
-use Scion\Http\Request;
+namespace FlexyProject\GitHub\Receiver\GitData;
+
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Trees API class provides access to GitData's trees
  * @link    https://developer.github.com/v3/git/trees/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class Trees extends AbstractGitData {
 
@@ -18,7 +19,7 @@ class Trees extends AbstractGitData {
 	 */
 	public function get($sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/trees/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/trees/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -31,7 +32,7 @@ class Trees extends AbstractGitData {
 	 */
 	public function getRecursively($sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/trees/:sha?recursive=1', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/trees/:sha?recursive=1', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -45,7 +46,7 @@ class Trees extends AbstractGitData {
 	 */
 	public function create($tree, $base_tree) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/trees', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/trees', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'tree'      => $tree,

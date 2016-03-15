@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Hooks API class allow you to receive HTTP POST payloads whenever certain events happen within the organization.
- * @package Scion\GitHub\Receiver\Organizations
+ * @package FlexyProject\GitHub\Receiver\Organizations
  */
 class Hooks extends AbstractOrganizations {
 
@@ -19,7 +19,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function listHooks($org) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks', $org)
+			$this->getApi()->sprintf('/orgs/:org/hooks', $org)
 		);
 	}
 
@@ -33,7 +33,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function getSingleHook($org, $id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id)
+			$this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id)
 		);
 	}
 
@@ -50,7 +50,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function createHook($org, $name, $config, $events = [AbstractApi::EVENTS_PUSH], $active = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks', $org),
+			$this->getApi()->sprintf('/orgs/:org/hooks', $org),
 			Request::METHOD_POST,
 			[
 				'name'   => $name,
@@ -74,7 +74,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function editHook($org, $id, $config, $events = [AbstractApi::EVENTS_PUSH], $active = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
+			$this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'config' => $config,
@@ -94,7 +94,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function pingHook($org, $id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks/:id/pings', $org, (string)$id),
+			$this->getApi()->sprintf('/orgs/:org/hooks/:id/pings', $org, (string)$id),
 			Request::METHOD_POST
 		);
 
@@ -115,7 +115,7 @@ class Hooks extends AbstractOrganizations {
 	 */
 	public function deleteHook($org, $id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
+			$this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
 			Request::METHOD_DELETE
 		);
 

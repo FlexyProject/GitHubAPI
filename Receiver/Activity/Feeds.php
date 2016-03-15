@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
 /**
  * The Atom feeds API class provide access to a list of Atom feeds available for the authenticated user.

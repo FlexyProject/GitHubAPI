@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Watching API class registers the user to receive notifications on new discussions, as well as events in the user’s activity feed.
@@ -17,7 +17,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function listWatchers() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/subscribers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/subscribers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -30,12 +30,12 @@ class Watching extends AbstractActivity {
 	public function listSubscriptions($username = null) {
 		if (null !== $username) {
 			return $this->getApi()->request(
-				$this->getApi()->getString()->sprintf('/users/:username/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $username)
+				$this->getApi()->sprintf('/users/:username/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $username)
 			);
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/user/subscriptions', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -46,7 +46,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function getRepositorySubscription() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -59,7 +59,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function setRepositorySubscription($subscribed = false, $ignored = false) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/subscription?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/subscription?:args', $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query([
 				'subscribed' => $subscribed,
 				'ignored'    => $ignored
 			])),
@@ -74,7 +74,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function deleteRepositorySubscription() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/subscription', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 
@@ -92,7 +92,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function userSubscriptions() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -109,7 +109,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function watchRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
 
@@ -127,7 +127,7 @@ class Watching extends AbstractActivity {
 	 */
 	public function stopWatchingRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 

@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Commits API class provides access to GitData's commits.
  * @link    https://developer.github.com/v3/git/commits/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class Commits extends AbstractGitData {
 
@@ -19,7 +19,7 @@ class Commits extends AbstractGitData {
 	 */
 	public function get($sha) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/commits/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/commits/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -37,7 +37,7 @@ class Commits extends AbstractGitData {
 	 */
 	public function create($message, $tree, $parents, $name = null, $email = null, $date = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/commits', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/commits', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'message' => $message,

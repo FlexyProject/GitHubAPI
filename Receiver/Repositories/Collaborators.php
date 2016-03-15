@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Collaborators API class provides access to repository's collaborators
  * @link    https://developer.github.com/v3/repos/collaborators/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Collaborators extends AbstractRepositories {
 
@@ -17,7 +17,7 @@ class Collaborators extends AbstractRepositories {
 	 */
 	public function listCollaborators() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/collaborators', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/collaborators', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -29,7 +29,7 @@ class Collaborators extends AbstractRepositories {
 	 */
 	public function checkUserIsACollaborator($username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username)
+			$this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -47,7 +47,7 @@ class Collaborators extends AbstractRepositories {
 	 */
 	public function addUserAsCollaborator($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
+			$this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
 			Request::METHOD_PUT
 		);
 	}
@@ -60,7 +60,7 @@ class Collaborators extends AbstractRepositories {
 	 */
 	public function removeUserAsCollaborator($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
+			$this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
 			Request::METHOD_DELETE
 		);
 	}

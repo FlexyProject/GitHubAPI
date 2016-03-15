@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Teams API class gives you access to the available organization's teams.
- * @package Scion\GitHub\Receiver\Organizations
+ * @package FlexyProject\GitHub\Receiver\Organizations
  */
 class Teams extends AbstractOrganizations {
 
@@ -19,7 +19,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function listTeams($org) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/teams', $org)
+			$this->getApi()->sprintf('/orgs/:org/teams', $org)
 		);
 	}
 
@@ -32,7 +32,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function getTeam($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id)
+			$this->getApi()->sprintf('/teams/:id', (string)$id)
 		);
 	}
 
@@ -49,7 +49,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function createTeam($org, $name, $description = null, $repoNames = [], $permission = AbstractApi::PERMISSION_PULL) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/teams', $org),
+			$this->getApi()->sprintf('/orgs/:org/teams', $org),
 			Request::METHOD_POST,
 			[
 				'name'        => $name,
@@ -72,7 +72,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function editTeam($id, $name, $description = null, $permission = AbstractApi::PERMISSION_PULL) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id),
+			$this->getApi()->sprintf('/teams/:id', (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'name'        => $name,
@@ -91,7 +91,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function deleteTeam($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id),
+			$this->getApi()->sprintf('/teams/:id', (string)$id),
 			Request::METHOD_DELETE
 		);
 
@@ -111,7 +111,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function listTeamMembers($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/members', (string)$id)
+			$this->getApi()->sprintf('/teams/:id/members', (string)$id)
 		);
 	}
 
@@ -125,7 +125,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function getTeamMembership($id, $username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username)
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username)
 		);
 	}
 
@@ -139,7 +139,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function addTeamMembership($id, $username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
 			Request::METHOD_PUT
 		);
 	}
@@ -154,7 +154,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function removeTeamMembership($id, $username) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
 			Request::METHOD_DELETE
 		);
 
@@ -174,7 +174,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function listTeamRepos($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos', (string)$id)
+			$this->getApi()->sprintf('/teams/:id/repos', (string)$id)
 		);
 	}
 
@@ -187,7 +187,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function checkTeamManagesRepository($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo())
+			$this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo())
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -206,7 +206,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function addTeamRepository($id) {
 		$return = $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:org/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
+			$this->getApi()->sprintf('/teams/:id/repos/:org/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
 			Request::METHOD_PUT
 		);
 
@@ -225,7 +225,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function removeTeamRepository() {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
+			$this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
 			Request::METHOD_DELETE
 		);
 
@@ -244,7 +244,7 @@ class Teams extends AbstractOrganizations {
 	 */
 	public function lisUserTeams() {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/teams')
+			$this->getApi()->sprintf('/user/teams')
 		);
 	}
 }

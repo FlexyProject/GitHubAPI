@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Deployments API class provides access to repository's deployments.
  * @link    https://developer.github.com/v3/repos/deployments/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Deployments extends AbstractRepositories {
 
@@ -22,7 +22,7 @@ class Deployments extends AbstractRepositories {
 	 */
 	public function listDeployments($sha = null, $ref = null, $task = null, $environment = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query(['sha' => $sha, 'ref' => $ref, 'task' => $task, 'environment' => $environment]))
+			$this->getApi()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query(['sha' => $sha, 'ref' => $ref, 'task' => $task, 'environment' => $environment]))
 		);
 	}
 
@@ -40,7 +40,7 @@ class Deployments extends AbstractRepositories {
 	 */
 	public function createDeployement($ref, $task = AbstractApi::TASK_DEPLOY, $autoMerge = true, $requiredContexts = [], $payload = '', $environment = AbstractApi::ENVIRONMENT_PRODUCTION, $description = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/deployments', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'ref'               => $ref,
@@ -62,7 +62,7 @@ class Deployments extends AbstractRepositories {
 	 */
 	public function listDeploymentStatus($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -77,7 +77,7 @@ class Deployments extends AbstractRepositories {
 	 */
 	public function createDeploymentStatus($id, $state, $targetUrl = '', $description = '') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/deployments/:id/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_POST,
 			[
 				'state'       => $state,

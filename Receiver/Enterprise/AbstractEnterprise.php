@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
-use Scion\GitHub\Receiver\Enterprise;
+use FlexyProject\GitHub\Receiver\Enterprise;
 
 abstract class AbstractEnterprise {
 
@@ -39,7 +39,7 @@ abstract class AbstractEnterprise {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return \FlexyProject\GitHub\AbstractApi
 	 */
 	public function getApi() {
 		return $this->api;
@@ -47,7 +47,7 @@ abstract class AbstractEnterprise {
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param \FlexyProject\GitHub\AbstractApi $api
 	 * @return AbstractEnterprise
 	 */
 	public function setApi($api) {

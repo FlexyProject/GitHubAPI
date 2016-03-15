@@ -1,11 +1,11 @@
 <?php
-namespace Scion\GitHub;
-use Scion\GitHub\Receiver\AbstractReceiver;
+namespace FlexyProject\GitHub;
+use FlexyProject\GitHub\Receiver\AbstractReceiver;
 
 /**
  * Client API v3
  * @link https://developer.github.com/v3/
- * @package Scion\GitHub
+ * @package FlexyProject\GitHub
  */
 class Client extends AbstractApi {
 
@@ -28,7 +28,7 @@ class Client extends AbstractApi {
 	 * @return null|AbstractReceiver
 	 */
 	public function getReceiver($receiver) {
-		$class = (string)$this->getString()->sprintf(':namespace\Receiver\:receiver', __NAMESPACE__, $receiver);
+		$class = (string)$this->sprintf(':namespace\Receiver\:receiver', __NAMESPACE__, $receiver);
 
 		if (class_exists($class)) {
 			return new $class($this);

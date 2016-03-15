@@ -1,11 +1,9 @@
 <?php
-namespace Scion\GitHub;
+namespace FlexyProject\GitHub;
 
-use Scion\File\Parser\Json as JsonParser;
-use Scion\Http\Client\Curl;
-use Scion\Http\Request;
-use Scion\Utils\Strings;
-use Scion\Validator\Json as JsonValidator;
+use Exception;
+use FlexyProject\Curl\Client as CurlClient;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractApi {
 
@@ -121,18 +119,24 @@ abstract class AbstractApi {
 	protected $failure;
 	protected $headers        = [];
 	protected $httpAuth       = ['username' => '', 'password' => ''];
-	protected $jsonValidator;
 	protected $success;
-	protected $string;
 	protected $timeout        = 240;
 	protected $token;
+	protected $request;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->string        = new Strings();
-		$this->jsonValidator = new JsonValidator();
+		$this->request = Request::createFromGlobals();
+	}
+
+	/**
+	 * Get request
+	 * @return Request
+	 */
+	public function getRequest() {
+		return $this->request;
 	}
 
 	/**
@@ -311,14 +315,6 @@ abstract class AbstractApi {
 	}
 
 	/**
-	 * Get string
-	 * @return \Scion\Utils\Strings
-	 */
-	public function getString() {
-		return $this->string;
-	}
-
-	/**
 	 * Get headers
 	 * @return array
 	 */
@@ -332,7 +328,7 @@ abstract class AbstractApi {
 	 * @param string      $method
 	 * @param array       $postFields
 	 * @param null|string $apiUrl
-	 * @return string
+	 * @return array
 	 */
 	public function request($url, $method = Request::METHOD_GET, $postFields = [], $apiUrl = null) {
 		/** Building url */
@@ -359,7 +355,7 @@ abstract class AbstractApi {
 		}
 
 		/** Call curl */
-		$curl = new Curl();
+		$curl = new CurlClient();
 		$curl->setOption([
 			CURLOPT_USERAGENT      => self::USER_AGENT,
 			CURLOPT_TIMEOUT        => $this->getTimeout(),
@@ -466,22 +462,57 @@ abstract class AbstractApi {
 				break;
 		}
 
-		$curl->success(function (Curl $instance) {
+		$curl->success(function (CurlClient $instance) {
 			$this->headers = $instance->getHeaders();
 			$this->success = $instance->getResponse();
-			if ($this->jsonValidator->isValid($this->success)) {
-				$this->success = JsonParser::decode($this->success);
+			$data          = json_decode($this->success, true);
+			if (JSON_ERROR_NONE === json_last_error()) {
+				$this->success = $data;
 			}
 		});
-		$curl->error(function (Curl $instance) {
+		$curl->error(function (CurlClient $instance) {
 			$this->headers = $instance->getHeaders();
 			$this->failure = $instance->getResponse();
-			if ($this->jsonValidator->isValid($this->failure)) {
-				$this->failure = JsonParser::decode($this->failure);
+			$data          = json_decode($this->failure, true);
+			if (JSON_ERROR_NONE === json_last_error()) {
+				$this->failure = $data;
 			}
 		});
 		$curl->perform();
 
-		return (null != $this->success ? $this->success : $this->failure);
+		return (array)(null != $this->success ? $this->success : $this->failure);
+	}
+
+	/**
+	 * Return a formatted string. Modified version of sprintf using colon(:)
+	 * @param string $string
+	 * @param array  $params
+	 * @return String
+	 * @throws Exception
+	 */
+	public function sprintf($string, ...$params) {
+		preg_match_all('/\:([A-Za-z0-9_]+)/', $string, $matches);
+		$matches = $matches[1];
+		if (count($matches)) {
+			$tokens   = [];
+			$replaces = [];
+			foreach ($matches as $key => $value) {
+				if (count($params) > 1 || !is_array($params[0])) {
+					if (!array_key_exists($key, $params)) {
+						throw new Exception('Too few arguments, missing argument: ' . $key);
+					}
+					$replaces[] = $params[$key];
+				}
+				else {
+					if (!array_key_exists($value, $params[0])) {
+						throw new Exception('Missing array argument: ' . $key);
+					}
+					$replaces[] = $params[0][$value];
+				}
+				$tokens[] = ':' . $value;
+			}
+			$string = str_replace($tokens, $replaces, $string);
+		}
+		return $string;
 	}
 }

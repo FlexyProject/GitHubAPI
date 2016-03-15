@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class give you access to the Pull Request API who allows you to list, view, edit, create, and even merge pull requests.
  * @link    https://developer.github.com/v3/pulls/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class PullRequests extends AbstractReceiver {
 
@@ -27,7 +27,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function listPullRequests($state = AbstractApi::STATE_OPEN, $head = null, $base = null, $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_ASC) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls?:args', $this->getOwner(), $this->getRepo(), http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls?:args', $this->getOwner(), $this->getRepo(), http_build_query([
 				'state'     => $state,
 				'head'      => $head,
 				'base'      => $base,
@@ -46,7 +46,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function getSinglePullRequest($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
 
@@ -62,7 +62,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function createPullrequest($title, $head, $base, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls', $this->getOwner(), $this->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls', $this->getOwner(), $this->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title' => $title,
@@ -85,7 +85,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function updatePullRequest($number, $title = null, $body = null, $state = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number', $this->getOwner(), $this->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number', $this->getOwner(), $this->getRepo(), $number),
 			Request::METHOD_PATCH,
 			[
 				'title' => $title,
@@ -104,7 +104,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function listCommits($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/commits', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/commits', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
 
@@ -117,7 +117,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function listPullRequestsFiles($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/files', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/files', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
 
@@ -130,7 +130,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function checkPullRequestsMerged($number) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/merge', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/merge', $this->getOwner(), $this->getRepo(), $number)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -151,7 +151,7 @@ class PullRequests extends AbstractReceiver {
 	 */
 	public function mergePullRequest($number, $commitMessage = null, $sha = null) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pulls/:number/merge', $this->getOwner(), $this->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/merge', $this->getOwner(), $this->getRepo(), $number),
 			Request::METHOD_PUT,
 			[
 				'commit_message' => $commitMessage,

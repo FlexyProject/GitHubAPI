@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
-use Scion\Http\Request;
-use Scion\GitHub\AbstractApi;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Trees API class provides access to Issues's comments.
  * @link    https://developer.github.com/v3/issues/comments/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Comments extends AbstractIssues {
 
@@ -19,7 +19,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function listIssueComments($number) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/comments', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/comments', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -33,7 +33,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function listRepositoryComments($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = 'now') {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/comments?:args', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/comments?:args', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
 				'sort'      => $sort,
 				'direction' => $direction,
 				'since'     => $since
@@ -49,7 +49,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function getComment($id) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id)
 		);
 	}
 
@@ -62,7 +62,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function createComment($number, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/comments', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/comments', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_POST,
 			[
 				'body' => $body
@@ -79,7 +79,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function editComment($id, $body) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id),
 			Request::METHOD_PATCH,
 			[
 				'body' => $body
@@ -95,7 +95,7 @@ class Comments extends AbstractIssues {
 	 */
 	public function deleteComment($id) {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 

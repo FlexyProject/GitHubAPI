@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
  * The Meta API class provides information about GitHub.com (the service) or your organization’s GitHub Enterprise installation.
  * @link    https://developer.github.com/v3/meta/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Meta extends AbstractMiscellaneous {
 

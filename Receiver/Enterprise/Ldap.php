@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The LDAP API is used to update account relationships between a GitHub Enterprise user and its linked LDAP entry or queue a new synchronization.
  * @link    https://developer.github.com/v3/enterprise/ldap/
  * @since   2.2
- * @package Scion\GitHub\Receiver\Enterprise
+ * @package FlexyProject\GitHub\Receiver\Enterprise
  */
 class Ldap extends AbstractEnterprise {
 
@@ -20,7 +20,7 @@ class Ldap extends AbstractEnterprise {
 	 */
 	public function updateMappingUser($username) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/admin/ldap/user/:username/mapping', $username),
+			$this->getApi()->sprintf('/admin/ldap/user/:username/mapping', $username),
 			Request::METHOD_PATCH
 		);
 	}
@@ -34,7 +34,7 @@ class Ldap extends AbstractEnterprise {
 	 */
 	public function syncMappingUser($userId) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/admin/ldap/user/:user_id/sync', (string)$userId),
+			$this->getApi()->sprintf('/admin/ldap/user/:user_id/sync', (string)$userId),
 			Request::METHOD_POST
 		);
 	}
@@ -48,7 +48,7 @@ class Ldap extends AbstractEnterprise {
 	 */
 	public function updateMappingTeam($teamId) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/admin/ldap/teams/:team_id/mapping', (String)$teamId),
+			$this->getApi()->sprintf('/admin/ldap/teams/:team_id/mapping', (String)$teamId),
 			Request::METHOD_PATCH
 		);
 	}
@@ -62,7 +62,7 @@ class Ldap extends AbstractEnterprise {
 	 */
 	public function syncMappingTeam($teamId) {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/admin/ldap/teams/:team_id/sync', (string)$teamId),
+			$this->getApi()->sprintf('/admin/ldap/teams/:team_id/sync', (string)$teamId),
 			Request::METHOD_POST
 		);
 	}
