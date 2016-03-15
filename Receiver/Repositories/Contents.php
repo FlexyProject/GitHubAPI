@@ -1,24 +1,24 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Contents API class provides access to repository's contents.
  * @link    https://developer.github.com/v3/repos/contents/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Contents extends AbstractRepositories {
 
 	/**
 	 * Get the README
 	 * @link https://developer.github.com/v3/repos/contents/#get-the-readme
-	 * @return mixed
+	 * @return array
 	 */
-	public function getReadme() {
+	public function getReadme(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/readme', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/readme', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -27,11 +27,11 @@ class Contents extends AbstractRepositories {
 	 * @link https://developer.github.com/v3/repos/contents/#get-contents
 	 * @param string $path
 	 * @param string $ref
-	 * @return mixed
+	 * @return array
 	 */
-	public function getContents($path = '', $ref = AbstractApi::BRANCH_MASTER) {
+	public function getContents(string $path = '', string $ref = AbstractApi::BRANCH_MASTER): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['ref' => $ref]))
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['ref' => $ref]))
 		);
 	}
 
@@ -42,11 +42,11 @@ class Contents extends AbstractRepositories {
 	 * @param string $message
 	 * @param string $content
 	 * @param string $branch
-	 * @return mixed
+	 * @return array
 	 */
-	public function createFile($path, $message, $content, $branch = AbstractApi::BRANCH_MASTER) {
+	public function createFile(string $path, string $message, string $content, string $branch = AbstractApi::BRANCH_MASTER): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
 			Request::METHOD_PUT
 		);
 	}
@@ -59,11 +59,11 @@ class Contents extends AbstractRepositories {
 	 * @param string $content
 	 * @param string $sha
 	 * @param string $branch
-	 * @return mixed
+	 * @return array
 	 */
-	public function updateFile($path, $message, $content, $sha, $branch = AbstractApi::BRANCH_MASTER) {
+	public function updateFile(string $path, string $message, string $content, string $sha, string $branch = AbstractApi::BRANCH_MASTER): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path, http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
 			Request::METHOD_PUT
 		);
 	}
@@ -75,11 +75,11 @@ class Contents extends AbstractRepositories {
 	 * @param string $message
 	 * @param string $sha
 	 * @param string $branch
-	 * @return mixed
+	 * @return array
 	 */
-	public function deleteFile($path, $message, $sha, $branch = AbstractApi::BRANCH_MASTER) {
+	public function deleteFile(string $path, string $message, string $sha, string $branch = AbstractApi::BRANCH_MASTER): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/contents/:path', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path),
+			$this->getApi()->sprintf('/repos/:owner/:repo/contents/:path', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path),
 			Request::METHOD_DELETE,
 			[
 				'message' => $message,
@@ -94,11 +94,11 @@ class Contents extends AbstractRepositories {
 	 * @link https://developer.github.com/v3/repos/contents/#get-archive-link
 	 * @param string $archiveFormat
 	 * @param string $ref
-	 * @return mixed
+	 * @return array
 	 */
-	public function getArchiveLink($archiveFormat = AbstractApi::ARCHIVE_TARBALL, $ref = AbstractApi::BRANCH_MASTER) {
+	public function getArchiveLink(string $archiveFormat = AbstractApi::ARCHIVE_TARBALL, string $ref = AbstractApi::BRANCH_MASTER): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/:archive_format/:ref', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref)
+			$this->getApi()->sprintf('/repos/:owner/:repo/:archive_format/:ref', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref)
 		);
 	}
 }

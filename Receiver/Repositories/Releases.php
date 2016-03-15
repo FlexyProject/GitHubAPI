@@ -1,25 +1,25 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Repositories;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Repositories;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Releases API class provides access to repository's releases.
  * @link    https://developer.github.com/v3/repos/releases/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Releases extends AbstractRepositories {
 
 	/**
 	 * List releases for a repository
 	 * @link https://developer.github.com/v3/repos/releases/#list-releases-for-a-repository
-	 * @return mixed
+	 * @return array
 	 */
-	public function listReleases() {
+	public function listReleases(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -27,23 +27,23 @@ class Releases extends AbstractRepositories {
 	 * Get a single release
 	 * @link https://developer.github.com/v3/repos/releases/#get-a-single-release
 	 * @param string $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getSingleRelease($id) {
+	public function getSingleRelease(string $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
 	/**
 	 * Get the latest release
 	 * @link https://developer.github.com/v3/repos/releases/#get-the-latest-release
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getLatestRelease() {
+	public function getLatestRelease(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -51,12 +51,12 @@ class Releases extends AbstractRepositories {
 	 * Get a release by tag name
 	 * @link https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 	 * @param string $tag
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getReleaseByTagName($tag) {
+	public function getReleaseByTagName(string $tag): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/tags/:tag', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $tag)
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/tags/:tag', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $tag)
 		);
 	}
 
@@ -69,11 +69,11 @@ class Releases extends AbstractRepositories {
 	 * @param string $body
 	 * @param bool   $draft
 	 * @param bool   $preRelease
-	 * @return mixed
+	 * @return array
 	 */
-	public function createRelease($tagName, $targetCommitish = AbstractApi::BRANCH_MASTER, $name = null, $body = null, $draft = false, $preRelease = false) {
+	public function createRelease(string $tagName, string $targetCommitish = AbstractApi::BRANCH_MASTER, string $name = null, string $body = null, bool $draft = false, bool $preRelease = false): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'tag_name'         => $tagName,
@@ -96,11 +96,11 @@ class Releases extends AbstractRepositories {
 	 * @param string $body
 	 * @param bool   $draft
 	 * @param bool   $preRelease
-	 * @return mixed
+	 * @return array
 	 */
-	public function editRelease($id, $tagName, $targetCommitish = AbstractApi::BRANCH_MASTER, $name, $body, $draft = false, $preRelease = false) {
+	public function editRelease(string $id, string $tagName, string $targetCommitish = AbstractApi::BRANCH_MASTER, string $name, string $body, bool $draft = false, bool $preRelease = false): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_PATCH,
 			[
 				'tag_name'         => $tagName,
@@ -117,11 +117,11 @@ class Releases extends AbstractRepositories {
 	 * Delete a release
 	 * @link https://developer.github.com/v3/repos/releases/#delete-a-release
 	 * @param string $id
-	 * @return boolean
+	 * @return bool
 	 */
-	public function deleteRelease($id) {
+	public function deleteRelease(string $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 
@@ -136,11 +136,11 @@ class Releases extends AbstractRepositories {
 	 * List assets for a release
 	 * @link https://developer.github.com/v3/repos/releases/#list-assets-for-a-release
 	 * @param string $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getReleaseAssets($id) {
+	public function getReleaseAssets(string $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/:id/assets', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/:id/assets', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -150,12 +150,12 @@ class Releases extends AbstractRepositories {
 	 * @param string $id
 	 * @param string $contentType
 	 * @param string $name
-	 * @return mixed
+	 * @return array
 	 */
-	public function uploadReleaseAsset($id, $contentType, $name) {
+	public function uploadReleaseAsset(string $id, string $contentType, string $name): array {
 
 		return $this->getApi()->setApiUrl(AbstractApi::API_UPLOADS)->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/:id/assets?:arg', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, http_build_query(['name' => $name])),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/:id/assets?:arg', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id, http_build_query(['name' => $name])),
 			Request::METHOD_POST,
 			[
 				'Content-Type' => $contentType
@@ -167,11 +167,11 @@ class Releases extends AbstractRepositories {
 	 * Get a single release asset
 	 * @link https://developer.github.com/v3/repos/releases/#get-a-single-release-asset
 	 * @param string $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getSingleReleaseAsset($id) {
+	public function getSingleReleaseAsset(string $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -181,11 +181,11 @@ class Releases extends AbstractRepositories {
 	 * @param string $id
 	 * @param string $name
 	 * @param string $label
-	 * @return mixed
+	 * @return array
 	 */
-	public function editReleaseAsset($id, $name, $label = '') {
+	public function editReleaseAsset(string $id, string $name, string $label = ''): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_PATCH,
 			[
 				'name'  => $name,
@@ -198,11 +198,11 @@ class Releases extends AbstractRepositories {
 	 * Delete a release asset
 	 * @link https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 	 * @param string $id
-	 * @return boolean
+	 * @return bool
 	 */
-	public function deleteReleaseAsset($id) {
+	public function deleteReleaseAsset(string $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 

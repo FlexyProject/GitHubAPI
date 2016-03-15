@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Gists;
+namespace FlexyProject\GitHub\Receiver\Gists;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Comments API class provides access to gists's comments.
  * @link    https://developer.github.com/v3/gists/comments/
- * @package Scion\GitHub\Receiver\Gists
+ * @package FlexyProject\GitHub\Receiver\Gists
  */
 class Comments extends AbstractGists {
 
@@ -14,11 +14,11 @@ class Comments extends AbstractGists {
 	 * List comments on a gist
 	 * @link https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 	 * @param int $gistId
-	 * @return mixed
+	 * @return array
 	 */
-	public function listComments($gistId) {
+	public function listComments(int $gistId): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments', (string)$gistId)
+			$this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId)
 		);
 	}
 
@@ -27,11 +27,11 @@ class Comments extends AbstractGists {
 	 * @link https://developer.github.com/v3/gists/comments/#get-a-single-comment
 	 * @param int $gistId
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getSingleComment($gistId, $id) {
+	public function getSingleComment(int $gistId, int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id)
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id)
 		);
 	}
 
@@ -40,11 +40,11 @@ class Comments extends AbstractGists {
 	 * @link https://developer.github.com/v3/gists/comments/#create-a-comment
 	 * @param int    $gistId
 	 * @param string $body
-	 * @return mixed
+	 * @return array
 	 */
-	public function createComment($gistId, $body) {
+	public function createComment(int $gistId, string $body): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments', (string)$gistId),
+			$this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId),
 			Request::METHOD_POST,
 			[
 				'body' => $body
@@ -58,11 +58,11 @@ class Comments extends AbstractGists {
 	 * @param int    $gistId
 	 * @param int    $id
 	 * @param string $body
-	 * @return mixed
+	 * @return array
 	 */
-	public function editComment($gistId, $id, $body) {
+	public function editComment(int $gistId, int $id, string $body): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'body' => $body
@@ -75,11 +75,11 @@ class Comments extends AbstractGists {
 	 * @link https://developer.github.com/v3/gists/comments/#delete-a-comment
 	 * @param int $gistId
 	 * @param int $id
-	 * @return boolean
+	 * @return bool
 	 */
-	public function deleteComment($gistId, $id) {
+	public function deleteComment(int $gistId, int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+			$this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
 			Request::METHOD_DELETE
 		);
 

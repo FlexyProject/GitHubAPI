@@ -1,14 +1,14 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class provides access to Issues API.
  * @link    https://developer.github.com/v3/issues/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Issues extends AbstractReceiver {
 
@@ -28,11 +28,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $sort
 	 * @param string $direction
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
+	public function listIssues(string $filter = AbstractApi::FILTER_ASSIGNED, string $state = AbstractApi::STATE_OPEN, string $labels = '', string $sort = AbstractApi::SORT_CREATED, string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/issues?:args',
+			$this->getApi()->sprintf('/issues?:args',
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -54,11 +54,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $sort
 	 * @param string $direction
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listUserIssues($filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
+	public function listUserIssues(string $filter = AbstractApi::FILTER_ASSIGNED, string $state = AbstractApi::STATE_OPEN, string $labels = '', string $sort = AbstractApi::SORT_CREATED, string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/issues?:args',
+			$this->getApi()->sprintf('/user/issues?:args',
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -81,11 +81,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $sort
 	 * @param string $direction
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listOrganizationIssues($organization, $filter = AbstractApi::FILTER_ASSIGNED, $state = AbstractApi::STATE_OPEN, $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
+	public function listOrganizationIssues(string $organization, string $filter = AbstractApi::FILTER_ASSIGNED, string $state = AbstractApi::STATE_OPEN, string $labels = '', string $sort = AbstractApi::SORT_CREATED, string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/issues?:args', $organization,
+			$this->getApi()->sprintf('/orgs/:org/issues?:args', $organization,
 				http_build_query([
 					'filter'    => $filter,
 					'state'     => $state,
@@ -110,11 +110,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $sort
 	 * @param string $direction
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listRepositoryIssues($milestone = '*', $state = AbstractApi::STATE_OPEN, $assignee = '*', $creator = '', $mentioned = '', $labels = '', $sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $since = '1970-01-01') {
+	public function listRepositoryIssues(string $milestone = '*', string $state = AbstractApi::STATE_OPEN, string $assignee = '*', string $creator = '', string $mentioned = '', string $labels = '', string $sort = AbstractApi::SORT_CREATED, string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(), $this->getRepo(),
 				http_build_query([
 					'milestone' => $milestone,
 					'state'     => $state,
@@ -134,11 +134,11 @@ class Issues extends AbstractReceiver {
 	 * Get a single issue
 	 * @link https://developer.github.com/v3/issues/#get-a-single-issue
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function getIssue($number) {
+	public function getIssue(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number)
 		);
 	}
 
@@ -150,11 +150,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $assignee
 	 * @param int    $milestone
 	 * @param array  $labels
-	 * @return mixed
+	 * @return array
 	 */
-	public function createIssue($title, $body = '', $assignee = '', $milestone = 0, $labels = []) {
+	public function createIssue(string $title, string $body = '', string $assignee = '',  int $milestone = 0, array $labels = []): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(), $this->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(), $this->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title'     => $title,
@@ -175,11 +175,11 @@ class Issues extends AbstractReceiver {
 	 * @param string $assignee
 	 * @param int    $milestone
 	 * @param array  $labels
-	 * @return mixed
+	 * @return array
 	 */
-	public function editIssue($number, $title = '', $body = '', $assignee = '', $milestone = 0, $labels = []) {
+	public function editIssue(int $number, string $title = '', string $body = '', string $assignee = '', int $milestone = 0, array $labels = []): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(), $this->getRepo(), $number),
 			Request::METHOD_PATCH,
 			[
 				'title'     => $title,

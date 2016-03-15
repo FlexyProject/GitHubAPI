@@ -1,21 +1,21 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
 /**
  * The Trees API class provides access to Issues's assignees.
  * @link    https://developer.github.com/v3/issues/assignees/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Assignees extends AbstractIssues {
 
 	/**
 	 * List assignees
 	 * @link https://developer.github.com/v3/issues/assignees/#list-assignees
-	 * @return mixed
+	 * @return array
 	 */
-	public function listAssignees() {
+	public function listAssignees(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/assignees', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/assignees', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -23,11 +23,11 @@ class Assignees extends AbstractIssues {
 	 * Check assignee
 	 * @link  https://developer.github.com/v3/issues/assignees/#check-assignee
 	 * @param string $assignee
-	 * @return boolean
+	 * @return bool
 	 */
-	public function checkAssignee($assignee) {
+	public function checkAssignee(string $assignee): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/assignees/:assignee', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $assignee)
+			$this->getApi()->sprintf('/repos/:owner/:repo/assignees/:assignee', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $assignee)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {

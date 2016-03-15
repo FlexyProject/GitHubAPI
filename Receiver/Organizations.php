@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class give you access to the organizations API.
  * @link    https://developer.github.com/v3/orgs/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Organizations extends AbstractReceiver {
 
@@ -18,12 +18,12 @@ class Organizations extends AbstractReceiver {
 	/**
 	 * List your organizations
 	 * @link https://developer.github.com/v3/orgs/#list-your-organizations
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function listOrganizations() {
+	public function listOrganizations(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/orgs')
+			$this->getApi()->sprintf('/user/orgs')
 		);
 	}
 
@@ -31,12 +31,12 @@ class Organizations extends AbstractReceiver {
 	 * List user organizations
 	 * @link https://developer.github.com/v3/orgs/#list-user-organizations
 	 * @param string $username
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function listUserOrganizations($username) {
+	public function listUserOrganizations(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/orgs', $username)
+			$this->getApi()->sprintf('/users/:username/orgs', $username)
 		);
 	}
 
@@ -44,12 +44,12 @@ class Organizations extends AbstractReceiver {
 	 * Get an organization
 	 * @link https://developer.github.com/v3/orgs/#get-an-organization
 	 * @param string $org
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function get($org) {
+	public function get(string $org): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org', $org)
+			$this->getApi()->sprintf('/orgs/:org', $org)
 		);
 	}
 
@@ -63,12 +63,12 @@ class Organizations extends AbstractReceiver {
 	 * @param string $location
 	 * @param string $name
 	 * @param string $description
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function edit($org, $billingEmail = null, $company = null, $email = null, $location = null, $name = null, $description = null) {
+	public function edit(string $org, string $billingEmail = null, string $company = null, string $email = null, string $location = null, string $name = null, string $description = null): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org', $org),
+			$this->getApi()->sprintf('/orgs/:org', $org),
 			Request::METHOD_PATCH,
 			[
 				'billing_email' => $billingEmail,

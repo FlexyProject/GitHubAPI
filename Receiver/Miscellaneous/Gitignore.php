@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
  * The Gitignore API class gives you access to the available gitignore templates.
  * @link    https://developer.github.com/v3/gitignore/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Gitignore extends AbstractMiscellaneous {
 
@@ -13,7 +13,7 @@ class Gitignore extends AbstractMiscellaneous {
 	 * @link https://developer.github.com/v3/gitignore/#listing-available-templates
 	 * @return array
 	 */
-	public function listingAvailableTemplates() {
+	public function listingAvailableTemplates(): array {
 		return $this->getApi()->request('/gitignore/templates');
 	}
 
@@ -23,7 +23,7 @@ class Gitignore extends AbstractMiscellaneous {
 	 * @param string $name
 	 * @return array
 	 */
-	public function getSingleTemplate($name) {
-		return $this->getApi()->request($this->getApi()->getString()->sprintf('/gitignore/templates/:name', $name));
+	public function getSingleTemplate(string $name): array {
+		return $this->getApi()->request($this->getApi()->sprintf('/gitignore/templates/:name', $name));
 	}
 } 

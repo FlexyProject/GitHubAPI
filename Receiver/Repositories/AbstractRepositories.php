@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Repositories;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Repositories;
 
 abstract class AbstractRepositories {
 
@@ -21,18 +21,18 @@ abstract class AbstractRepositories {
 
 	/**
 	 * Get repositories
-	 * @return mixed
+	 * @return Repositories
 	 */
-	public function getRepositories() {
+	public function getRepositories(): Repositories {
 		return $this->repositories;
 	}
 
 	/**
 	 * Set repositories
-	 * @param mixed $repositories
-	 * @return $this
+	 * @param Repositories $repositories
+	 * @return AbstractRepositories
 	 */
-	public function setRepositories($repositories) {
+	public function setRepositories(Repositories $repositories): AbstractRepositories {
 		$this->repositories = $repositories;
 
 		return $this;
@@ -42,16 +42,16 @@ abstract class AbstractRepositories {
 	 * Get api
 	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
 	/**
 	 * Set api
 	 * @param AbstractApi $api
-	 * @return $this
+	 * @return AbstractRepositories
 	 */
-	public function setApi(AbstractApi $api) {
+	public function setApi(AbstractApi $api): AbstractRepositories {
 		$this->api = $api;
 
 		return $this;

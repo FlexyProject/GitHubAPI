@@ -1,14 +1,9 @@
 <?php
-namespace Scion\GitHub\Event;
+namespace FlexyProject\GitHub\Event;
 
-use Scion\Crypt\Hash;
-use Scion\Crypt\Hmac;
-use Scion\File\Parser\Json as JsonParser;
-use Scion\GitHub\Exception\BadSignatureException;
-use Scion\GitHub\WebHook;
-use Scion\Http\Headers;
-use Scion\Http\Request;
-use Scion\Validator\Json as JsonValidator;
+use Zend\Crypt\Hmac;
+use FlexyProject\GitHub\Exception\BadSignatureException;
+use FlexyProject\GitHub\WebHook;
 
 class Payload implements EventInterface {
 
@@ -24,7 +19,7 @@ class Payload implements EventInterface {
 	 */
 	public function __construct(WebHook $webHook) {
 		$this->setWebHook($webHook);
-		$this->setRawData((new Request())->getContent());
+		$this->setRawData($webHook->getRequest()->getContent());
 	}
 
 	/**
@@ -40,7 +35,7 @@ class Payload implements EventInterface {
 	 * @param mixed $webHook
 	 * @return Payload
 	 */
-	public function setWebHook($webHook) {
+	public function setWebHook($webHook): Payload {
 		$this->webHook = $webHook;
 
 		return $this;
@@ -51,8 +46,8 @@ class Payload implements EventInterface {
 	 * @param string $secret
 	 * @return Payload
 	 */
-	public function setSecret($secret) {
-		$this->secret = Hmac::compute($secret, Hash::ALGO_SHA1, $this->rawData, Hmac::OUTPUT_STRING);
+	public function setSecret(string $secret): Payload {
+		$this->secret = Hmac::compute($secret, 'sha1', $this->rawData, Hmac::OUTPUT_STRING);
 
 		return $this;
 	}
@@ -78,7 +73,7 @@ class Payload implements EventInterface {
 	 * @param resource|string $rawData
 	 * @return Payload
 	 */
-	public function setRawData($rawData) {
+	public function setRawData($rawData): Payload {
 		$this->rawData = $rawData;
 
 		return $this;
@@ -97,9 +92,10 @@ class Payload implements EventInterface {
 	 * @param mixed $parsedData
 	 * @return Payload
 	 */
-	protected function setParsedData($parsedData) {
-		if ((new JsonValidator())->isValid($parsedData)) {
-			$this->parsedData = JsonParser::decode($parsedData);
+	protected function setParsedData($parsedData): Payload {
+		$data = json_decode($parsedData);
+		if (JSON_ERROR_NONE === json_last_error()) {
+			$this->parsedData = $data;
 		}
 
 		return $this;
@@ -107,12 +103,12 @@ class Payload implements EventInterface {
 
 	/**
 	 * Debugger
-	 * @return resource|string
+	 * @return array
 	 */
-	public function __debugInfo() {
+	public function __debugInfo(): array {
 		return [
 			'ramData'     => (array)$this->getRawData(),
-			'jsonEncoded' => JsonParser::decode($this->getRawData())
+			'jsonEncoded' => json_decode($this->getRawData())
 		];
 	}
 
@@ -122,7 +118,7 @@ class Payload implements EventInterface {
 	 * @throws BadSignatureException
 	 * @throws \Exception
 	 */
-	public function parse() {
+	public function parse(): Payload {
 		/** Check signature from header */
 		if (!$this->_checkSignature()) {
 			throw new BadSignatureException('Hook secret does not match.');
@@ -151,14 +147,14 @@ class Payload implements EventInterface {
 	 * @throws BadSignatureException
 	 * @return bool
 	 */
-	private function _checkSignature() {
+	private function _checkSignature(): bool {
 		if (null !== $this->secret) {
-			if (array_key_exists('HTTP_X_HUB_SIGNATURE', Headers::getInstance()->getHttpHeaders())) {
+			if ($this->getWebHook()->getRequest()->server->get('HTTP_X_HUB_SIGNATURE')) {
 				/**
 				 * Split signature into algorithm and hash
 				 * @link http://isometriks.com/verify-github-webhooks-with-php
 				 */
-				list(, $hash) = explode('=', Headers::getInstance()->getHttpHeaders()['HTTP_X_HUB_SIGNATURE'], 2);
+				list(, $hash) = explode('=', $this->getWebHook()->getRequest()->server->get('HTTP_X_HUB_SIGNATURE'), 2);
 
 				return $this->secret == $hash;
 			}

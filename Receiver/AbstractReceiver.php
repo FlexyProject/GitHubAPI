@@ -1,15 +1,14 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Stdlib\Exception\Exception;
+use FlexyProject\GitHub\AbstractApi;
 
 abstract class AbstractReceiver {
 
 	/** Protected properties */
 	protected $api;
-	protected $owner;
-	protected $repo;
+	protected $owner = '';
+	protected $repo  = '';
 
 	/**
 	 * Constructor
@@ -23,16 +22,16 @@ abstract class AbstractReceiver {
 	 * Get api
 	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
 	/**
 	 * Set api
 	 * @param AbstractApi $api
-	 * @return $this
+	 * @return AbstractReceiver
 	 */
-	public function setApi(AbstractApi $api) {
+	public function setApi(AbstractApi $api): AbstractReceiver {
 		$this->api = $api;
 
 		return $this;
@@ -40,18 +39,18 @@ abstract class AbstractReceiver {
 
 	/**
 	 * Get owner
-	 * @return mixed
+	 * @return string
 	 */
-	public function getOwner() {
+	public function getOwner(): string {
 		return $this->owner;
 	}
 
 	/**
 	 * Set owner
 	 * @param string $owner
-	 * @return $this
+	 * @return AbstractReceiver
 	 */
-	public function setOwner($owner) {
+	public function setOwner(string $owner): AbstractReceiver {
 		$this->owner = $owner;
 
 		return $this;
@@ -59,18 +58,18 @@ abstract class AbstractReceiver {
 
 	/**
 	 * Get repository
-	 * @return mixed
+	 * @return string
 	 */
-	public function getRepo() {
+	public function getRepo(): string {
 		return $this->repo;
 	}
 
 	/**
 	 * Set repository
 	 * @param string $repo
-	 * @return $this
+	 * @return AbstractReceiver
 	 */
-	public function setRepo($repo) {
+	public function setRepo(string $repo): AbstractReceiver {
 		$this->repo = $repo;
 
 		return $this;
@@ -81,9 +80,9 @@ abstract class AbstractReceiver {
 	 * @param string $name
 	 * @return null|object
 	 */
-	public function getReceiver($name) {
+	public function getReceiver(string $name) {
 		$classPath = explode('\\', get_called_class());
-		$class     = (string)$this->getApi()->getString()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
+		$class     = (string)$this->getApi()->sprintf(':namespace\:class\:method', __NAMESPACE__, end($classPath), $name);
 
 		if (class_exists($class)) {
 			return new $class($this);

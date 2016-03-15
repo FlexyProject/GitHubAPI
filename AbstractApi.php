@@ -1,11 +1,9 @@
 <?php
-namespace Scion\GitHub;
+namespace FlexyProject\GitHub;
 
-use Scion\File\Parser\Json as JsonParser;
-use Scion\Http\Client\Curl;
-use Scion\Http\Request;
-use Scion\Utils\Strings;
-use Scion\Validator\Json as JsonValidator;
+use Exception;
+use FlexyProject\Curl\Client as CurlClient;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractApi {
 
@@ -121,18 +119,24 @@ abstract class AbstractApi {
 	protected $failure;
 	protected $headers        = [];
 	protected $httpAuth       = ['username' => '', 'password' => ''];
-	protected $jsonValidator;
 	protected $success;
-	protected $string;
 	protected $timeout        = 240;
-	protected $token;
+	protected $token          = '';
+	protected $request;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->string        = new Strings();
-		$this->jsonValidator = new JsonValidator();
+		$this->request = Request::createFromGlobals();
+	}
+
+	/**
+	 * Get request
+	 * @return Request
+	 */
+	public function getRequest(): Request {
+		return $this->request;
 	}
 
 	/**
@@ -148,7 +152,7 @@ abstract class AbstractApi {
 	 * @param array|string $accept
 	 * @return AbstractApi
 	 */
-	public function setAccept($accept) {
+	public function setAccept($accept): AbstractApi {
 		$this->accept = $accept;
 
 		return $this;
@@ -158,16 +162,16 @@ abstract class AbstractApi {
 	 * Get authentication
 	 * @return int
 	 */
-	public function getAuthentication() {
+	public function getAuthentication(): int {
 		return $this->authentication;
 	}
 
 	/**
 	 * Set authentication
 	 * @param int $authentication
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setAuthentication($authentication) {
+	public function setAuthentication(int $authentication): AbstractApi {
 		$this->authentication = $authentication;
 
 		return $this;
@@ -177,16 +181,16 @@ abstract class AbstractApi {
 	 * Get apiUrl
 	 * @return string
 	 */
-	public function getApiUrl() {
+	public function getApiUrl(): string {
 		return $this->apiUrl;
 	}
 
 	/**
 	 * Set apiUrl
 	 * @param mixed $apiUrl
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setApiUrl($apiUrl) {
+	public function setApiUrl($apiUrl): AbstractApi {
 		$this->apiUrl = $apiUrl;
 
 		return $this;
@@ -203,9 +207,9 @@ abstract class AbstractApi {
 	/**
 	 * Set clientId
 	 * @param mixed $clientId
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setClientId($clientId) {
+	public function setClientId($clientId): AbstractApi {
 		$this->clientId = $clientId;
 
 		return $this;
@@ -222,9 +226,9 @@ abstract class AbstractApi {
 	/**
 	 * Set clientSecret
 	 * @param mixed $clientSecret
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setClientSecret($clientSecret) {
+	public function setClientSecret($clientSecret): AbstractApi {
 		$this->clientSecret = $clientSecret;
 
 		return $this;
@@ -234,7 +238,7 @@ abstract class AbstractApi {
 	 * Get httpAuth
 	 * @return array
 	 */
-	public function getHttpAuth() {
+	public function getHttpAuth(): array {
 		return $this->httpAuth;
 	}
 
@@ -242,9 +246,9 @@ abstract class AbstractApi {
 	 * Set httpAuth
 	 * @param string $username
 	 * @param string $password
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setHttpAuth($username, $password = '') {
+	public function setHttpAuth(string $username, string $password = ''): AbstractApi {
 		$this->httpAuth['username'] = $username;
 		$this->httpAuth['password'] = $password;
 
@@ -255,7 +259,7 @@ abstract class AbstractApi {
 	 * Get token
 	 * @return string
 	 */
-	public function getToken() {
+	public function getToken(): string {
 		return $this->token;
 	}
 
@@ -263,9 +267,9 @@ abstract class AbstractApi {
 	 * Set token
 	 * @param string $token
 	 * @param int    $authentication
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setToken($token, $authentication = self::OAUTH_AUTH) {
+	public function setToken(string $token, int $authentication = self::OAUTH_AUTH): AbstractApi {
 		$this->token = $token;
 		$this->setAuthentication($authentication);
 
@@ -276,16 +280,16 @@ abstract class AbstractApi {
 	 * Get timeout
 	 * @return int
 	 */
-	public function getTimeout() {
+	public function getTimeout(): int {
 		return $this->timeout;
 	}
 
 	/**
 	 * Set timeout
 	 * @param int $timeout
-	 * @return $this
+	 * @return AbstractApi
 	 */
-	public function setTimeout($timeout) {
+	public function setTimeout(int $timeout): AbstractApi {
 		$this->timeout = $timeout;
 
 		return $this;
@@ -295,7 +299,7 @@ abstract class AbstractApi {
 	 * Get contentType
 	 * @return string
 	 */
-	public function getContentType() {
+	public function getContentType(): string {
 		return $this->contentType;
 	}
 
@@ -304,25 +308,17 @@ abstract class AbstractApi {
 	 * @param string $contentType
 	 * @return AbstractApi
 	 */
-	public function setContentType($contentType) {
+	public function setContentType(string $contentType): AbstractApi {
 		$this->contentType = $contentType;
 
 		return $this;
 	}
 
 	/**
-	 * Get string
-	 * @return \Scion\Utils\Strings
-	 */
-	public function getString() {
-		return $this->string;
-	}
-
-	/**
 	 * Get headers
 	 * @return array
 	 */
-	public function getHeaders() {
+	public function getHeaders(): array {
 		return $this->headers;
 	}
 
@@ -332,9 +328,9 @@ abstract class AbstractApi {
 	 * @param string      $method
 	 * @param array       $postFields
 	 * @param null|string $apiUrl
-	 * @return string
+	 * @return array
 	 */
-	public function request($url, $method = Request::METHOD_GET, $postFields = [], $apiUrl = null) {
+	public function request(string $url, string $method = Request::METHOD_GET, array $postFields = [], string $apiUrl = null): array {
 		/** Building url */
 		if (null === $apiUrl) {
 			$apiUrl = $this->getApiUrl();
@@ -359,7 +355,7 @@ abstract class AbstractApi {
 		}
 
 		/** Call curl */
-		$curl = new Curl();
+		$curl = new CurlClient();
 		$curl->setOption([
 			CURLOPT_USERAGENT      => self::USER_AGENT,
 			CURLOPT_TIMEOUT        => $this->getTimeout(),
@@ -466,22 +462,61 @@ abstract class AbstractApi {
 				break;
 		}
 
-		$curl->success(function (Curl $instance) {
+		$curl->success(function (CurlClient $instance) {
 			$this->headers = $instance->getHeaders();
 			$this->success = $instance->getResponse();
-			if ($this->jsonValidator->isValid($this->success)) {
-				$this->success = JsonParser::decode($this->success);
+			$data          = json_decode($this->success, true);
+			if (JSON_ERROR_NONE === json_last_error()) {
+				$this->success = $data;
 			}
 		});
-		$curl->error(function (Curl $instance) {
+		$curl->error(function (CurlClient $instance) {
 			$this->headers = $instance->getHeaders();
 			$this->failure = $instance->getResponse();
-			if ($this->jsonValidator->isValid($this->failure)) {
-				$this->failure = JsonParser::decode($this->failure);
+			$data          = json_decode($this->failure, true);
+			if (JSON_ERROR_NONE === json_last_error()) {
+				$this->failure = $data;
 			}
 		});
 		$curl->perform();
 
-		return (null != $this->success ? $this->success : $this->failure);
+		return (array)$this->success ?? (array)$this->failure;
+	}
+
+	/**
+	 * Return a formatted string. Modified version of sprintf using colon(:)
+	 * @param string $string
+	 * @param array  $params
+	 * @return String
+	 * @throws Exception
+	 */
+	public function sprintf(string $string, ...$params): string {
+		preg_match_all('/\:([A-Za-z0-9_]+)/', $string, $matches);
+		$matches = $matches[1];
+
+		if (count($matches)) {
+			$tokens   = [];
+			$replaces = [];
+
+			foreach ($matches as $key => $value) {
+				if (count($params) > 1 || !is_array($params[0])) {
+					if (!array_key_exists($key, $params)) {
+						throw new Exception('Too few arguments, missing argument: ' . $key);
+					}
+					$replaces[] = $params[$key];
+				}
+				else {
+					if (!array_key_exists($value, $params[0])) {
+						throw new Exception('Missing array argument: ' . $key);
+					}
+					$replaces[] = $params[0][$value];
+				}
+				$tokens[] = ':' . $value;
+			}
+
+			$string = str_replace($tokens, $replaces, $string);
+		}
+
+		return $string;
 	}
 }

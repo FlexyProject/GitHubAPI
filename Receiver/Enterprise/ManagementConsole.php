@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Management Console API helps you manage your GitHub Enterprise installation.
@@ -11,23 +11,23 @@ use Scion\Http\Request;
 class ManagementConsole extends AbstractEnterprise {
 
 	/** Properties */
-	protected $hostname;
-	protected $password;
+	protected $hostname = '';
+	protected $password = '';
 
 	/**
 	 * Get password
-	 * @return mixed
+	 * @return string
 	 */
-	public function getPassword() {
+	public function getPassword(): string {
 		return $this->password;
 	}
 
 	/**
 	 * Set password
-	 * @param mixed $password
+	 * @param string $password
 	 * @return ManagementConsole
 	 */
-	public function setPassword($password) {
+	public function setPassword(string $password): ManagementConsole {
 		$this->password = $password;
 
 		return $this;
@@ -35,18 +35,18 @@ class ManagementConsole extends AbstractEnterprise {
 
 	/**
 	 * Get hostname
-	 * @return mixed
+	 * @return string
 	 */
-	public function getHostname() {
+	public function getHostname(): string {
 		return $this->hostname;
 	}
 
 	/**
 	 * Set hostname
-	 * @param mixed $hostname
+	 * @param string $hostname
 	 * @return ManagementConsole
 	 */
-	public function setHostname($hostname) {
+	public function setHostname(string $hostname): ManagementConsole {
 		$this->hostname = $hostname;
 
 		return $this;
@@ -58,9 +58,9 @@ class ManagementConsole extends AbstractEnterprise {
 	 * @param string $license
 	 * @param string $package
 	 * @param string $settings
-	 * @return mixed
+	 * @return array
 	 */
-	public function upload($license, $package, $settings = '') {
+	public function upload(string $license, string $package, string $settings = ''): array {
 		$this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
 		return $this->getApi()->request(
@@ -74,9 +74,9 @@ class ManagementConsole extends AbstractEnterprise {
 	 * @link https://developer.github.com/v3/enterprise/management_console/#upgrade-a-license-or-software-package
 	 * @param string $license
 	 * @param string $package
-	 * @return mixed
+	 * @return array
 	 */
-	public function upgrade($license = '', $package = '') {
+	public function upgrade(string $license = '', string $package = ''): array {
 		$this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
 		return $this->getApi()->request(
@@ -88,9 +88,9 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Check configuration status
 	 * @link https://developer.github.com/v3/enterprise/management_console/#check-configuration-status
-	 * @return mixed
+	 * @return array
 	 */
-	public function checkConfigurationStatus() {
+	public function checkConfigurationStatus(): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/configcheck')
 		);
@@ -99,9 +99,9 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Start a configuration process
 	 * @link https://developer.github.com/v3/enterprise/management_console/#start-a-configuration-process
-	 * @return string
+	 * @return array
 	 */
-	public function startConfigurationProcess() {
+	public function startConfigurationProcess(): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/configure'),
 			Request::METHOD_POST
@@ -111,9 +111,9 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Retrieve settings
 	 * @link https://developer.github.com/v3/enterprise/management_console/#retrieve-settings
-	 * @return string
+	 * @return array
 	 */
-	public function retrieveSettings() {
+	public function retrieveSettings(): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings')
 		);
@@ -123,9 +123,9 @@ class ManagementConsole extends AbstractEnterprise {
 	 * Modify settings
 	 * @link https://developer.github.com/v3/enterprise/management_console/#modify-settings
 	 * @param $settings
-	 * @return string
+	 * @return array
 	 */
-	public function modifySettings($settings) {
+	public function modifySettings($settings): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings settings=%s', $settings),
 			Request::METHOD_PUT
@@ -135,9 +135,9 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Check maintenance status
 	 * @link https://developer.github.com/v3/enterprise/management_console/#check-maintenance-status
-	 * @return string
+	 * @return array
 	 */
-	public function checkMaintenanceStatus() {
+	public function checkMaintenanceStatus(): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/maintenance')
 		);
@@ -146,10 +146,10 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Enable or disable maintenance mode
 	 * @link https://developer.github.com/v3/enterprise/management_console/#enable-or-disable-maintenance-mode
-	 * @param $maintenance
-	 * @return string
+	 * @param string $maintenance
+	 * @return array
 	 */
-	public function updateMaintenanceStatus($maintenance) {
+	public function updateMaintenanceStatus(string $maintenance): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/maintenance -d maintenance=%s', $maintenance),
 			Request::METHOD_POST
@@ -159,9 +159,9 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Retrieve authorized SSH keys
 	 * @link https://developer.github.com/v3/enterprise/management_console/#retrieve-authorized-ssh-keys
-	 * @return string
+	 * @return array
 	 */
-	public function retrieveAuthorizedSshKeys() {
+	public function retrieveAuthorizedSshKeys(): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys')
 		);
@@ -170,10 +170,10 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Add a new authorized SSH key
 	 * @link https://developer.github.com/v3/enterprise/management_console/#add-a-new-authorized-ssh-key
-	 * @param $authorizedKey
-	 * @return string
+	 * @param string $authorizedKey
+	 * @return array
 	 */
-	public function addNewAuthorizedSshKeys($authorizedKey) {
+	public function addNewAuthorizedSshKeys(string $authorizedKey): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s', $authorizedKey),
 			Request::METHOD_POST
@@ -183,10 +183,10 @@ class ManagementConsole extends AbstractEnterprise {
 	/**
 	 * Remove an authorized SSH key
 	 * @link https://developer.github.com/v3/enterprise/management_console/#remove-an-authorized-ssh-key
-	 * @param $authorizedKey
-	 * @return string
+	 * @param string $authorizedKey
+	 * @return array
 	 */
-	public function removeAuthorizedSshKeys($authorizedKey) {
+	public function removeAuthorizedSshKeys(string $authorizedKey): array {
 		return $this->getApi()->request(
 			sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s', $authorizedKey),
 			Request::METHOD_DELETE

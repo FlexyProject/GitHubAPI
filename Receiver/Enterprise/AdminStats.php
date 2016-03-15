@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
 /**
  * The Admin Stats API provides a variety of metrics about your installation.
@@ -12,11 +12,11 @@ class AdminStats extends AbstractEnterprise {
 	 * Get statistics
 	 * @link https://developer.github.com/v3/enterprise/admin_stats/#get-statistics
 	 * @param string $type
-	 * @return mixed
+	 * @return array
 	 */
-	public function getStatistics($type) {
+	public function getStatistics(string $type): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/enterprise/stats/:type', $type)
+			$this->getApi()->sprintf('/enterprise/stats/:type', $type)
 		);
 	}
 } 

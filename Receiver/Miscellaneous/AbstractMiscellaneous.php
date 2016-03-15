@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Miscellaneous;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Miscellaneous;
 
 abstract class AbstractMiscellaneous {
 
@@ -23,7 +23,7 @@ abstract class AbstractMiscellaneous {
 	 * Get miscellaneous
 	 * @return Miscellaneous
 	 */
-	public function getMiscellaneous() {
+	public function getMiscellaneous(): Miscellaneous {
 		return $this->miscellaneous;
 	}
 
@@ -32,7 +32,7 @@ abstract class AbstractMiscellaneous {
 	 * @param Miscellaneous $miscellaneous
 	 * @return AbstractMiscellaneous
 	 */
-	public function setMiscellaneous($miscellaneous) {
+	public function setMiscellaneous(Miscellaneous $miscellaneous): AbstractMiscellaneous {
 		$this->miscellaneous = $miscellaneous;
 
 		return $this;
@@ -42,7 +42,7 @@ abstract class AbstractMiscellaneous {
 	 * Get api
 	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
@@ -51,7 +51,7 @@ abstract class AbstractMiscellaneous {
 	 * @param AbstractApi $api
 	 * @return AbstractMiscellaneous
 	 */
-	public function setApi($api) {
+	public function setApi(AbstractApi $api): AbstractMiscellaneous {
 		$this->api = $api;
 
 		return $this;

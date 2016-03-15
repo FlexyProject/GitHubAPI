@@ -1,23 +1,23 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The DeployKeys API class provides access to repository's deploy keys.
  * @link    https://developer.github.com/v3/repos/keys/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class DeployKeys extends AbstractRepositories {
 
 	/**
 	 * List deploy keys
 	 * @link https://developer.github.com/v3/repos/keys/#list
-	 * @return mixed
+	 * @return array
 	 */
-	public function listDeployKeys() {
+	public function listDeployKeys(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
@@ -25,11 +25,11 @@ class DeployKeys extends AbstractRepositories {
 	 * Get a deploy key
 	 * @link https://developer.github.com/v3/repos/keys/#get
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getDeployKey($id) {
+	public function getDeployKey(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id)
 		);
 	}
 
@@ -38,11 +38,11 @@ class DeployKeys extends AbstractRepositories {
 	 * @link https://developer.github.com/v3/repos/keys/#create
 	 * @param string $title
 	 * @param string $key
-	 * @return mixed
+	 * @return array
 	 */
-	public function addNewDeployKey($title, $key) {
+	public function addNewDeployKey(string $title, string $key): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title' => $title,
@@ -55,11 +55,11 @@ class DeployKeys extends AbstractRepositories {
 	 * Remove a deploy key
 	 * @link https://developer.github.com/v3/repos/keys/#delete
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function removeDeployKey($id) {
+	public function removeDeployKey(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
+			$this->getApi()->sprintf('/repos/:owner/:repo/keys/:id', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id),
 			Request::METHOD_DELETE
 		);
 	}

@@ -1,23 +1,23 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Trees API class provides access to Issues's labels.
  * @link    https://developer.github.com/v3/issues/labels/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Labels extends AbstractIssues {
 
 	/**
 	 * List all labels for this repository
 	 * @link https://developer.github.com/v3/issues/labels/#list-all-labels-for-this-repository
-	 * @return mixed
+	 * @return array
 	 */
-	public function listRepositoryLabels() {
+	public function listRepositoryLabels(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo())
 		);
 	}
 
@@ -25,11 +25,11 @@ class Labels extends AbstractIssues {
 	 * Get a single label
 	 * @link https://developer.github.com/v3/issues/labels/#get-a-single-label
 	 * @param string $name
-	 * @return mixed
+	 * @return array
 	 */
-	public function getLabel($name) {
+	public function getLabel(string $name): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 	}
 
@@ -38,11 +38,11 @@ class Labels extends AbstractIssues {
 	 * @link https://developer.github.com/v3/issues/labels/#create-a-label
 	 * @param string $name
 	 * @param string $color
-	 * @return mixed
+	 * @return array
 	 */
-	public function createLabel($name, $color) {
+	public function createLabel(string $name, string $color): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'name'  => $name,
@@ -56,11 +56,11 @@ class Labels extends AbstractIssues {
 	 * @link https://developer.github.com/v3/issues/labels/#update-a-label
 	 * @param string $name
 	 * @param string $color
-	 * @return mixed
+	 * @return array
 	 */
-	public function updateLabel($name, $color) {
+	public function updateLabel(string $name, string $color): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name),
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name),
 			Request::METHOD_PATCH,
 			[
 				'color' => $color
@@ -72,11 +72,11 @@ class Labels extends AbstractIssues {
 	 * Delete a label
 	 * @link https://developer.github.com/v3/issues/labels/#delete-a-label
 	 * @param string $name
-	 * @return boolean
+	 * @return bool
 	 */
-	public function deleteLabel($name) {
+	public function deleteLabel(string $name): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
+			$this->getApi()->sprintf('/repos/:owner/:repo/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $name)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -90,11 +90,11 @@ class Labels extends AbstractIssues {
 	 * List labels on an issue
 	 * @link https://developer.github.com/v3/issues/labels/#list-labels-on-an-issue
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function listIssueLabels($number) {
+	public function listIssueLabels(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -102,11 +102,11 @@ class Labels extends AbstractIssues {
 	 * Add labels to an issue
 	 * @link https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function addIssueLabels($number) {
+	public function addIssueLabels(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_POST
 		);
 	}
@@ -116,11 +116,11 @@ class Labels extends AbstractIssues {
 	 * @link https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 	 * @param int    $number
 	 * @param string $name
-	 * @return boolean
+	 * @return bool
 	 */
-	public function removeIssueLabel($number, $name) {
+	public function removeIssueLabel(int $number, string $name): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $name),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels/:name', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number, $name),
 			Request::METHOD_DELETE
 		);
 
@@ -135,11 +135,11 @@ class Labels extends AbstractIssues {
 	 * Replace all labels for an issue
 	 * @link https://developer.github.com/v3/issues/labels/#replace-all-labels-for-an-issue
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function replaceIssuesLabels($number) {
+	public function replaceIssuesLabels(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_PUT
 		);
 	}
@@ -148,11 +148,11 @@ class Labels extends AbstractIssues {
 	 * Remove all labels from an issue
 	 * @link https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 	 * @param int $number
-	 * @return boolean
+	 * @return bool
 	 */
-	public function removeIssueLabels($number) {
+	public function removeIssueLabels(int $number): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_DELETE
 		);
 
@@ -167,11 +167,11 @@ class Labels extends AbstractIssues {
 	 * Get labels for every issue in a milestone
 	 * @link https://developer.github.com/v3/issues/labels/#get-labels-for-every-issue-in-a-milestone
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function getIssueLabelsInMilestone($number) {
+	public function getIssueLabelsInMilestone(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number/labels', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 } 

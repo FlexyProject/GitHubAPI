@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Commits API class provides access to GitData's commits.
  * @link    https://developer.github.com/v3/git/commits/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class Commits extends AbstractGitData {
 
@@ -15,11 +15,11 @@ class Commits extends AbstractGitData {
 	 * Get a Commit
 	 * @link https://developer.github.com/v3/git/commits/#get-a-commit
 	 * @param string $sha
-	 * @return string
+	 * @return array
 	 */
-	public function get($sha) {
+	public function get(string $sha): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/commits/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/commits/:sha', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha)
 		);
 	}
 
@@ -32,12 +32,12 @@ class Commits extends AbstractGitData {
 	 * @param string       $name
 	 * @param string       $email
 	 * @param string       $date
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function create($message, $tree, $parents, $name = null, $email = null, $date = 'now') {
+	public function create(string $message, string $tree, $parents, string $name = null, string $email = null, string $date = 'now'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/commits', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/commits', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'message' => $message,

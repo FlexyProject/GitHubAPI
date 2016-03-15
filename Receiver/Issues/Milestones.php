@@ -1,14 +1,14 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
-use Scion\Http\Request;
-use Scion\GitHub\AbstractApi;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
+use FlexyProject\GitHub\AbstractApi;
 
 /**
  * The Trees API class provides access to Issues's milestones.
  * @link    https://developer.github.com/v3/issues/milestones/
- * @package Scion\GitHub\Receiver\Issues
+ * @package FlexyProject\GitHub\Receiver\Issues
  */
 class Milestones extends AbstractIssues {
 
@@ -18,11 +18,11 @@ class Milestones extends AbstractIssues {
 	 * @param string $state
 	 * @param string $sort
 	 * @param string $direction
-	 * @return mixed
+	 * @return array
 	 */
-	public function listMilestones($state = AbstractApi::STATE_OPEN, $sort = AbstractApi::SORT_DUE_DATE, $direction = AbstractApi::DIRECTION_ASC) {
+	public function listMilestones(string $state = AbstractApi::STATE_OPEN, string $sort = AbstractApi::SORT_DUE_DATE, string $direction = AbstractApi::DIRECTION_ASC): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones?:args', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones?:args', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
 				'state'     => $state,
 				'sort'      => $sort,
 				'direction' => $direction
@@ -34,11 +34,11 @@ class Milestones extends AbstractIssues {
 	 * Get a single milestone
 	 * @link https://developer.github.com/v3/issues/milestones/#get-a-single-milestone
 	 * @param int $number
-	 * @return mixed
+	 * @return array
 	 */
-	public function getMilestone($number) {
+	public function getMilestone(int $number): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number)
 		);
 	}
 
@@ -49,11 +49,11 @@ class Milestones extends AbstractIssues {
 	 * @param string $state
 	 * @param string $description
 	 * @param string $dueOn
-	 * @return mixed
+	 * @return array
 	 */
-	public function createMilestone($title, $state = AbstractApi::STATE_OPEN, $description = '', $dueOn = '') {
+	public function createMilestone(string $title, string $state = AbstractApi::STATE_OPEN, string $description = '', string $dueOn = ''): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones', $this->getIssues()->getOwner(), $this->getIssues()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'title'       => $title,
@@ -72,11 +72,11 @@ class Milestones extends AbstractIssues {
 	 * @param string $state
 	 * @param string $description
 	 * @param string $dueOn
-	 * @return mixed
+	 * @return array
 	 */
-	public function updateMilestone($number, $title = '', $state = AbstractApi::STATE_OPEN, $description = '', $dueOn = '') {
+	public function updateMilestone(int $number, string $title = '', string $state = AbstractApi::STATE_OPEN, string $description = '', string $dueOn = ''): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_PATCH,
 			[
 				'title'       => $title,
@@ -91,11 +91,11 @@ class Milestones extends AbstractIssues {
 	 * Delete a milestone
 	 * @link https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 	 * @param int $number
-	 * @return boolean
+	 * @return bool
 	 */
-	public function deleteMilestone($number) {
+	public function deleteMilestone(int $number): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
+			$this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number', $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number),
 			Request::METHOD_DELETE
 		);
 

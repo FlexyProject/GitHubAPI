@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class give you access to the Users API.
  * @link    https://developer.github.com/v3/users/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Users extends AbstractReceiver {
 
@@ -19,24 +19,24 @@ class Users extends AbstractReceiver {
 	 * Get a single user
 	 * @link https://developer.github.com/v3/users/#get-a-single-user
 	 * @param string $username
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getSingleUser($username) {
+	public function getSingleUser(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username', $username)
+			$this->getApi()->sprintf('/users/:username', $username)
 		);
 	}
 
 	/**
 	 * Get the authenticated user
 	 * @link https://developer.github.com/v3/users/#get-the-authenticated-user
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getUser() {
+	public function getUser(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user')
+			$this->getApi()->sprintf('/user')
 		);
 	}
 
@@ -50,12 +50,12 @@ class Users extends AbstractReceiver {
 	 * @param string $location
 	 * @param bool   $hireable
 	 * @param string $bio
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function updateUser($name = null, $email = null, $blog = null, $company = null, $location = null, $hireable = false, $bio = null) {
+	public function updateUser(string $name = null, string $email = null, string $blog = null, string $company = null, string $location = null, bool $hireable = false, string $bio = null): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user'),
+			$this->getApi()->sprintf('/user'),
 			Request::METHOD_PATCH,
 			[
 				'name'     => $name,
@@ -73,12 +73,12 @@ class Users extends AbstractReceiver {
 	 * Get all users
 	 * @link https://developer.github.com/v3/users/#get-all-users
 	 * @param string $since
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getAllUsers($since = null) {
+	public function getAllUsers(string $since = null): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users?:args', http_build_query(['since' => $since]))
+			$this->getApi()->sprintf('/users?:args', http_build_query(['since' => $since]))
 		);
 	}
 }

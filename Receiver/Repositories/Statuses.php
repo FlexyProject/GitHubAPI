@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Statuses API class provides access to repository's statuses.
  * @link    https://developer.github.com/v3/repos/statuses/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Statuses extends AbstractRepositories {
 
@@ -18,11 +18,11 @@ class Statuses extends AbstractRepositories {
 	 * @param string $targetUrl
 	 * @param string $description
 	 * @param string $context
-	 * @return mixed
+	 * @return array
 	 */
-	public function createStatus($sha, $state, $targetUrl = null, $description = null, $context = 'default') {
+	public function createStatus(string $sha, string $state, string $targetUrl = null, string $description = null, string $context = 'default'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/statuses/:sha', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha),
+			$this->getApi()->sprintf('/repos/:owner/:repo/statuses/:sha', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha),
 			Request::METHOD_POST,
 			[
 				'state'       => $state,
@@ -37,11 +37,11 @@ class Statuses extends AbstractRepositories {
 	 * List Statuses for a specific Ref
 	 * @link https://developer.github.com/v3/repos/statuses/#list-statuses-for-a-specific-ref
 	 * @param string $ref
-	 * @return mixed
+	 * @return array
 	 */
-	public function listStatuses($ref) {
+	public function listStatuses(string $ref): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits/:ref/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/statuses', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 
@@ -49,11 +49,11 @@ class Statuses extends AbstractRepositories {
 	 * Get the combined Status for a specific Ref
 	 * @link https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-ref
 	 * @param string $ref
-	 * @return mixed
+	 * @return array
 	 */
-	public function getCombinedStatus($ref) {
+	public function getCombinedStatus(string $ref): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/commits/:ref/status', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
+			$this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/status', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref)
 		);
 	}
 } 

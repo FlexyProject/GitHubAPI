@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Starring API class provide a feature that lets users bookmark repositories.
@@ -14,11 +14,11 @@ class Starring extends AbstractActivity {
 	/**
 	 * List Stargazers
 	 * @link https://developer.github.com/v3/activity/starring/#list-stargazers
-	 * @return mixed
+	 * @return array
 	 */
-	public function listStargazers() {
+	public function listStargazers(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/stargazers', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -27,29 +27,29 @@ class Starring extends AbstractActivity {
 	 * @link https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 	 * @param string $sort
 	 * @param string $direction
-	 * @param null   $username
-	 * @return mixed
+	 * @param string $username
+	 * @return array
 	 */
-	public function listRepositories($sort = AbstractApi::SORT_CREATED, $direction = AbstractApi::DIRECTION_DESC, $username = null) {
+	public function listRepositories(string $sort = AbstractApi::SORT_CREATED, string $direction = AbstractApi::DIRECTION_DESC, string $username = null): array {
 		if (null !== $username) {
 			return $this->getApi()->request(
-				$this->getApi()->getString()->sprintf('/users/:username/starred?:args', $username, http_build_query(['sort' => $sort, 'direction' => $direction]))
+				$this->getApi()->sprintf('/users/:username/starred?:args', $username, http_build_query(['sort' => $sort, 'direction' => $direction]))
 			);
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred?:args', http_build_query(['sort' => $sort, 'direction' => $direction]))
+			$this->getApi()->sprintf('/user/starred?:args', http_build_query(['sort' => $sort, 'direction' => $direction]))
 		);
 	}
 
 	/**
 	 * Check if you are starring a repository
 	 * @link https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
-	 * @return boolean
+	 * @return bool
 	 */
-	public function checkYouAreStarringRepository() {
+	public function checkYouAreStarringRepository(): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -62,11 +62,11 @@ class Starring extends AbstractActivity {
 	/**
 	 * Star a repository
 	 * @link https://developer.github.com/v3/activity/starring/#star-a-repository
-	 * @return boolean
+	 * @return bool
 	 */
-	public function starRepository() {
+	public function starRepository(): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_PUT
 		);
 
@@ -80,11 +80,11 @@ class Starring extends AbstractActivity {
 	/**
 	 * Unstar a repository
 	 * @link https://developer.github.com/v3/activity/starring/#unstar-a-repository
-	 * @return boolean
+	 * @return bool
 	 */
-	public function unStarRepository() {
+	public function unStarRepository(): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
+			$this->getApi()->sprintf('/user/starred/:owner/:repo', $this->getActivity()->getOwner(), $this->getActivity()->getRepo()),
 			Request::METHOD_DELETE
 		);
 

@@ -1,7 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Issues;
+namespace FlexyProject\GitHub\Receiver\Issues;
 
-use Scion\GitHub\Receiver\Issues;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Issues;
 
 abstract class AbstractIssues {
 
@@ -21,7 +22,7 @@ abstract class AbstractIssues {
 	 * Get issues
 	 * @return Issues
 	 */
-	public function getIssues() {
+	public function getIssues(): Issues {
 		return $this->issues;
 	}
 
@@ -30,7 +31,7 @@ abstract class AbstractIssues {
 	 * @param Issues $issues
 	 * @return AbstractIssues
 	 */
-	public function setIssues($issues) {
+	public function setIssues(Issues $issues): AbstractIssues {
 		$this->issues = $issues;
 
 		return $this;
@@ -38,18 +39,18 @@ abstract class AbstractIssues {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param AbstractApi $api
 	 * @return AbstractIssues
 	 */
-	public function setApi($api) {
+	public function setApi(AbstractApi $api): AbstractIssues {
 		$this->api = $api;
 
 		return $this;

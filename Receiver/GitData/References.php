@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\Http\Request;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The References API class provides access to GitData's references
  * @link    https://developer.github.com/v3/git/refs/
- * @package Scion\GitHub\Receiver\GitData
+ * @package FlexyProject\GitHub\Receiver\GitData
  */
 class References extends AbstractGitData {
 
@@ -14,24 +14,24 @@ class References extends AbstractGitData {
 	 * Get a Reference
 	 * @link https://developer.github.com/v3/git/refs/#get-a-reference
 	 * @param string $branch
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function get($branch) {
+	public function get(string $branch): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/heads/:branch', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $branch)
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/heads/:branch', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $branch)
 		);
 	}
 
 	/**
 	 * Get all References
 	 * @link https://developer.github.com/v3/git/refs/#get-all-references
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getAll() {
+	public function getAll(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo())
 		);
 	}
 
@@ -40,12 +40,12 @@ class References extends AbstractGitData {
 	 * @link https://developer.github.com/v3/git/refs/#create-a-reference
 	 * @param string $ref
 	 * @param string $sha
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function create($ref, $sha) {
+	public function create(string $ref, string $sha): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(), $this->getGitData()->getRepo()),
 			Request::METHOD_POST,
 			[
 				'ref' => $ref,
@@ -57,15 +57,15 @@ class References extends AbstractGitData {
 	/**
 	 * Update a Reference
 	 * @link https://developer.github.com/v3/git/refs/#update-a-reference
-	 * @param        $ref
+	 * @param string $ref
 	 * @param string $sha
 	 * @param bool   $force
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function update($ref, $sha, $force = false) {
+	public function update(string $ref, string $sha, bool $force = false): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
 			Request::METHOD_POST,
 			[
 				'sha'   => $sha,
@@ -78,12 +78,12 @@ class References extends AbstractGitData {
 	 * Delete a Reference
 	 * @link https://developer.github.com/v3/git/refs/#delete-a-reference
 	 * @param string $ref
-	 * @return boolean
+	 * @return bool
 	 * @throws \Exception
 	 */
-	public function delete($ref) {
+	public function delete(string $ref): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
+			$this->getApi()->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref),
 			Request::METHOD_DELETE
 		);
 

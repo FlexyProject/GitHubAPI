@@ -1,7 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\GitData;
+namespace FlexyProject\GitHub\Receiver\GitData;
 
-use Scion\GitHub\Receiver\GitData;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\GitData;
 
 abstract class AbstractGitData {
 
@@ -22,7 +23,7 @@ abstract class AbstractGitData {
 	 * Get gitData
 	 * @return GitData
 	 */
-	public function getGitData() {
+	public function getGitData(): GitData {
 		return $this->gitData;
 	}
 
@@ -31,7 +32,7 @@ abstract class AbstractGitData {
 	 * @param GitData $gitData
 	 * @return AbstractGitData
 	 */
-	public function setGitData($gitData) {
+	public function setGitData(GitData $gitData): AbstractGitData {
 		$this->gitData = $gitData;
 
 		return $this;
@@ -39,18 +40,18 @@ abstract class AbstractGitData {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param AbstractApi $api
 	 * @return AbstractGitData
 	 */
-	public function setApi($api) {
+	public function setApi(AbstractApi $api): AbstractGitData {
 		$this->api = $api;
 
 		return $this;

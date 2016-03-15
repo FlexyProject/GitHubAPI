@@ -1,8 +1,8 @@
 {
-	"name": "scion/githubapi",
+	"name": "flexyproject/githubapi",
 	"type": "library",
-	"description": "GitHub API v3 Client and WebHook wrapper, written in PHP5",
-	"homepage": "https://github.com/Scion-Framework/GitHubAPI",
+	"description": "PHP7 Client & WebHook wrapper for GitHub API v3",
+	"homepage": "https://github.com/FlexyProject/GitHubAPI",
 	"keywords": [
 		"github",
 		"api"
@@ -15,18 +15,14 @@
 		}
 	],
 	"require": {
-		"php": ">=5.6.1",
-		"ext-curl": "*",
-		"scion/crypt": "*",
-		"scion/file": "*",
-		"scion/http": "*",
-		"scion/stdlib": "*",
-		"scion/utils": "*",
-		"scion/validator": "*"
+		"php": ">=7",
+		"symfony/http-foundation": "^3.0",
+		"zendframework/zend-crypt": "^2.6",
+		"flexyproject/curl": "^1.1"
 	},
 	"autoload": {
 		"psr-4": {
-			"Scion\\GitHub\\": "./"
+			"FlexyProject\\GitHub\\": "./"
 		}
 	}
 }

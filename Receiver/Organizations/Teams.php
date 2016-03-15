@@ -1,12 +1,12 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Teams API class gives you access to the available organization's teams.
- * @package Scion\GitHub\Receiver\Organizations
+ * @package FlexyProject\GitHub\Receiver\Organizations
  */
 class Teams extends AbstractOrganizations {
 
@@ -14,12 +14,12 @@ class Teams extends AbstractOrganizations {
 	 * List teams
 	 * @link https://developer.github.com/v3/orgs/teams/#list-teams
 	 * @param string $org
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function listTeams($org) {
+	public function listTeams(string $org): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/teams', $org)
+			$this->getApi()->sprintf('/orgs/:org/teams', $org)
 		);
 	}
 
@@ -27,12 +27,12 @@ class Teams extends AbstractOrganizations {
 	 * Get team
 	 * @link https://developer.github.com/v3/orgs/teams/#get-team
 	 * @param int $id
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getTeam($id) {
+	public function getTeam(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id)
+			$this->getApi()->sprintf('/teams/:id', (string)$id)
 		);
 	}
 
@@ -44,12 +44,12 @@ class Teams extends AbstractOrganizations {
 	 * @param null|string $description
 	 * @param array       $repoNames
 	 * @param string      $permission
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function createTeam($org, $name, $description = null, $repoNames = [], $permission = AbstractApi::PERMISSION_PULL) {
+	public function createTeam(string $org, string $name, string $description = null, array $repoNames = [], string $permission = AbstractApi::PERMISSION_PULL): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/teams', $org),
+			$this->getApi()->sprintf('/orgs/:org/teams', $org),
 			Request::METHOD_POST,
 			[
 				'name'        => $name,
@@ -67,12 +67,12 @@ class Teams extends AbstractOrganizations {
 	 * @param string      $name
 	 * @param null|string $description
 	 * @param string      $permission
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function editTeam($id, $name, $description = null, $permission = AbstractApi::PERMISSION_PULL) {
+	public function editTeam(int $id, string $name, string $description = null, string $permission = AbstractApi::PERMISSION_PULL): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id),
+			$this->getApi()->sprintf('/teams/:id', (string)$id),
 			Request::METHOD_PATCH,
 			[
 				'name'        => $name,
@@ -89,9 +89,9 @@ class Teams extends AbstractOrganizations {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function deleteTeam($id) {
+	public function deleteTeam(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id', (string)$id),
+			$this->getApi()->sprintf('/teams/:id', (string)$id),
 			Request::METHOD_DELETE
 		);
 
@@ -106,12 +106,12 @@ class Teams extends AbstractOrganizations {
 	 * List team members
 	 * @link https://developer.github.com/v3/orgs/teams/#list-team-members
 	 * @param int $id
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function listTeamMembers($id) {
+	public function listTeamMembers(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/members', (string)$id)
+			$this->getApi()->sprintf('/teams/:id/members', (string)$id)
 		);
 	}
 
@@ -120,12 +120,12 @@ class Teams extends AbstractOrganizations {
 	 * @link https://developer.github.com/v3/orgs/teams/#get-team-membership
 	 * @param int    $id
 	 * @param string $username
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getTeamMembership($id, $username) {
+	public function getTeamMembership(int $id, string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username)
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username)
 		);
 	}
 
@@ -134,12 +134,12 @@ class Teams extends AbstractOrganizations {
 	 * @link https://developer.github.com/v3/orgs/teams/#add-team-membership
 	 * @param int    $id
 	 * @param string $username
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function addTeamMembership($id, $username) {
+	public function addTeamMembership(int $id, string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
 			Request::METHOD_PUT
 		);
 	}
@@ -152,9 +152,9 @@ class Teams extends AbstractOrganizations {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function removeTeamMembership($id, $username) {
+	public function removeTeamMembership(int $id, string $username): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
+			$this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
 			Request::METHOD_DELETE
 		);
 
@@ -169,12 +169,12 @@ class Teams extends AbstractOrganizations {
 	 * List team repos
 	 * @link https://developer.github.com/v3/orgs/teams/#list-team-repos
 	 * @param int $id
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function listTeamRepos($id) {
+	public function listTeamRepos(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos', (string)$id)
+			$this->getApi()->sprintf('/teams/:id/repos', (string)$id)
 		);
 	}
 
@@ -185,9 +185,9 @@ class Teams extends AbstractOrganizations {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function checkTeamManagesRepository($id) {
+	public function checkTeamManagesRepository(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo())
+			$this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo())
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -201,12 +201,12 @@ class Teams extends AbstractOrganizations {
 	 * Add team repository
 	 * @link https://developer.github.com/v3/orgs/teams/#add-team-repo
 	 * @param int $id
-	 * @return bool|string
+	 * @return bool|array
 	 * @throws \Exception
 	 */
-	public function addTeamRepository($id) {
+	public function addTeamRepository(int $id) {
 		$return = $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:org/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
+			$this->getApi()->sprintf('/teams/:id/repos/:org/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
 			Request::METHOD_PUT
 		);
 
@@ -220,12 +220,13 @@ class Teams extends AbstractOrganizations {
 	/**
 	 * Remove team repository
 	 * @link https://developer.github.com/v3/orgs/teams/#remove-team-repo
+	 * @param int $id
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function removeTeamRepository() {
+	public function removeTeamRepository(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
+			$this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id, $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()),
 			Request::METHOD_DELETE
 		);
 
@@ -239,12 +240,12 @@ class Teams extends AbstractOrganizations {
 	/**
 	 * List user teams
 	 * @link https://developer.github.com/v3/orgs/teams/#list-user-teams
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function lisUserTeams() {
+	public function lisUserTeams(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/user/teams')
+			$this->getApi()->sprintf('/user/teams')
 		);
 	}
 }

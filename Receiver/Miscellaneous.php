@@ -1,10 +1,10 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
 /**
  * This class is a miscellaneous set of APIs which provide access to top level GitHub resources and info.
  * @link    https://developer.github.com/v3/misc/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Miscellaneous extends AbstractReceiver {
 

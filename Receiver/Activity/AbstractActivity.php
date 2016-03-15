@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Activity;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Activity;
 
 abstract class AbstractActivity {
 
@@ -22,16 +22,16 @@ abstract class AbstractActivity {
 	 * Get activity
 	 * @return Activity
 	 */
-	public function getActivity() {
+	public function getActivity(): Activity {
 		return $this->activity;
 	}
 
 	/**
 	 * Set activity
 	 * @param Activity $activity
-	 * @return $this
+	 * @return AbstractActivity
 	 */
-	public function setActivity($activity) {
+	public function setActivity(Activity $activity): AbstractActivity {
 		$this->activity = $activity;
 
 		return $this;
@@ -41,16 +41,16 @@ abstract class AbstractActivity {
 	 * Get api
 	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
 	/**
 	 * Set api
 	 * @param AbstractApi $api
-	 * @return $this
+	 * @return AbstractActivity
 	 */
-	public function setApi(AbstractApi $api) {
+	public function setApi(AbstractApi $api): AbstractActivity {
 		$this->api = $api;
 
 		return $this;

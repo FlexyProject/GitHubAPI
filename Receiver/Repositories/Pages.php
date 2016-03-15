@@ -1,43 +1,43 @@
 <?php
-namespace Scion\GitHub\Receiver\Repositories;
+namespace FlexyProject\GitHub\Receiver\Repositories;
 
 /**
  * The Pages API class provides access to repository's pages.
  * @link    https://developer.github.com/v3/repos/pages/
- * @package Scion\GitHub\Receiver\Repositories
+ * @package FlexyProject\GitHub\Receiver\Repositories
  */
 class Pages extends AbstractRepositories {
 
 	/**
 	 * Get information about a Pages site
 	 * @link https://developer.github.com/v3/repos/pages/#get-information-about-a-pages-site
-	 * @return mixed
+	 * @return array
 	 */
-	public function getInformation() {
+	public function getInformation(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
 	/**
 	 * List Pages builds
 	 * @link https://developer.github.com/v3/repos/pages/#list-pages-builds
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPagesBuilds() {
+	public function listPagesBuilds(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages/builds', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages/builds', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 
 	/**
 	 * List latest Pages build
 	 * @link https://developer.github.com/v3/repos/pages/#list-latest-pages-build
-	 * @return mixed
+	 * @return array
 	 */
-	public function listLatestPagesBuilds() {
+	public function listLatestPagesBuilds(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/pages/builds/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/pages/builds/latest', $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo())
 		);
 	}
 }

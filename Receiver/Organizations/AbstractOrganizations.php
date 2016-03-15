@@ -1,8 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Organizations;
+namespace FlexyProject\GitHub\Receiver\Organizations;
 
-use Scion\GitHub\AbstractApi;
-use Scion\GitHub\Receiver\Organizations;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Organizations;
 
 abstract class AbstractOrganizations {
 
@@ -23,16 +23,16 @@ abstract class AbstractOrganizations {
 	 * Get organizations
 	 * @return Organizations
 	 */
-	public function getOrganizations() {
+	public function getOrganizations(): Organizations {
 		return $this->organizations;
 	}
 
 	/**
 	 * Set organizations
-	 * @param mixed $organizations
+	 * @param Organizations $organizations
 	 * @return AbstractOrganizations
 	 */
-	public function setOrganizations($organizations) {
+	public function setOrganizations(Organizations $organizations): AbstractOrganizations {
 		$this->organizations = $organizations;
 
 		return $this;
@@ -42,7 +42,7 @@ abstract class AbstractOrganizations {
 	 * Get api
 	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi {
 		return $this->api;
 	}
 
@@ -51,7 +51,7 @@ abstract class AbstractOrganizations {
 	 * @param mixed $api
 	 * @return AbstractOrganizations
 	 */
-	public function setApi($api) {
+	public function setApi(AbstractApi $api): AbstractOrganizations {
 		$this->api = $api;
 
 		return $this;

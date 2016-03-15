@@ -1,7 +1,8 @@
 <?php
-namespace Scion\GitHub\Receiver\Gists;
+namespace FlexyProject\GitHub\Receiver\Gists;
 
-use Scion\GitHub\Receiver\Gists;
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Gists;
 
 abstract class AbstractGists {
 
@@ -22,7 +23,7 @@ abstract class AbstractGists {
 	 * Get gists
 	 * @return Gists
 	 */
-	public function getGists() {
+	public function getGists(): Gists {
 		return $this->gists;
 	}
 
@@ -31,7 +32,7 @@ abstract class AbstractGists {
 	 * @param Gists $gists
 	 * @return AbstractGists
 	 */
-	public function setGists($gists) {
+	public function setGists(Gists $gists): AbstractGists {
 		$this->gists = $gists;
 
 		return $this;
@@ -39,18 +40,18 @@ abstract class AbstractGists {
 
 	/**
 	 * Get api
-	 * @return \Scion\GitHub\AbstractApi
+	 * @return AbstractApi
 	 */
-	public function getApi() {
+	public function getApi(): AbstractApi{
 		return $this->api;
 	}
 
 	/**
 	 * Set api
-	 * @param \Scion\GitHub\AbstractApi $api
+	 * @param AbstractApi $api
 	 * @return AbstractGists
 	 */
-	public function setApi($api) {
+	public function setApi(AbstractApi $api): AbstractGists {
 		$this->api = $api;
 
 		return $this;

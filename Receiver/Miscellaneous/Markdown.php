@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver\Miscellaneous;
+namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use Scion\GitHub\AbstractApi;
-use Scion\Http\Request;
+use FlexyProject\GitHub\AbstractApi;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * The Markdown API class lets you render Markdown documents.
  * @link    https://developer.github.com/v3/markdown/
- * @package Scion\GitHub\Receiver\Miscellaneous
+ * @package FlexyProject\GitHub\Receiver\Miscellaneous
  */
 class Markdown extends AbstractMiscellaneous {
 
@@ -17,9 +17,9 @@ class Markdown extends AbstractMiscellaneous {
 	 * @param string $text    The Markdown text to render
 	 * @param string $mode    The rendering mode.
 	 * @param string $context The repository context. Only taken into account when rendering as gfm
-	 * @return string
+	 * @return array
 	 */
-	public function render($text, $mode = AbstractApi::MODE_MARKDOWN, $context = '') {
+	public function render(string $text, string $mode = AbstractApi::MODE_MARKDOWN, string $context = ''): array {
 		return $this->getApi()->request(
 			'/markdown',
 			Request::METHOD_POST,
@@ -35,9 +35,9 @@ class Markdown extends AbstractMiscellaneous {
 	 * Render a Markdown document in raw mode
 	 * @link https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 	 * @param string $file
-	 * @return string
+	 * @return array
 	 */
-	public function renderRaw($file) {
+	public function renderRaw(string $file): array {
 		return $this->getApi()->setAccept('text/plain')->request(
 			'/markdown/raw',
 			Request::METHOD_POST,

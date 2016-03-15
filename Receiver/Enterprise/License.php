@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Enterprise;
+namespace FlexyProject\GitHub\Receiver\Enterprise;
 
 /**
  * The License API provides information on your Enterprise license.
@@ -11,9 +11,9 @@ class License extends AbstractEnterprise {
 	/**
 	 * Get license information
 	 * @link https://developer.github.com/v3/enterprise/license/#get-license-information
-	 * @return mixed
+	 * @return array
 	 */
-	public function getLicenseInformation() {
+	public function getLicenseInformation(): array {
 		return $this->getApi()->request(
 			sprintf('/enterprise/settings/license')
 		);

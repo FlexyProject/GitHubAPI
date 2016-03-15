@@ -1,7 +1,7 @@
 <?php
-namespace Scion\GitHub\Event;
+namespace FlexyProject\GitHub\Event;
 
-use Scion\GitHub\WebHook;
+use FlexyProject\GitHub\WebHook;
 
 interface EventInterface {
 
@@ -15,5 +15,5 @@ interface EventInterface {
 	 * Parse raw data
 	 * @return Payload
 	 */
-	public function parse();
+	public function parse(): Payload;
 }

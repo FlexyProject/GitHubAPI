@@ -1,13 +1,13 @@
 <?php
-namespace Scion\GitHub\Receiver;
+namespace FlexyProject\GitHub\Receiver;
 
-use Scion\Http\Request;
-use Scion\Stdlib\DateTime;
+use DateTime;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * This class provides access to Gists API.
  * @link    https://developer.github.com/v3/gists/
- * @package Scion\GitHub\Receiver
+ * @package FlexyProject\GitHub\Receiver
  */
 class Gists extends AbstractReceiver {
 
@@ -19,16 +19,16 @@ class Gists extends AbstractReceiver {
 	 * @link https://developer.github.com/v3/gists/#list-gists
 	 * @param string $username
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listGists($username = null, $since = '1970-01-01') {
+	public function listGists(string $username = null, string $since = '1970-01-01'): array {
 		$url = '/gists';
 		if (null !== $username) {
 			$url = '/users/:username/gists';
 		}
 
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf(':url?:arg', $url, $username, http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -36,11 +36,11 @@ class Gists extends AbstractReceiver {
 	 * List all public gists:
 	 * @link https://developer.github.com/v3/gists/#list-gists
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicGists($since = '1970-01-01') {
+	public function listPublicGists(string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf('/gists/public?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -48,11 +48,11 @@ class Gists extends AbstractReceiver {
 	 * List the authenticated user’s starred gists
 	 * @link https://developer.github.com/v3/gists/#list-gists
 	 * @param string $since
-	 * @return mixed
+	 * @return array
 	 */
-	public function listUsersStarredGists($since = '1970-01-01') {
+	public function listUsersStarredGists(string $since = '1970-01-01'): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
+			$this->getApi()->sprintf('/gists/starred?:arg', http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)]))
 		);
 	}
 
@@ -60,11 +60,11 @@ class Gists extends AbstractReceiver {
 	 * Get a single gist
 	 * @link https://developer.github.com/v3/gists/#get-a-single-gist
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function getGist($id) {
+	public function getGist(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id)
+			$this->getApi()->sprintf('/gists/:id', $id)
 		);
 	}
 
@@ -73,12 +73,12 @@ class Gists extends AbstractReceiver {
 	 * @link https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 	 * @param string $id
 	 * @param string $sha
-	 * @return string
+	 * @return array
 	 * @throws \Exception
 	 */
-	public function getGistRevision($id, $sha) {
+	public function getGistRevision(string $id, string $sha): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/:sha', $id, $sha)
+			$this->getApi()->sprintf('/gists/:id/:sha', $id, $sha)
 		);
 	}
 
@@ -88,11 +88,11 @@ class Gists extends AbstractReceiver {
 	 * @param string $files
 	 * @param string $description
 	 * @param bool   $public
-	 * @return mixed
+	 * @return array
 	 */
-	public function createGist($files, $description = null, $public = false) {
+	public function createGist(string $files, string $description = null, bool $public = false): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists'),
+			$this->getApi()->sprintf('/gists'),
 			Request::METHOD_POST,
 			[
 				'file'        => $files,
@@ -110,11 +110,11 @@ class Gists extends AbstractReceiver {
 	 * @param string $files
 	 * @param string $content
 	 * @param string $filename
-	 * @return mixed
+	 * @return array
 	 */
-	public function editGist($id, $description = '', $files = '{}', $content = '', $filename = '') {
+	public function editGist(int $id, string $description = '', string $files = '{}', string $content = '', string $filename = ''): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id),
+			$this->getApi()->sprintf('/gists/:id', $id),
 			Request::METHOD_PATCH,
 			[
 				'description' => $description,
@@ -129,11 +129,11 @@ class Gists extends AbstractReceiver {
 	 * List gist commits
 	 * @link https://developer.github.com/v3/gists/#list-gist-commits
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function listGistsCommits($id) {
+	public function listGistsCommits(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/commits', $id)
+			$this->getApi()->sprintf('/gists/:id/commits', $id)
 		);
 	}
 
@@ -141,11 +141,11 @@ class Gists extends AbstractReceiver {
 	 * Star a gist
 	 * @link https://developer.github.com/v3/gists/#star-a-gist
 	 * @param int $id
-	 * @return mixed
+	 * @return bool
 	 */
-	public function starGist($id) {
+	public function starGist(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id),
+			$this->getApi()->sprintf('/gists/:id/star', $id),
 			Request::METHOD_PUT
 		);
 
@@ -160,11 +160,11 @@ class Gists extends AbstractReceiver {
 	 * Unstar a gist
 	 * @link https://developer.github.com/v3/gists/#unstar-a-gist
 	 * @param int $id
-	 * @return mixed
+	 * @return bool
 	 */
-	public function unStarGist($id) {
+	public function unStarGist(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id),
+			$this->getApi()->sprintf('/gists/:id/star', $id),
 			Request::METHOD_DELETE
 		);
 
@@ -179,11 +179,11 @@ class Gists extends AbstractReceiver {
 	 * Check if a gist is starred
 	 * @link https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 	 * @param int $id
-	 * @return mixed
+	 * @return bool
 	 */
-	public function checkGistIsStarred($id) {
+	public function checkGistIsStarred(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/star', $id)
+			$this->getApi()->sprintf('/gists/:id/star', $id)
 		);
 
 		if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
@@ -197,11 +197,11 @@ class Gists extends AbstractReceiver {
 	 * Fork a gist
 	 * @link https://developer.github.com/v3/gists/#fork-a-gist
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function forkGist($id) {
+	public function forkGist(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/forks', $id),
+			$this->getApi()->sprintf('/gists/:id/forks', $id),
 			Request::METHOD_POST
 		);
 	}
@@ -210,11 +210,11 @@ class Gists extends AbstractReceiver {
 	 * List gist forks
 	 * @link https://developer.github.com/v3/gists/#list-gist-forks
 	 * @param int $id
-	 * @return mixed
+	 * @return array
 	 */
-	public function listGistForks($id) {
+	public function listGistForks(int $id): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id/forks', $id)
+			$this->getApi()->sprintf('/gists/:id/forks', $id)
 		);
 	}
 
@@ -222,11 +222,11 @@ class Gists extends AbstractReceiver {
 	 * Delete a gist
 	 * @link https://developer.github.com/v3/gists/#delete-a-gist
 	 * @param int $id
-	 * @return mixed
+	 * @return bool
 	 */
-	public function deleteGist($id) {
+	public function deleteGist(int $id): bool {
 		$this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/gists/:id', $id),
+			$this->getApi()->sprintf('/gists/:id', $id),
 			Request::METHOD_DELETE
 		);
 

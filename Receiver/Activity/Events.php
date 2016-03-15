@@ -1,5 +1,5 @@
 <?php
-namespace Scion\GitHub\Receiver\Activity;
+namespace FlexyProject\GitHub\Receiver\Activity;
 
 /**
  * The Events API class provide a read-only interface to all the event types that power the various activity streams on GitHub.
@@ -11,9 +11,9 @@ class Events extends AbstractActivity {
 	/**
 	 * List public events
 	 * @link https://developer.github.com/v3/activity/events/#list-public-events
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicEvents() {
+	public function listPublicEvents(): array {
 		return $this->getApi()->request(
 			sprintf('/events')
 		);
@@ -22,33 +22,33 @@ class Events extends AbstractActivity {
 	/**
 	 * List repository events
 	 * @link https://developer.github.com/v3/activity/events/#list-repository-events
-	 * @return mixed
+	 * @return array
 	 */
-	public function listRepositoryEvents() {
+	public function listRepositoryEvents(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
 	/**
 	 * List issue events for a repository
 	 * @link https://developer.github.com/v3/activity/events/#list-issue-events-for-a-repository
-	 * @return mixed
+	 * @return array
 	 */
-	public function listIssueEvents() {
+	public function listIssueEvents(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/repos/:owner/:repo/issues/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/repos/:owner/:repo/issues/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
 	/**
 	 * List public events for a network of repositories
 	 * @link https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicNetworkEvents() {
+	public function listPublicNetworkEvents(): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/networks/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
+			$this->getApi()->sprintf('/networks/:owner/:repo/events', $this->getActivity()->getOwner(), $this->getActivity()->getRepo())
 		);
 	}
 
@@ -56,11 +56,11 @@ class Events extends AbstractActivity {
 	 * List public events for an organization
 	 * @link https://developer.github.com/v3/activity/events/#list-public-events-for-an-organization
 	 * @param string $organization
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicOrganizationEvents($organization) {
+	public function listPublicOrganizationEvents(string $organization): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/orgs/:org/events', $organization)
+			$this->getApi()->sprintf('/orgs/:org/events', $organization)
 		);
 	}
 
@@ -68,11 +68,11 @@ class Events extends AbstractActivity {
 	 * List events that a user has received
 	 * @link https://developer.github.com/v3/activity/events/#list-events-that-a-user-has-received
 	 * @param string $username
-	 * @return mixed
+	 * @return array
 	 */
-	public function listUserReceiveEvents($username) {
+	public function listUserReceiveEvents(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/received_events', $username)
+			$this->getApi()->sprintf('/users/:username/received_events', $username)
 		);
 	}
 
@@ -80,11 +80,11 @@ class Events extends AbstractActivity {
 	 * List public events that a user has received
 	 * @link https://developer.github.com/v3/activity/events/#list-public-events-that-a-user-has-received
 	 * @param string $username
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicUserReceiveEvents($username) {
+	public function listPublicUserReceiveEvents(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/received_events/public', $username)
+			$this->getApi()->sprintf('/users/:username/received_events/public', $username)
 		);
 	}
 
@@ -92,11 +92,11 @@ class Events extends AbstractActivity {
 	 * List events performed by a user
 	 * @link https://developer.github.com/v3/activity/events/#list-events-performed-by-a-user
 	 * @param string $username
-	 * @return mixed
+	 * @return array
 	 */
-	public function listUserPerformedEvents($username) {
+	public function listUserPerformedEvents(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events', $username)
+			$this->getApi()->sprintf('/users/:username/events', $username)
 		);
 	}
 
@@ -104,11 +104,11 @@ class Events extends AbstractActivity {
 	 * List public events performed by a user
 	 * @link https://developer.github.com/v3/activity/events/#list-public-events-performed-by-a-user
 	 * @param string $username
-	 * @return mixed
+	 * @return array
 	 */
-	public function listPublicUserPerformedEvents($username) {
+	public function listPublicUserPerformedEvents(string $username): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events/public', $username)
+			$this->getApi()->sprintf('/users/:username/events/public', $username)
 		);
 	}
 
@@ -117,11 +117,11 @@ class Events extends AbstractActivity {
 	 * @link https://developer.github.com/v3/activity/events/#list-events-for-an-organization
 	 * @param string $username
 	 * @param string $organization
-	 * @return mixed
+	 * @return array
 	 */
-	public function listOrganizationEvents($username, $organization) {
+	public function listOrganizationEvents(string $username, string $organization): array {
 		return $this->getApi()->request(
-			$this->getApi()->getString()->sprintf('/users/:username/events/orgs/:org', $username, $organization)
+			$this->getApi()->sprintf('/users/:username/events/orgs/:org', $username, $organization)
 		);
 	}
 } 
