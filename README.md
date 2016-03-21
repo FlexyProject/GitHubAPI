@@ -7,13 +7,9 @@ This library works with cURL and provides all documented functionality as descri
 ## Requirements
 * PHP >= 5.6.1
 * [cURL](http://php.net/manual/en/book.curl.php) extension
-* [scion/designpatterns](https://github.com/Scion-Framework/DesignPatterns)
-* [scion/crypt](https://github.com/Scion-Framework/Crypt)
-* [scion/file](https://github.com/Scion-Framework/File)
-* [scion/http](https://github.com/Scion-Framework/Http)
-* [scion/stdlib](https://github.com/Scion-Framework/Stdlib)
-* [scion/utils](https://github.com/Scion-Framework/Utils)
-* [scion/validator](https://github.com/Scion-Framework/Validator)
+* [symfony/http-foundation](https://github.com/symfony/http-foundation)
+* [zendframework/zend-crypt](https://github.com/zendframework/zend-crypt)
+* [flexyproject/curl](https://github.com/FlexyProject/Curl)
 
 ## Quick Start
 ```php
