@@ -1,7 +1,6 @@
 <?php
 namespace FlexyProject\GitHub\Event;
 
-use Zend\Crypt\Hmac;
 use FlexyProject\GitHub\Exception\BadSignatureException;
 use FlexyProject\GitHub\WebHook;
 
@@ -47,7 +46,7 @@ class Payload implements EventInterface {
 	 * @return Payload
 	 */
 	public function setSecret(string $secret): Payload {
-		$this->secret = Hmac::compute($secret, 'sha1', $this->rawData, Hmac::OUTPUT_STRING);
+		$this->secret = hash_hmac('sha1', $this->rawData, $secret);
 
 		return $this;
 	}
