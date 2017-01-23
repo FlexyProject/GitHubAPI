@@ -1,4 +1,8 @@
 # PHP7 Client & WebHook wrapper for GitHub API v3
+[![Latest Stable Version](https://poser.pugx.org/flexyproject/githubapi/v/stable)](https://packagist.org/packages/flexyproject/githubapi)
+[![Total Downloads](https://poser.pugx.org/flexyproject/githubapi/downloads)](https://packagist.org/packages/flexyproject/githubapi)
+[![License](https://poser.pugx.org/flexyproject/githubapi/license)](https://packagist.org/packages/flexyproject/githubapi)
+
 This is a simple Object Oriented wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP7.  
 This library works with cURL and provides all documented functionality as described in the official documentation including [Client](https://developer.github.com/v3/) and [WebHooks](https://developer.github.com/webhooks/).  
 
