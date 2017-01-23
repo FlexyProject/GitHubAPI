@@ -10,7 +10,6 @@ This library works with cURL and provides all documented functionality as descri
 * PHP >= 7
 * [cURL](http://php.net/manual/en/book.curl.php) extension
 * [symfony/http-foundation](https://github.com/symfony/http-foundation)
-* [zendframework/zend-crypt](https://github.com/zendframework/zend-crypt)
 * [flexyproject/curl](https://github.com/FlexyProject/Curl)
 
 ## Quick Start
