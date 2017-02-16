@@ -3,6 +3,12 @@ namespace FlexyProject\GitHub\Exception;
 
 use Exception;
 
-class BadSignatureException extends Exception {
+/**
+ * Class BadSignatureException
+ *
+ * @package FlexyProject\GitHub\Exception
+ */
+class BadSignatureException extends Exception
+{
 
 } 
