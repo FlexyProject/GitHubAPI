@@ -1,0 +1,7 @@
+version: '3'
+services:
+  phpfarm:
+    container_name: githubapi
+    image: splitbrain/phpfarm:jessie
+    volumes:
+      - ./:/usr/src/githubapi
