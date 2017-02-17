@@ -17,9 +17,9 @@ class Gists extends AbstractReceiver
     const COMMENTS = 'Comments';
 
     /**
-     * List gists
+     * List a user's gists
      *
-     * @link https://developer.github.com/v3/gists/#list-gists
+     * @link https://developer.github.com/v3/gists/#list-a-users-gists
      *
      * @param string $username
      * @param string $since
@@ -40,7 +40,7 @@ class Gists extends AbstractReceiver
     /**
      * List all public gists:
      *
-     * @link https://developer.github.com/v3/gists/#list-gists
+     * @link https://developer.github.com/v3/gists/#list-all-public-gists
      *
      * @param string $since
      *
@@ -55,7 +55,7 @@ class Gists extends AbstractReceiver
     /**
      * List the authenticated user’s starred gists
      *
-     * @link https://developer.github.com/v3/gists/#list-gists
+     * @link https://developer.github.com/v3/gists/#list-starred-gists
      *
      * @param string $since
      *
