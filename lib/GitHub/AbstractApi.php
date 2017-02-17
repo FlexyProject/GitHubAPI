@@ -5,6 +5,11 @@ use Exception;
 use FlexyProject\Curl\Client as CurlClient;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class AbstractApi
+ *
+ * @package FlexyProject\GitHub
+ */
 abstract class AbstractApi
 {
 
