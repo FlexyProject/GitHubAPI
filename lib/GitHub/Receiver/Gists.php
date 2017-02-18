@@ -111,7 +111,7 @@ class Gists extends AbstractReceiver
     public function createGist(string $files, string $description = null, bool $public = false): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists'), Request::METHOD_POST, [
-                'file'        => $files,
+                'files'        => $files,
                 'description' => $description,
                 'public'      => $public
             ]);
