@@ -102,13 +102,13 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#create-a-gist
      *
-     * @param string $files
+     * @param array $files
      * @param string $description
      * @param bool   $public
      *
      * @return array
      */
-    public function createGist(string $files, string $description = null, bool $public = false): array
+    public function createGist(array $files, string $description = null, bool $public = false): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists'), Request::METHOD_POST, [
                 'files'        => $files,
