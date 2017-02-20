@@ -540,7 +540,7 @@ abstract class AbstractApi
         });
         $curl->perform();
 
-        return $this->success ?? $this->failure;
+        return (array)($this->success ?? $this->failure);
     }
 
     /**
