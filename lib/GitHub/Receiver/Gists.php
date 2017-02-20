@@ -102,7 +102,7 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#create-a-gist
      *
-     * @param array $files
+     * @param array  $files
      * @param string $description
      * @param bool   $public
      *
@@ -111,10 +111,10 @@ class Gists extends AbstractReceiver
     public function createGist(array $files, string $description = null, bool $public = false): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists'), Request::METHOD_POST, [
-                'files'        => $files,
-                'description' => $description,
-                'public'      => $public
-            ]);
+            'files'       => $files,
+            'description' => $description,
+            'public'      => $public
+        ]);
     }
 
     /**
@@ -122,23 +122,23 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#edit-a-gist
      *
-     * @param int    $id
+     * @param string $id
      * @param string $description
-     * @param string $files
+     * @param array  $files
      * @param string $content
      * @param string $filename
      *
      * @return array
      */
-    public function editGist(int $id, string $description = '', string $files = '{}', string $content = '',
+    public function editGist(string $id, string $description = '', array $files = [], string $content = '',
                              string $filename = ''): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id', $id), Request::METHOD_PATCH, [
-                'description' => $description,
-                'files'       => $files,
-                'content'     => $content,
-                'filename'    => $filename
-            ]);
+            'description' => $description,
+            'files'       => $files,
+            'content'     => $content,
+            'filename'    => $filename
+        ]);
     }
 
     /**
@@ -248,11 +248,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#delete-a-gist
      *
-     * @param int $id
+     * @param string $id
      *
      * @return bool
      */
-    public function deleteGist(int $id): bool
+    public function deleteGist(string $id): bool
     {
         $this->getApi()->request($this->getApi()->sprintf('/gists/:id', $id), Request::METHOD_DELETE);
 
