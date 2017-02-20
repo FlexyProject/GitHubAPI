@@ -72,11 +72,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#get-a-single-gist
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function getGist(int $id): array
+    public function getGist(string $id): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id', $id));
     }
@@ -146,11 +146,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#list-gist-commits
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function listGistsCommits(int $id): array
+    public function listGistsCommits(string $id): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id/commits', $id));
     }
@@ -160,11 +160,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#star-a-gist
      *
-     * @param int $id
+     * @param string $id
      *
      * @return bool
      */
-    public function starGist(int $id): bool
+    public function starGist(string $id): bool
     {
         $this->getApi()->request($this->getApi()->sprintf('/gists/:id/star', $id), Request::METHOD_PUT);
 
@@ -180,11 +180,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#unstar-a-gist
      *
-     * @param int $id
+     * @param string $id
      *
      * @return bool
      */
-    public function unStarGist(int $id): bool
+    public function unStarGist(string $id): bool
     {
         $this->getApi()->request($this->getApi()->sprintf('/gists/:id/star', $id), Request::METHOD_DELETE);
 
@@ -200,11 +200,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
      *
-     * @param int $id
+     * @param string $id
      *
      * @return bool
      */
-    public function checkGistIsStarred(int $id): bool
+    public function checkGistIsStarred(string $id): bool
     {
         $this->getApi()->request($this->getApi()->sprintf('/gists/:id/star', $id));
 
@@ -220,11 +220,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#fork-a-gist
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function forkGist(int $id): array
+    public function forkGist(string $id): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id/forks', $id), Request::METHOD_POST);
     }
@@ -234,11 +234,11 @@ class Gists extends AbstractReceiver
      *
      * @link https://developer.github.com/v3/gists/#list-gist-forks
      *
-     * @param int $id
+     * @param string $id
      *
      * @return array
      */
-    public function listGistForks(int $id): array
+    public function listGistForks(string $id): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id/forks', $id));
     }
