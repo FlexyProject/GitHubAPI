@@ -22,7 +22,7 @@ abstract class AbstractApi
     const API_RAW_URL    = 'https://raw.github.com';
     const CONTENT_TYPE   = 'application/json';
     const DEFAULT_ACCEPT = 'application/vnd.github.' . self::API_VERSION . '+json';
-    const USER_AGENT     = 'scion.github-api';
+    const USER_AGENT     = 'FlexyProject-GitHubAPI';
 
     /** Archive constants */
     const ARCHIVE_TARBALL = 'tarball';
