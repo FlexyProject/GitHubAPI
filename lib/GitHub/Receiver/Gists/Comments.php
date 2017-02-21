@@ -17,13 +17,13 @@ class Comments extends AbstractGists
      *
      * @link https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
      *
-     * @param int $gistId
+     * @param string $gistId
      *
      * @return array
      */
-    public function listComments(int $gistId): array
+    public function listComments(string $gistId): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId));
+        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments', $gistId));
     }
 
     /**
@@ -31,15 +31,14 @@ class Comments extends AbstractGists
      *
      * @link https://developer.github.com/v3/gists/comments/#get-a-single-comment
      *
-     * @param int $gistId
-     * @param int $id
+     * @param string $gistId
+     * @param int    $id
      *
      * @return array
      */
-    public function getSingleComment(int $gistId, int $id): array
+    public function getSingleComment(string $gistId, int $id): array
     {
-        return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id));
+        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id));
     }
 
     /**
@@ -47,14 +46,14 @@ class Comments extends AbstractGists
      *
      * @link https://developer.github.com/v3/gists/comments/#create-a-comment
      *
-     * @param int    $gistId
+     * @param string $gistId
      * @param string $body
      *
      * @return array
      */
-    public function createComment(int $gistId, string $body): array
+    public function createComment(string $gistId, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments', (string)$gistId),
+        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments', $gistId),
             Request::METHOD_POST, [
                 'body' => $body
             ]);
@@ -65,16 +64,15 @@ class Comments extends AbstractGists
      *
      * @link https://developer.github.com/v3/gists/comments/#edit-a-comment
      *
-     * @param int    $gistId
+     * @param string $gistId
      * @param int    $id
      * @param string $body
      *
      * @return array
      */
-    public function editComment(int $gistId, int $id, string $body): array
+    public function editComment(string $gistId, int $id, string $body): array
     {
-        return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
             Request::METHOD_PATCH, [
                 'body' => $body
             ]);
@@ -85,14 +83,14 @@ class Comments extends AbstractGists
      *
      * @link https://developer.github.com/v3/gists/comments/#delete-a-comment
      *
-     * @param int $gistId
-     * @param int $id
+     * @param string $gistId
+     * @param int    $id
      *
      * @return bool
      */
-    public function deleteComment(int $gistId, int $id): bool
+    public function deleteComment(string $gistId, int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', (string)$gistId, (string)$id),
+        $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
             Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {

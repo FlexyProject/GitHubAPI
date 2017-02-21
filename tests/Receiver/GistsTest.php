@@ -12,10 +12,14 @@ use FlexyProject\GitHub\{
  */
 class GistsTest extends AbstractTest
 {
+    /** Public test gist ID */
     const PUBLIC_GIST = '76e253825bb3c6c084cf31f92997eb72';
 
     /** @var Gists */
     protected $gists;
+
+    /** @var Gists\Comments */
+    protected $comments;
 
     /**
      * GistsTest constructor.
@@ -30,6 +34,9 @@ class GistsTest extends AbstractTest
 
         // Gists
         $this->gists = $this->client->getReceiver(Client::GISTS);
+
+        // Comments
+        $this->comments = $this->gists->getReceiver(Gists::COMMENTS);
     }
 
     /**
@@ -97,7 +104,7 @@ class GistsTest extends AbstractTest
             md5('phpunit-testing') . '.txt' => [
                 'content' => 'String file contents'
             ]
-        ], 'the description for this gist', true);
+        ], 'the description for this gist');
 
         $this->assertArrayHasKey('url', $gist);
         $this->assertArrayHasKey('files', $gist);
@@ -226,6 +233,97 @@ class GistsTest extends AbstractTest
     }
 
     /**
+     * Test deleting a forked gist
+     *
+     * @depends testForkGist
+     *
+     * @param string $gistId
+     */
+    public function testDeleteForkedGist(string $gistId)
+    {
+        $this->assertTrue($this->gists->deleteGist($gistId));
+    }
+
+    /**
+     * Test create a new comment in specific gist
+     *
+     * @depends testCreateGist
+     *
+     * @param string $gistId
+     */
+    public function testCreateComment(string $gistId)
+    {
+        $response = $this->comments->createComment($gistId, 'Just commenting for the sake of commenting');
+
+        $this->assertEquals('Just commenting for the sake of commenting', $response['body']);
+
+        return $response['id'];
+    }
+
+    /**
+     * Test listing all comments for specific gist
+     *
+     * @depends testCreateGist
+     *
+     * @param string $gistId
+     */
+    public function testListComments(string $gistId)
+    {
+        $comments = $this->comments->listComments($gistId);
+        $comment  = array_pop($comments);
+
+        $this->assertArrayHasKey('id', $comment);
+        $this->assertArrayHasKey('url', $comment);
+        $this->assertArrayHasKey('body', $comment);
+    }
+
+    /**
+     * Test getting a single comment
+     *
+     * @depends testCreateGist
+     * @depends testCreateComment
+     *
+     * @param string $gistId
+     * @param string $commentId
+     */
+    public function testGetSingleComment(string $gistId, string $commentId)
+    {
+        $response = $this->comments->getSingleComment($gistId, $commentId);
+
+        $this->assertEquals('Just commenting for the sake of commenting', $response['body']);
+    }
+
+    /**
+     * Test editing a gist's comment
+     *
+     * @depends testCreateGist
+     * @depends testCreateComment
+     *
+     * @param string $gistId
+     * @param string $commentId
+     */
+    public function testEditComment(string $gistId, string $commentId)
+    {
+        $response = $this->comments->editComment($gistId, $commentId, 'Just editing this comment!');
+
+        $this->assertEquals('Just editing this comment!', $response['body']);
+    }
+
+    /**
+     * Test deleting a comment
+     *
+     * @depends testCreateGist
+     * @depends testCreateComment
+     *
+     * @param string $gistId
+     * @param string $commentId
+     */
+    public function testDeleteComment(string $gistId, string $commentId)
+    {
+        $this->assertTrue($this->comments->deleteComment($gistId, $commentId));
+    }
+
+    /**
      * Test deleting an existing gist
      *
      * @depends testCreateGist
@@ -237,15 +335,4 @@ class GistsTest extends AbstractTest
         $this->assertTrue($this->gists->deleteGist($gistId));
     }
 
-    /**
-     * Test deleting a forked gist
-     *
-     * @depends testForkGist
-     *
-     * @param string $gistId
-     */
-    public function testDeleteForkedGist(string $gistId)
-    {
-        $this->assertTrue($this->gists->deleteGist($gistId));
-    }
 }
