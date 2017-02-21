@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\Miscellaneous;
 
 /**
@@ -11,10 +12,11 @@ use FlexyProject\GitHub\Receiver\Miscellaneous;
  */
 abstract class AbstractMiscellaneous
 {
+    /** Api trait */
+    use Api;
 
     /** Properties */
     protected $miscellaneous;
-    protected $api;
 
     /**
      * Constructor
@@ -50,28 +52,4 @@ abstract class AbstractMiscellaneous
 
         return $this;
     }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractMiscellaneous
-     */
-    public function setApi(AbstractApi $api): AbstractMiscellaneous
-    {
-        $this->api = $api;
-
-        return $this;
-    }
-} 
+}

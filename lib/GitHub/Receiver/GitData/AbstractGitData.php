@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\GitData;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\GitData;
 
 /**
@@ -11,10 +12,11 @@ use FlexyProject\GitHub\Receiver\GitData;
  */
 abstract class AbstractGitData
 {
+    /** Api trait */
+    use Api;
 
     /** Properties */
     protected $gitData;
-    protected $api;
 
     /**
      * Constructor
@@ -50,28 +52,4 @@ abstract class AbstractGitData
 
         return $this;
     }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractGitData
-     */
-    public function setApi(AbstractApi $api): AbstractGitData
-    {
-        $this->api = $api;
-
-        return $this;
-    }
-} 
+}

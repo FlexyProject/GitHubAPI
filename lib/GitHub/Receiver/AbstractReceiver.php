@@ -10,9 +10,10 @@ use FlexyProject\GitHub\AbstractApi;
  */
 abstract class AbstractReceiver
 {
+    /** Api trait */
+    use Api;
 
     /** Protected properties */
-    protected $api;
     protected $owner = '';
     protected $repo  = '';
 
@@ -24,30 +25,6 @@ abstract class AbstractReceiver
     public function __construct(AbstractApi $api)
     {
         $this->setApi($api);
-    }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractReceiver
-     */
-    public function setApi(AbstractApi $api): AbstractReceiver
-    {
-        $this->api = $api;
-
-        return $this;
     }
 
     /**
