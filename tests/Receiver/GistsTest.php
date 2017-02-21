@@ -87,21 +87,6 @@ class GistsTest extends AbstractTest
     }
 
     /**
-     * Test getting gist by ID
-     */
-    public function testGetGistById()
-    {
-        $gist = $this->gists->getGist(1);
-
-        $this->assertArrayHasKey('url', $gist);
-        $this->assertArrayHasKey('files', $gist);
-        $this->assertArrayHasKey('comments', $gist);
-        $this->assertArrayHasKey('created_at', $gist);
-        $this->assertArrayHasKey('updated_at', $gist);
-        $this->assertArrayHasKey('user', $gist);
-    }
-
-    /**
      * Test creating a new gist
      *
      * @return string
@@ -122,6 +107,25 @@ class GistsTest extends AbstractTest
         $this->assertArrayHasKey('user', $gist);
 
         return $gist['id'];
+    }
+
+    /**
+     * Test getting gist by ID
+     *
+     * @depends testCreateGist
+     *
+     * @param string $gistId
+     */
+    public function testGetGistById(string $gistId)
+    {
+        $gist = $this->gists->getGist($gistId);
+
+        $this->assertArrayHasKey('url', $gist);
+        $this->assertArrayHasKey('files', $gist);
+        $this->assertArrayHasKey('comments', $gist);
+        $this->assertArrayHasKey('created_at', $gist);
+        $this->assertArrayHasKey('updated_at', $gist);
+        $this->assertArrayHasKey('user', $gist);
     }
 
     /**
