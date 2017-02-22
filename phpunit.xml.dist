@@ -13,6 +13,11 @@
 		 syntaxCheck="false"
 		 bootstrap="vendor/autoload.php">
 
+    <php>
+        <var name="USERNAME" value="githubapi-octocat" />
+        <var name="PASSWORD" value="S=p}g2E($L#T(K3x" />
+    </php>
+
 	<testsuites>
 		<testsuite name="GitHubAPI Test Suite">
 			<directory>./tests/</directory>

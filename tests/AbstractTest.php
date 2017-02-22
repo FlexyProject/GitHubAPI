@@ -11,11 +11,6 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractTest extends TestCase
 {
-
-    /** Authentication constants */
-    const USERNAME = 'githubapi-octocat';
-    const PASSWORD = 'S=p}g2E($L#T(K3x';
-
     /** @var Client */
     protected $client;
 
@@ -32,7 +27,7 @@ abstract class AbstractTest extends TestCase
         $this->client = new Client();
 
         // Set auth credentials
-        $this->client->setHttpAuth(self::USERNAME, self::PASSWORD);
+        $this->client->setHttpAuth($GLOBALS['USERNAME'], $GLOBALS['PASSWORD']);
 
         parent::__construct($name, $data, $dataName);
     }
