@@ -27,10 +27,10 @@ class Markdown extends AbstractMiscellaneous
     public function render(string $text, string $mode = AbstractApi::MODE_MARKDOWN, string $context = ''): array
     {
         return $this->getApi()->request('/markdown', Request::METHOD_POST, [
-                'text'    => $text,
-                'mode'    => $mode,
-                'context' => $context
-            ]);
+            'text'    => $text,
+            'mode'    => $mode,
+            'context' => $context
+        ]);
     }
 
     /**
@@ -38,13 +38,13 @@ class Markdown extends AbstractMiscellaneous
      *
      * @link https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
      *
-     * @param string $file
+     * @param string $string
      *
      * @return array
      */
-    public function renderRaw(string $file): array
+    public function renderRaw(string $string): array
     {
-        return $this->getApi()->setAccept('text/plain')
-                    ->request('/markdown/raw', Request::METHOD_POST, ['file' => $file]);
+        return $this->getApi()->setContentType('text/plain')
+                    ->request('/markdown/raw', Request::METHOD_POST, ['file' => $string]);
     }
 }
