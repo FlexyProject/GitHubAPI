@@ -318,4 +318,16 @@ class Repositories extends AbstractReceiver
                                              ->sprintf('/repos/:owner/:repo', $this->getOwner(), $this->getRepo()),
             Request::METHOD_DELETE);
     }
+
+    /**
+     * Get the contents of a repository's license
+     *
+     * @link https://developer.github.com/v3/licenses/#get-the-contents-of-a-repositorys-license
+     * @return array
+     */
+    public function getRepositoryLicenseContent(): array
+    {
+        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/license', $this->getOwner(),
+            $this->getRepo()));
+    }
 }
