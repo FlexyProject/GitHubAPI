@@ -1,6 +1,13 @@
 <?php
 namespace FlexyProject\GitHub\Receiver;
 
+use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\{
+    Activity\AbstractActivity, Enterprise\AbstractEnterprise, Gists\AbstractGists, GitData\AbstractGitData,
+    Issues\AbstractIssues, Miscellaneous\AbstractMiscellaneous, Organizations\AbstractOrganizations,
+    PullRequests\AbstractPullRequests, Repositories\AbstractRepositories
+};
+
 /**
  * Class Api
  *
@@ -14,7 +21,7 @@ trait Api
     /**
      * Get api
      *
-     * @return mixed
+     * @return AbstractApi|AbstractActivity|AbstractEnterprise|AbstractGists|AbstractGitData|AbstractIssues|AbstractMiscellaneous|AbstractOrganizations|AbstractPullRequests|AbstractRepositories
      */
     public function getApi()
     {
@@ -24,11 +31,11 @@ trait Api
     /**
      * Set api
      *
-     * @param mixed $api
+     * @param AbstractApi|AbstractActivity|AbstractEnterprise|AbstractGists|AbstractGitData|AbstractIssues|AbstractMiscellaneous|AbstractOrganizations|AbstractPullRequests|AbstractRepositories $api
      *
-     * @return $this
+     * @return Api
      */
-    public function setApi($api)
+    public function setApi($api): self
     {
         $this->api = $api;
 
