@@ -2,7 +2,7 @@
 namespace FlexyProject\GitHub\Tests\Receiver;
 
 use FlexyProject\GitHub\{
-    AbstractApi, Client, Receiver\Miscellaneous, Tests\AbstractTest
+    Client, Receiver\Miscellaneous, Tests\AbstractClientTest
 };
 
 /**
@@ -10,7 +10,7 @@ use FlexyProject\GitHub\{
  *
  * @package FlexyProject\GitHub\Tests
  */
-class MiscellaneousTest extends AbstractTest
+class MiscellaneousTest extends AbstractClientTest
 {
 
     /** @var Miscellaneous */
