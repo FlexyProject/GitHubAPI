@@ -2,7 +2,7 @@
 namespace FlexyProject\GitHub\Tests\Receiver;
 
 use FlexyProject\GitHub\{
-    Client, Receiver\Gists, Receiver\Gists\Comments, Tests\AbstractClientTest
+    Client, Receiver\Gists, Tests\AbstractClientTest
 };
 
 /**
@@ -52,7 +52,7 @@ class GistsTest extends AbstractClientTest
      */
     public function testComments()
     {
-        $this->assertInstanceOf(Comments::class, $this->comments);
+        $this->assertInstanceOf(Gists\Comments::class, $this->comments);
     }
 
     /**
