@@ -68,6 +68,62 @@ class MiscellaneousTest extends AbstractClientTest
     }
 
     /**
+     * Test instance of Miscellaneous's class
+     */
+    public function testMiscellaneous()
+    {
+        $this->assertInstanceOf(Miscellaneous::class, $this->miscellaneous);
+    }
+
+    /**
+     * Test instance of Emojis's class
+     */
+    public function testEmojis()
+    {
+        $this->assertInstanceOf(Miscellaneous\Emojis::class, $this->emojis);
+    }
+
+    /**
+     * Test instance of Gitignore's class
+     */
+    public function testGitIgnore()
+    {
+        $this->assertInstanceOf(Miscellaneous\Gitignore::class, $this->gitIgnore);
+    }
+
+    /**
+     * Test instance of Licenses's class
+     */
+    public function testLicenses()
+    {
+        $this->assertInstanceOf(Miscellaneous\Licenses::class, $this->licenses);
+    }
+
+    /**
+     * Test instance of Markdown's class
+     */
+    public function testMarkdown()
+    {
+        $this->assertInstanceOf(Miscellaneous\Markdown::class, $this->markdown);
+    }
+
+    /**
+     * Test instance of Meta's class
+     */
+    public function testMeta()
+    {
+        $this->assertInstanceOf(Miscellaneous\Meta::class, $this->meta);
+    }
+
+    /**
+     * Test instance of 's class
+     */
+    public function testRateLimit()
+    {
+        $this->assertInstanceOf(Miscellaneous\RateLimit::class, $this->rateLimit);
+    }
+
+    /**
      * Test list available Emojis
      */
     public function testGetListEmojis()
@@ -156,7 +212,7 @@ class MiscellaneousTest extends AbstractClientTest
     /**
      * Test rate limit
      */
-    public function testRateLimit()
+    public function testRate()
     {
         $rateLimit = $this->rateLimit->get();
 
