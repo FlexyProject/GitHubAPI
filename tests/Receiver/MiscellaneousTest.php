@@ -82,7 +82,7 @@ class MiscellaneousTest extends AbstractTest
     {
         $templates = $this->gitIgnore->listingAvailableTemplates();
 
-        $this->assertArrayHasKey('Android', $templates);
+        $this->assertContains('Android', $templates);
     }
 
     /**
