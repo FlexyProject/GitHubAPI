@@ -1,8 +1,6 @@
 <?php
 namespace FlexyProject\GitHub\Receiver\Miscellaneous;
 
-use FlexyProject\GitHub\Receiver\Miscellaneous;
-
 /**
  * The Licenses API class returns information about open source licenses or under what license, if any a given project
  * is distributed.

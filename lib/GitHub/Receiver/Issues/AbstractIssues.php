@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\Issues;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\Issues;
 
 /**
@@ -11,9 +12,11 @@ use FlexyProject\GitHub\Receiver\Issues;
  */
 abstract class AbstractIssues
 {
+    /** Api trait */
+    use Api;
 
+    /** Properties */
     protected $issues;
-    protected $api;
 
     /**
      * Constructor
@@ -49,28 +52,4 @@ abstract class AbstractIssues
 
         return $this;
     }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractIssues
-     */
-    public function setApi(AbstractApi $api): AbstractIssues
-    {
-        $this->api = $api;
-
-        return $this;
-    }
-} 
+}

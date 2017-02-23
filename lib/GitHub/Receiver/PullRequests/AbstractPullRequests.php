@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\PullRequests;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\PullRequests;
 
 /**
@@ -11,10 +12,11 @@ use FlexyProject\GitHub\Receiver\PullRequests;
  */
 abstract class AbstractPullRequests
 {
+    /** Api trait */
+    use Api;
 
     /** Properties */
     protected $pullRequests;
-    protected $api;
 
     /**
      * Constructor
@@ -50,28 +52,4 @@ abstract class AbstractPullRequests
 
         return $this;
     }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractPullRequests
-     */
-    public function setApi(AbstractApi $api): AbstractPullRequests
-    {
-        $this->api = $api;
-
-        return $this;
-    }
-} 
+}

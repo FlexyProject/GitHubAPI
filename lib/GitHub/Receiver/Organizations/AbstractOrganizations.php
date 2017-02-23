@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\Organizations;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\Organizations;
 
 /**
@@ -11,10 +12,11 @@ use FlexyProject\GitHub\Receiver\Organizations;
  */
 abstract class AbstractOrganizations
 {
+    /** Api trait */
+    use Api;
 
     /** Properties */
     protected $organizations;
-    protected $api;
 
     /**
      * Constructor
@@ -47,30 +49,6 @@ abstract class AbstractOrganizations
     public function setOrganizations(Organizations $organizations): AbstractOrganizations
     {
         $this->organizations = $organizations;
-
-        return $this;
-    }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param mixed $api
-     *
-     * @return AbstractOrganizations
-     */
-    public function setApi(AbstractApi $api): AbstractOrganizations
-    {
-        $this->api = $api;
 
         return $this;
     }

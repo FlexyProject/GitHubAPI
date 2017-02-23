@@ -2,6 +2,7 @@
 namespace FlexyProject\GitHub\Receiver\Gists;
 
 use FlexyProject\GitHub\AbstractApi;
+use FlexyProject\GitHub\Receiver\Api;
 use FlexyProject\GitHub\Receiver\Gists;
 
 /**
@@ -11,10 +12,11 @@ use FlexyProject\GitHub\Receiver\Gists;
  */
 abstract class AbstractGists
 {
+    /** Api trait */
+    use Api;
 
     /** Properties */
     protected $gists;
-    protected $api;
 
     /**
      * Constructor
@@ -47,30 +49,6 @@ abstract class AbstractGists
     public function setGists(Gists $gists): AbstractGists
     {
         $this->gists = $gists;
-
-        return $this;
-    }
-
-    /**
-     * Get api
-     *
-     * @return AbstractApi
-     */
-    public function getApi(): AbstractApi
-    {
-        return $this->api;
-    }
-
-    /**
-     * Set api
-     *
-     * @param AbstractApi $api
-     *
-     * @return AbstractGists
-     */
-    public function setApi(AbstractApi $api): AbstractGists
-    {
-        $this->api = $api;
 
         return $this;
     }
