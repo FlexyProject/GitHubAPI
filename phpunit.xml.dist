@@ -23,6 +23,7 @@
 		<testsuite name="GitHubAPI Test Suite">
 			<directory>./tests/</directory>
             <exclude>./tests/AbstractTest.php</exclude>
+            <exclude>./tests/AbstractWebHookTest.php</exclude>
 		</testsuite>
 	</testsuites>
 
