@@ -293,4 +293,39 @@ class ActivityTest extends AbstractClientTest
             $this->assertArrayHasKey('org', $event);
         }
     }
+
+    /**
+     * Test listing feeds
+     */
+    public function testListFeeds()
+    {
+        $feeds = $this->feeds->listFeeds();
+        $this->assertArrayHasKey('timeline_url', $feeds);
+        $this->assertArrayHasKey('user_url', $feeds);
+        $this->assertArrayHasKey('current_user_public_url', $feeds);
+        $this->assertArrayHasKey('current_user_url', $feeds);
+        $this->assertArrayHasKey('current_user_actor_url', $feeds);
+        $this->assertArrayHasKey('current_user_organization_url', $feeds);
+        $this->assertArrayHasKey('current_user_organization_urls', $feeds);
+    }
+
+    /**
+     * Test listing notifications
+     */
+    public function testListNotifications()
+    {
+        $notifications = $this->notifications->listNotifications(true, true, '2016-02-14');
+        if (!empty($notifications)) {
+            $notification = array_pop($notifications);
+
+            $this->assertArrayHasKey('id', $notification);
+            $this->assertArrayHasKey('repository', $notification);
+            $this->assertArrayHasKey('subject', $notification);
+            $this->assertArrayHasKey('reason', $notification);
+            $this->assertArrayHasKey('unread', $notification);
+            $this->assertArrayHasKey('updated_at', $notification);
+            $this->assertArrayHasKey('last_read_at', $notification);
+            $this->assertArrayHasKey('url', $notification);
+        }
+    }
 }
