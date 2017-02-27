@@ -3,7 +3,7 @@
 [![Total Downloads](https://poser.pugx.org/flexyproject/githubapi/downloads)](https://packagist.org/packages/flexyproject/githubapi)
 [![License](https://poser.pugx.org/flexyproject/githubapi/license)](https://packagist.org/packages/flexyproject/githubapi)
 [![Build Status](https://travis-ci.org/FlexyProject/GitHubAPI.svg?branch=master)](https://travis-ci.org/FlexyProject/GitHubAPI)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlexyProject/GitHubAPI/badges/quality-score.png?b=1.1)](https://scrutinizer-ci.com/g/FlexyProject/GitHubAPI/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FlexyProject/GitHubAPI/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FlexyProject/GitHubAPI/?branch=master)
 
 This is a simple Object Oriented wrapper for [GitHub API v3](http://developer.github.com/v3/), written with PHP7.  
 This library works with cURL and provides all documented functionality as described in the official documentation including [Client](https://developer.github.com/v3/) and [WebHooks](https://developer.github.com/webhooks/).  

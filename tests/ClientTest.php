@@ -11,7 +11,7 @@ use FlexyProject\GitHub\Receiver\{
  *
  * @package FlexyProject\GitHub\Tests
  */
-class ClientTest extends AbstractTest
+class ClientTest extends AbstractClientTest
 {
 
     /**

@@ -1,8 +1,10 @@
 <?php
 namespace FlexyProject\GitHub\Event;
 
+use Exception;
 use FlexyProject\GitHub\Exception\BadSignatureException;
 use FlexyProject\GitHub\WebHook;
+use Symfony\Component\HttpFoundation\ServerBag;
 
 /**
  * Payloads
@@ -12,12 +14,20 @@ use FlexyProject\GitHub\WebHook;
  */
 class Payload implements EventInterface
 {
-
-    /** Protected properties */
+    /** @var WebHook */
     protected $webHook;
+
+    /** @var null|string */
     protected $secret = null;
+
+    /** @var string|resource */
     protected $rawData;
+
+    /** @var mixed */
     protected $parsedData;
+
+    /** @var ServerBag */
+    protected $serverBag;
 
     /**
      * Constructor, pass a WebHook object
@@ -27,7 +37,9 @@ class Payload implements EventInterface
     public function __construct(WebHook $webHook)
     {
         $this->setWebHook($webHook);
-        $this->setRawData($webHook->getRequest()->getContent());
+        $request = $webHook->getRequest();
+        $this->setRawData($request->getContent());
+        $this->serverBag = $request->server;
     }
 
     /**
@@ -157,7 +169,7 @@ class Payload implements EventInterface
         }
 
         /** Get data from different locations according to content-type */
-        switch ($_SERVER['CONTENT_TYPE']) {
+        switch ($this->serverBag->get('CONTENT_TYPE')) {
             case 'application/json':
                 $data = $this->getRawData();
                 break;
@@ -167,7 +179,7 @@ class Payload implements EventInterface
                 break;
 
             default:
-                throw new \Exception('Unsupported content type: "' . $_SERVER['CONTENT_TYPE'] . '"');
+                throw new Exception('Unsupported content type: "' . $this->serverBag->get('CONTENT_TYPE') . '"');
         }
         $this->setParsedData($data);
 
@@ -182,16 +194,19 @@ class Payload implements EventInterface
      */
     private function _checkSignature(): bool
     {
-        if (null !== $this->secret) {
-            if ($this->getWebHook()->getRequest()->server->get('HTTP_X_HUB_SIGNATURE')) {
+        $secret           = $this->getSecret();
+        $httpHubSignature = $this->serverBag->get('HTTP_X_HUB_SIGNATURE');
+
+        if (null !== $secret) {
+            if ($httpHubSignature) {
                 /**
                  * Split signature into algorithm and hash
                  *
                  * @link http://isometriks.com/verify-github-webhooks-with-php
                  */
-                list(, $hash) = explode('=', $this->getWebHook()->getRequest()->server->get('HTTP_X_HUB_SIGNATURE'), 2);
+                list(, $hash) = explode('=', $httpHubSignature, 2);
 
-                return $this->secret == $hash;
+                return $secret == $hash;
             }
 
             throw new BadSignatureException('HTTP header "X-Hub-Signature" is missing.');

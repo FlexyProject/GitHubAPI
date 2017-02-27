@@ -2,11 +2,12 @@ GitHubAPI PHPUnit Testing
 =========================
 The unit tests for GitHubAPI are implemented using the PHPUnit testing framework and require PHPUnit to run.
 
-
 GitHubAPI PHPUnit Tests on multiple PHP versions using Docker
 =============================================================
+1. Run `docker-compose up -d` to create the [PHPFarm](https://github.com/splitbrain/docker-phpfarm) container.
+2. Replace credentials (*USERNAME*, *PASSWORD*, *ORGANIZATION*) in `phpunit.xml.dist` file.
 
-Run `docker-compose up -d` to create the [PHPFarm](https://github.com/splitbrain/docker-phpfarm) container.
+> ⚠ Be careful, executing this tests will create Organization, Issue, PullRequest, Gists, Repositories ⚠
 
 PHP7.0
 ------

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @package FlexyProject\GitHub\Tests
  */
-abstract class AbstractTest extends TestCase
+abstract class AbstractClientTest extends TestCase
 {
     /** @var Client */
     protected $client;

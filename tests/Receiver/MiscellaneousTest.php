@@ -2,7 +2,7 @@
 namespace FlexyProject\GitHub\Tests\Receiver;
 
 use FlexyProject\GitHub\{
-    AbstractApi, Client, Receiver\Miscellaneous, Tests\AbstractTest
+    Client, Receiver\Miscellaneous, Tests\AbstractClientTest
 };
 
 /**
@@ -10,7 +10,7 @@ use FlexyProject\GitHub\{
  *
  * @package FlexyProject\GitHub\Tests
  */
-class MiscellaneousTest extends AbstractTest
+class MiscellaneousTest extends AbstractClientTest
 {
 
     /** @var Miscellaneous */
@@ -65,6 +65,62 @@ class MiscellaneousTest extends AbstractTest
 
         // RateLimit
         $this->rateLimit = $this->miscellaneous->getReceiver(Miscellaneous::RATE_LIMIT);
+    }
+
+    /**
+     * Test instance of Miscellaneous's class
+     */
+    public function testMiscellaneous()
+    {
+        $this->assertInstanceOf(Miscellaneous::class, $this->miscellaneous);
+    }
+
+    /**
+     * Test instance of Emojis's class
+     */
+    public function testEmojis()
+    {
+        $this->assertInstanceOf(Miscellaneous\Emojis::class, $this->emojis);
+    }
+
+    /**
+     * Test instance of Gitignore's class
+     */
+    public function testGitIgnore()
+    {
+        $this->assertInstanceOf(Miscellaneous\Gitignore::class, $this->gitIgnore);
+    }
+
+    /**
+     * Test instance of Licenses's class
+     */
+    public function testLicenses()
+    {
+        $this->assertInstanceOf(Miscellaneous\Licenses::class, $this->licenses);
+    }
+
+    /**
+     * Test instance of Markdown's class
+     */
+    public function testMarkdown()
+    {
+        $this->assertInstanceOf(Miscellaneous\Markdown::class, $this->markdown);
+    }
+
+    /**
+     * Test instance of Meta's class
+     */
+    public function testMeta()
+    {
+        $this->assertInstanceOf(Miscellaneous\Meta::class, $this->meta);
+    }
+
+    /**
+     * Test instance of 's class
+     */
+    public function testRateLimit()
+    {
+        $this->assertInstanceOf(Miscellaneous\RateLimit::class, $this->rateLimit);
     }
 
     /**
@@ -156,7 +212,7 @@ class MiscellaneousTest extends AbstractTest
     /**
      * Test rate limit
      */
-    public function testRateLimit()
+    public function testRate()
     {
         $rateLimit = $this->rateLimit->get();
 

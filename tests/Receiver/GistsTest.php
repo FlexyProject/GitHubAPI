@@ -2,7 +2,7 @@
 namespace FlexyProject\GitHub\Tests\Receiver;
 
 use FlexyProject\GitHub\{
-    Client, Receiver\Gists, Tests\AbstractTest
+    Client, Receiver\Gists, Tests\AbstractClientTest
 };
 
 /**
@@ -10,7 +10,7 @@ use FlexyProject\GitHub\{
  *
  * @package FlexyProject\GitHub\Tests
  */
-class GistsTest extends AbstractTest
+class GistsTest extends AbstractClientTest
 {
     /** Public test gist ID */
     const PUBLIC_GIST = '76e253825bb3c6c084cf31f92997eb72';
@@ -37,6 +37,22 @@ class GistsTest extends AbstractTest
 
         // Comments
         $this->comments = $this->gists->getReceiver(Gists::COMMENTS);
+    }
+
+    /**
+     * Test instance of Gists's class
+     */
+    public function testGists()
+    {
+        $this->assertInstanceOf(Gists::class, $this->gists);
+    }
+
+    /**
+     * Test instance of Comments's class
+     */
+    public function testComments()
+    {
+        $this->assertInstanceOf(Gists\Comments::class, $this->comments);
     }
 
     /**

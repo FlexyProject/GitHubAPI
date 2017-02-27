@@ -19,7 +19,7 @@ class Events extends AbstractActivity
      */
     public function listPublicEvents(): array
     {
-        return $this->getApi()->request(sprintf('/events'));
+        return $this->getApi()->request('/events');
     }
 
     /**
