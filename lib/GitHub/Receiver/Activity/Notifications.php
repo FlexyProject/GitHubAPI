@@ -97,7 +97,7 @@ class Notifications extends AbstractActivity
     }
 
     /**
-     *View a single thread
+     * View a single thread
      *
      * @link https://developer.github.com/v3/activity/notifications/#view-a-single-thread
      *
