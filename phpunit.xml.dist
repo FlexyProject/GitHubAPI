@@ -16,6 +16,7 @@
     <php>
         <var name="USERNAME" value="githubapi-octocat" />
         <var name="PASSWORD" value="S=p}g2E($L#T(K3x" />
+        <var name="ORGANIZATION" value="githubapi-octorg" />
     </php>
 
 	<testsuites>
