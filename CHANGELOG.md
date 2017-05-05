@@ -1,4 +1,10 @@
-## 1.1.2 (2017-03-XX)
+## 1.1.3 (2017-05-05)
+`Added`
+* Add missing directive `working_dir` in `docker-composer.yml` file.
+* Add new class `\FlexyProject\GitHub\Pagination`.
+* Add PHPUnit tests for `\FlexyProject\GitHub\Pagination` class.
+
+## 1.1.2 (2017-03-02)
 `Added`
 * Add PHPUnit tests.
 * Add new method `getRepositoryLicenseContent` in `GitHub/Receiver/Repositories.php` file.
