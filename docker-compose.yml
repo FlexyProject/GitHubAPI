@@ -5,3 +5,4 @@ services:
     image: splitbrain/phpfarm:jessie
     volumes:
       - ./:/usr/src/githubapi
+    working_dir: /usr/src/githubapi

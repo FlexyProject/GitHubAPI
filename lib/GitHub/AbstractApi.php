@@ -125,10 +125,11 @@ abstract class AbstractApi
     protected $failure;
     protected $headers        = [];
     protected $httpAuth       = ['username' => '', 'password' => ''];
+    protected $pagination;
+    protected $request;
     protected $success;
     protected $timeout        = 240;
     protected $token          = '';
-    protected $request;
 
     /**
      * Constructor
@@ -379,6 +380,30 @@ abstract class AbstractApi
     }
 
     /**
+     * Get pagination
+     *
+     * @return Pagination|null
+     */
+    public function getPagination()
+    {
+        return $this->pagination;
+    }
+
+    /**
+     * Set pagination
+     *
+     * @param Pagination $pagination
+     *
+     * @return AbstractApi
+     */
+    public function setPagination(Pagination $pagination): AbstractApi
+    {
+        $this->pagination = $pagination;
+
+        return $this;
+    }
+
+    /**
      * Curl request
      *
      * @param string      $url
@@ -395,7 +420,8 @@ abstract class AbstractApi
         if (null === $apiUrl) {
             $apiUrl = $this->getApiUrl();
         }
-        $url = $apiUrl . $url;
+        $url   = $apiUrl . $url;
+        $query = [];
 
         /**
          * OAuth2 Key/Secret authentication
@@ -403,16 +429,40 @@ abstract class AbstractApi
          * @see https://developer.github.com/v3/#oauth2-keysecret
          */
         if (null !== $this->getClientId() && null !== $this->getClientSecret()) {
-            $url .= (strstr($url, '?') !== false ? '&' : '?');
-            $url .= http_build_query(['client_id'     => $this->getClientId(),
-                                      'client_secret' => $this->getClientSecret()
-            ]);
+            $query['client_id']     = $this->getClientId();
+            $query['client_secret'] = $this->getClientSecret();
         } /**
          * Basic authentication via OAuth2 Token (sent as a parameter)
          *
          * @see https://developer.github.com/v3/#oauth2-token-sent-as-a-parameter
          */ else if ($this->getAuthentication() === self::OAUTH2_PARAMETERS_AUTH) {
-            $url .= http_build_query(['access_token' => $this->getToken()]);
+            $query['access_token'] = $this->getToken();
+        }
+
+        /**
+         * Pagination
+         * Requests that return multiple items will be paginated to 30 items by default.
+         * You can specify further pages with the ?page parameter.
+         * For some resources, you can also set a custom page size up to 100 with the ?per_page parameter.
+         * Note that for technical reasons not all endpoints respect the ?per_page parameter,
+         *
+         * @see https://developer.github.com/v3/#pagination
+         */
+        if (null !== $this->getPagination()) {
+            if (null !== $this->getPagination()->getPage()) {
+                $query['page'] = $this->getPagination()->getPage();
+            }
+            if (null !== $this->getPagination()->getLimit()) {
+                $query['per_page'] = $this->getPagination()->getLimit();
+            }
+        }
+
+        /**
+         * Add URL-encoded query string parameters
+         */
+        if (!empty($query)) {
+            $url .= (strstr($url, '?') !== false ? '&' : '?');
+            $url .= http_build_query($query);
         }
 
         /** Call curl */
