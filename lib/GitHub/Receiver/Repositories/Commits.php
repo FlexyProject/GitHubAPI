@@ -26,7 +26,7 @@ class Commits extends AbstractRepositories
      * @return array
      */
     public function listCommits(string $sha = AbstractApi::BRANCH_MASTER, string $path = null, string $author = null,
-                                string $since = null, string $until = null): array
+                                string $since = null, string $until = null, $page = null, $per_page = null): array
     {
         return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits?:args',
             $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query([
@@ -34,7 +34,9 @@ class Commits extends AbstractRepositories
                 "path"   => $path,
                 "author" => $author,
                 "since"  => $since,
-                "until"  => $until
+                "until"  => $until,
+				"page"   => $page,
+				"per_page"  => $per_page
             ])));
     }
 
