@@ -9,10 +9,10 @@ This is a simple Object Oriented wrapper for [GitHub API v3](http://developer.gi
 This library works with cURL and provides all documented functionality as described in the official documentation including [Client](https://developer.github.com/v3/) and [WebHooks](https://developer.github.com/webhooks/).  
 
 ## Requirements
-* PHP >= 7
+* PHP >= 7.1.3
 * [cURL](http://php.net/manual/en/book.curl.php) extension
-* [symfony/http-foundation](https://github.com/symfony/http-foundation)
-* [flexyproject/curl](https://github.com/FlexyProject/Curl)
+* [symfony/http-foundation](https://github.com/symfony/http-foundation) ^4.0
+* [flexyproject/curl](https://github.com/FlexyProject/Curl) ^1.1.3
 
 ## Quick Start
 ```php

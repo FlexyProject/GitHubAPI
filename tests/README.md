@@ -9,14 +9,14 @@ GitHubAPI PHPUnit Tests on multiple PHP versions using Docker
 
 > ⚠ Be careful, executing this tests will create Organization, Issue, PullRequest, Gists, Repositories ⚠
 
-PHP7.0
-------
-```bash
-php-7.0 vendor/bin/phpunit -d memory_limit=512M --colors --debug  --coverage-text
-```
-
 PHP7.1
 ------
 ```bash
 php-7.1 vendor/bin/phpunit -d memory_limit=512M --colors --debug  --coverage-text
+```
+
+PHP7.2
+------
+```bash
+php-7.2 vendor/bin/phpunit -d memory_limit=512M --colors --debug  --coverage-text
 ```
