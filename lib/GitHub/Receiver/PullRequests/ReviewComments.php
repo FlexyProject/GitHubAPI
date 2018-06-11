@@ -26,8 +26,12 @@ class ReviewComments extends AbstractPullRequests
      */
     public function listCommentsPullRequest(int $number): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/comments',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pulls/:number/comments',
+            $this->getPullRequests()->getOwner(),
+            $this->getPullRequests()->getRepo(),
+            $number
+        ));
     }
 
     /**
@@ -42,16 +46,21 @@ class ReviewComments extends AbstractPullRequests
      * @return array
      * @throws \Exception
      */
-    public function listCommentsRepository(string $sort = AbstractApi::SORT_CREATED,
-                                           string $direction = AbstractApi::DIRECTION_DESC,
-                                           string $since = 'now'): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments?:args',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), http_build_query([
+    public function listCommentsRepository(
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = 'now'
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pulls/comments?:args',
+            $this->getPullRequests()->getOwner(),
+            $this->getPullRequests()->getRepo(),
+            http_build_query([
                 'sort'      => $sort,
                 'direction' => $direction,
                 'since'     => (new DateTime($since))->format(DateTime::ATOM)
-            ])));
+            ])
+        ));
     }
 
     /**
@@ -66,8 +75,12 @@ class ReviewComments extends AbstractPullRequests
      */
     public function getSingleComment(int $number): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pulls/comments/:number',
+            $this->getPullRequests()->getOwner(),
+            $this->getPullRequests()->getRepo(),
+            $number
+        ));
     }
 
     /**
@@ -86,8 +99,12 @@ class ReviewComments extends AbstractPullRequests
      */
     public function createComment(int $number, string $body, string $commitId, string $path, int $position): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/:number/comments',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pulls/:number/comments',
+            $this->getPullRequests()->getOwner(),
+            $this->getPullRequests()->getRepo(),
+            $number
+        ), Request::METHOD_POST, [
                 'body'      => $body,
                 'commit_id' => $commitId,
                 'path'      => $path,
@@ -108,11 +125,18 @@ class ReviewComments extends AbstractPullRequests
      */
     public function editComment(int $number, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number), Request::METHOD_PATCH,
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/pulls/comments/:number',
+                $this->getPullRequests()->getOwner(),
+                $this->getPullRequests()->getRepo(),
+                $number
+            ),
+            Request::METHOD_PATCH,
             [
                 'body' => $body
-            ]);
+            ]
+        );
     }
 
     /**
@@ -127,8 +151,12 @@ class ReviewComments extends AbstractPullRequests
      */
     public function deleteComment(int $number): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pulls/comments/:number',
-            $this->getPullRequests()->getOwner(), $this->getPullRequests()->getRepo(), $number));
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pulls/comments/:number',
+            $this->getPullRequests()->getOwner(),
+            $this->getPullRequests()->getRepo(),
+            $number
+        ));
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;

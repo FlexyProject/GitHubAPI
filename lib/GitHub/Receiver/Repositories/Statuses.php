@@ -25,11 +25,19 @@ class Statuses extends AbstractRepositories
      *
      * @return array
      */
-    public function createStatus(string $sha, string $state, string $targetUrl = null, string $description = null,
-                                 string $context = 'default'): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/statuses/:sha',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha), Request::METHOD_POST, [
+    public function createStatus(
+        string $sha,
+        string $state,
+        string $targetUrl = null,
+        string $description = null,
+        string $context = 'default'
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/statuses/:sha',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $sha
+        ), Request::METHOD_POST, [
                 'state'       => $state,
                 'target_url'  => $targetUrl,
                 'description' => $description,
@@ -48,8 +56,12 @@ class Statuses extends AbstractRepositories
      */
     public function listStatuses(string $ref): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/statuses',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits/:ref/statuses',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $ref
+        ));
     }
 
     /**
@@ -63,7 +75,11 @@ class Statuses extends AbstractRepositories
      */
     public function getCombinedStatus(string $ref): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/status',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits/:ref/status',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $ref
+        ));
     }
-} 
+}

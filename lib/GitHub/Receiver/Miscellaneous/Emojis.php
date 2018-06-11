@@ -20,4 +20,4 @@ class Emojis extends AbstractMiscellaneous
     {
         return $this->getApi()->request('/emojis');
     }
-} 
+}

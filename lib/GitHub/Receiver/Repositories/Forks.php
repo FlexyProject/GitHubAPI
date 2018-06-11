@@ -24,9 +24,12 @@ class Forks extends AbstractRepositories
      */
     public function listForks(string $sort = AbstractApi::SORT_NEWEST): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/forks?:arg',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(),
-            http_build_query(['sort' => $sort])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/forks?:arg',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            http_build_query(['sort' => $sort])
+        ));
     }
 
     /**
@@ -40,8 +43,14 @@ class Forks extends AbstractRepositories
      */
     public function createFork(string $organization = ''): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/forks',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()), Request::METHOD_POST,
-            ['organization' => $organization]);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/forks',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo()
+            ),
+            Request::METHOD_POST,
+            ['organization' => $organization]
+        );
     }
-} 
+}

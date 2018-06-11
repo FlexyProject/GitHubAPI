@@ -31,8 +31,11 @@ class Events extends AbstractActivity
     public function listRepositoryEvents(): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/events', $this->getActivity()->getOwner(),
-                                                 $this->getActivity()->getRepo()));
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/events',
+                                                 $this->getActivity()->getOwner(),
+                                                 $this->getActivity()->getRepo()
+                                             ));
     }
 
     /**
@@ -43,8 +46,11 @@ class Events extends AbstractActivity
      */
     public function listIssueEvents(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/events',
-            $this->getActivity()->getOwner(), $this->getActivity()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/events',
+            $this->getActivity()->getOwner(),
+            $this->getActivity()->getRepo()
+        ));
     }
 
     /**
@@ -55,8 +61,11 @@ class Events extends AbstractActivity
      */
     public function listPublicNetworkEvents(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/networks/:owner/:repo/events',
-            $this->getActivity()->getOwner(), $this->getActivity()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/networks/:owner/:repo/events',
+            $this->getActivity()->getOwner(),
+            $this->getActivity()->getRepo()
+        ));
     }
 
     /**
@@ -144,4 +153,4 @@ class Events extends AbstractActivity
         return $this->getApi()->request($this->getApi()
                                              ->sprintf('/users/:username/events/orgs/:org', $username, $organization));
     }
-} 
+}

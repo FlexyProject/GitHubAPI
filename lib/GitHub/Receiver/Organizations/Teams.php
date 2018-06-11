@@ -56,9 +56,13 @@ class Teams extends AbstractOrganizations
      * @return array
      * @throws \Exception
      */
-    public function createTeam(string $org, string $name, string $description = null, array $repoNames = [],
-                               string $permission = AbstractApi::PERMISSION_PULL): array
-    {
+    public function createTeam(
+        string $org,
+        string $name,
+        string $description = null,
+        array $repoNames = [],
+        string $permission = AbstractApi::PERMISSION_PULL
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/orgs/:org/teams', $org), Request::METHOD_POST, [
                 'name'        => $name,
                 'description' => $description,
@@ -80,9 +84,12 @@ class Teams extends AbstractOrganizations
      * @return array
      * @throws \Exception
      */
-    public function editTeam(int $id, string $name, string $description = null,
-                             string $permission = AbstractApi::PERMISSION_PULL): array
-    {
+    public function editTeam(
+        int $id,
+        string $name,
+        string $description = null,
+        string $permission = AbstractApi::PERMISSION_PULL
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/teams/:id', (string)$id), Request::METHOD_PATCH, [
                 'name'        => $name,
                 'description' => $description,
@@ -156,9 +163,11 @@ class Teams extends AbstractOrganizations
      */
     public function addTeamMembership(int $id, string $username): array
     {
-        return $this->getApi()->request($this->getApi()
+        return $this->getApi()->request(
+            $this->getApi()
                                              ->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
-            Request::METHOD_PUT);
+            Request::METHOD_PUT
+        );
     }
 
     /**
@@ -174,8 +183,10 @@ class Teams extends AbstractOrganizations
      */
     public function removeTeamMembership(int $id, string $username): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
-            Request::METHOD_DELETE);
+        $this->getApi()->request(
+            $this->getApi()->sprintf('/teams/:id/memberships/:username', (string)$id, $username),
+            Request::METHOD_DELETE
+        );
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -211,8 +222,12 @@ class Teams extends AbstractOrganizations
      */
     public function checkTeamManagesRepository(int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id,
-            $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()));
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/teams/:id/repos/:owner/:repo',
+            (string)$id,
+            $this->getOrganizations()->getOwner(),
+            $this->getOrganizations()->getRepo()
+        ));
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -233,8 +248,12 @@ class Teams extends AbstractOrganizations
      */
     public function addTeamRepository(int $id)
     {
-        $return = $this->getApi()->request($this->getApi()->sprintf('/teams/:id/repos/:org/:repo', (string)$id,
-            $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()), Request::METHOD_PUT);
+        $return = $this->getApi()->request($this->getApi()->sprintf(
+            '/teams/:id/repos/:org/:repo',
+            (string)$id,
+            $this->getOrganizations()->getOwner(),
+            $this->getOrganizations()->getRepo()
+        ), Request::METHOD_PUT);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -255,8 +274,12 @@ class Teams extends AbstractOrganizations
      */
     public function removeTeamRepository(int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/teams/:id/repos/:owner/:repo', (string)$id,
-            $this->getOrganizations()->getOwner(), $this->getOrganizations()->getRepo()), Request::METHOD_DELETE);
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/teams/:id/repos/:owner/:repo',
+            (string)$id,
+            $this->getOrganizations()->getOwner(),
+            $this->getOrganizations()->getRepo()
+        ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;

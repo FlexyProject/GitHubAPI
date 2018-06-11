@@ -17,7 +17,9 @@ class PayloadTest extends AbstractWebHookTest
     {
         $this->payload->setSecret('your-secret');
 
-        $this->assertEquals(hash_hmac('sha1', $this->payload->getRawData(), 'your-secret'),
-            $this->payload->getSecret());
+        $this->assertEquals(
+            hash_hmac('sha1', $this->payload->getRawData(), 'your-secret'),
+            $this->payload->getSecret()
+        );
     }
 }

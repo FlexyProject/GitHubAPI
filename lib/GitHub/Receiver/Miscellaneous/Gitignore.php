@@ -34,4 +34,4 @@ class Gitignore extends AbstractMiscellaneous
     {
         return $this->getApi()->request($this->getApi()->sprintf('/gitignore/templates/:name', $name));
     }
-} 
+}

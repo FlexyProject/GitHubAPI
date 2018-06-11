@@ -20,8 +20,11 @@ class Comments extends AbstractRepositories
      */
     public function listComments(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/comments',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/comments',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -35,8 +38,12 @@ class Comments extends AbstractRepositories
      */
     public function listCommitComments(string $ref): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits/:ref/comments',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $ref));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits/:ref/comments',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $ref
+        ));
     }
 
     /**
@@ -53,8 +60,12 @@ class Comments extends AbstractRepositories
      */
     public function addCommitComment(string $sha, string $body, string $path = '', int $position = 0): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits/:sha/comments',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits/:sha/comments',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $sha
+        ), Request::METHOD_POST, [
                 'body'     => $body,
                 'path'     => $path,
                 'position' => $position
@@ -72,8 +83,12 @@ class Comments extends AbstractRepositories
      */
     public function getCommitComment(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/comments/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/comments/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            (string)$id
+        ));
     }
 
     /**
@@ -89,11 +104,18 @@ class Comments extends AbstractRepositories
      */
     public function updateCommitComment(int $id, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/comments/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
-            Request::METHOD_PATCH, [
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/comments/:id',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo(),
+                (string)$id
+            ),
+            Request::METHOD_PATCH,
+            [
                 'body' => $body
-            ]);
+            ]
+        );
     }
 
     /**
@@ -107,8 +129,14 @@ class Comments extends AbstractRepositories
      */
     public function deleteCommitComment(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/comments/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), (string)$id),
-            Request::METHOD_DELETE);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/comments/:id',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo(),
+                (string)$id
+            ),
+            Request::METHOD_DELETE
+        );
     }
-} 
+}

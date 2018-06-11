@@ -57,9 +57,13 @@ class Hooks extends AbstractOrganizations
      * @return array
      * @throws \Exception
      */
-    public function createHook(string $org, string $name, $config, array $events = [AbstractApi::EVENTS_PUSH],
-                               bool $active = false): array
-    {
+    public function createHook(
+        string $org,
+        string $name,
+        $config,
+        array $events = [AbstractApi::EVENTS_PUSH],
+        bool $active = false
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/orgs/:org/hooks', $org), Request::METHOD_POST, [
                 'name'   => $name,
                 'config' => $config,
@@ -82,15 +86,22 @@ class Hooks extends AbstractOrganizations
      * @return array
      * @throws \Exception
      */
-    public function editHook(string $org, int $id, $config, array $events = [AbstractApi::EVENTS_PUSH],
-                             bool $active = false): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
-            Request::METHOD_PATCH, [
+    public function editHook(
+        string $org,
+        int $id,
+        $config,
+        array $events = [AbstractApi::EVENTS_PUSH],
+        bool $active = false
+    ): array {
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
+            Request::METHOD_PATCH,
+            [
                 'config' => $config,
                 'events' => $events,
                 'active' => $active
-            ]);
+            ]
+        );
     }
 
     /**
@@ -106,8 +117,10 @@ class Hooks extends AbstractOrganizations
      */
     public function pingHook(string $org, int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/orgs/:org/hooks/:id/pings', $org, (string)$id),
-            Request::METHOD_POST);
+        $this->getApi()->request(
+            $this->getApi()->sprintf('/orgs/:org/hooks/:id/pings', $org, (string)$id),
+            Request::METHOD_POST
+        );
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -129,8 +142,10 @@ class Hooks extends AbstractOrganizations
      */
     public function deleteHook(string $org, int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
-            Request::METHOD_DELETE);
+        $this->getApi()->request(
+            $this->getApi()->sprintf('/orgs/:org/hooks/:id', $org, (string)$id),
+            Request::METHOD_DELETE
+        );
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;

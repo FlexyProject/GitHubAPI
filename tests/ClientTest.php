@@ -2,9 +2,17 @@
 namespace FlexyProject\GitHub\Tests;
 
 use FlexyProject\GitHub\Client;
-use FlexyProject\GitHub\Receiver\{
-    Activity, Enterprise, Gists, GitData, Issues, Miscellaneous, Organizations, PullRequests, Repositories, Search, Users
-};
+use FlexyProject\GitHub\Receiver\Activity;
+use FlexyProject\GitHub\Receiver\Enterprise;
+use FlexyProject\GitHub\Receiver\Gists;
+use FlexyProject\GitHub\Receiver\GitData;
+use FlexyProject\GitHub\Receiver\Issues;
+use FlexyProject\GitHub\Receiver\Miscellaneous;
+use FlexyProject\GitHub\Receiver\Organizations;
+use FlexyProject\GitHub\Receiver\PullRequests;
+use FlexyProject\GitHub\Receiver\Repositories;
+use FlexyProject\GitHub\Receiver\Search;
+use FlexyProject\GitHub\Receiver\Users;
 
 /**
  * Class ClientTest

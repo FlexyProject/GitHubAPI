@@ -35,10 +35,14 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function listIssues(string $filter = AbstractApi::FILTER_ASSIGNED, string $state = AbstractApi::STATE_OPEN,
-                               string $labels = '', string $sort = AbstractApi::SORT_CREATED,
-                               string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array
-    {
+    public function listIssues(
+        string $filter = AbstractApi::FILTER_ASSIGNED,
+        string $state = AbstractApi::STATE_OPEN,
+        string $labels = '',
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = '1970-01-01'
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/issues?:args', http_build_query([
                 'filter'    => $filter,
                 'state'     => $state,
@@ -63,11 +67,14 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function listUserIssues(string $filter = AbstractApi::FILTER_ASSIGNED,
-                                   string $state = AbstractApi::STATE_OPEN, string $labels = '',
-                                   string $sort = AbstractApi::SORT_CREATED,
-                                   string $direction = AbstractApi::DIRECTION_DESC, string $since = '1970-01-01'): array
-    {
+    public function listUserIssues(
+        string $filter = AbstractApi::FILTER_ASSIGNED,
+        string $state = AbstractApi::STATE_OPEN,
+        string $labels = '',
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = '1970-01-01'
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/user/issues?:args', http_build_query([
                 'filter'    => $filter,
                 'state'     => $state,
@@ -93,12 +100,15 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function listOrganizationIssues(string $organization, string $filter = AbstractApi::FILTER_ASSIGNED,
-                                           string $state = AbstractApi::STATE_OPEN, string $labels = '',
-                                           string $sort = AbstractApi::SORT_CREATED,
-                                           string $direction = AbstractApi::DIRECTION_DESC,
-                                           string $since = '1970-01-01'): array
-    {
+    public function listOrganizationIssues(
+        string $organization,
+        string $filter = AbstractApi::FILTER_ASSIGNED,
+        string $state = AbstractApi::STATE_OPEN,
+        string $labels = '',
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = '1970-01-01'
+    ): array {
         return $this->getApi()->request($this->getApi()
                                              ->sprintf('/orgs/:org/issues?:args', $organization, http_build_query([
                                                      'filter'    => $filter,
@@ -127,14 +137,22 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function listRepositoryIssues(string $milestone = '*', string $state = AbstractApi::STATE_OPEN,
-                                         string $assignee = '*', string $creator = '', string $mentioned = '',
-                                         string $labels = '', string $sort = AbstractApi::SORT_CREATED,
-                                         string $direction = AbstractApi::DIRECTION_DESC,
-                                         string $since = '1970-01-01'): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues?:args', $this->getOwner(),
-            $this->getRepo(), http_build_query([
+    public function listRepositoryIssues(
+        string $milestone = '*',
+        string $state = AbstractApi::STATE_OPEN,
+        string $assignee = '*',
+        string $creator = '',
+        string $mentioned = '',
+        string $labels = '',
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = '1970-01-01'
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues?:args',
+            $this->getOwner(),
+            $this->getRepo(),
+            http_build_query([
                 'milestone' => $milestone,
                 'state'     => $state,
                 'assignee'  => $assignee,
@@ -144,7 +162,8 @@ class Issues extends AbstractReceiver
                 'sort'      => $sort,
                 'direction' => $direction,
                 'since'     => (new DateTime($since))->format(DateTime::ATOM)
-            ])));
+            ])
+        ));
     }
 
     /**
@@ -159,8 +178,12 @@ class Issues extends AbstractReceiver
     public function getIssue(int $number): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(),
-                                                 $this->getRepo(), $number));
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/issues/:number',
+                                                 $this->getOwner(),
+                                                 $this->getRepo(),
+                                                 $number
+                                             ));
     }
 
     /**
@@ -176,11 +199,18 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function createIssue(string $title, string $body = '', string $assignee = '', int $milestone = 0,
-                                array $labels = []): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues', $this->getOwner(),
-            $this->getRepo()), Request::METHOD_POST, [
+    public function createIssue(
+        string $title,
+        string $body = '',
+        string $assignee = '',
+        int $milestone = 0,
+        array $labels = []
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues',
+            $this->getOwner(),
+            $this->getRepo()
+        ), Request::METHOD_POST, [
                 'title'     => $title,
                 'body'      => $body,
                 'assignee'  => $assignee,
@@ -203,17 +233,26 @@ class Issues extends AbstractReceiver
      *
      * @return array
      */
-    public function editIssue(int $number, string $title = '', string $body = '', string $assignee = '',
-                              int $milestone = 0, array $labels = []): array
-    {
+    public function editIssue(
+        int $number,
+        string $title = '',
+        string $body = '',
+        string $assignee = '',
+        int $milestone = 0,
+        array $labels = []
+    ): array {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/issues/:number', $this->getOwner(),
-                                                 $this->getRepo(), $number), Request::METHOD_PATCH, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/issues/:number',
+                                                 $this->getOwner(),
+                                                 $this->getRepo(),
+                                                 $number
+                                             ), Request::METHOD_PATCH, [
                 'title'     => $title,
                 'body'      => $body,
                 'assignee'  => $assignee,
                 'milestone' => $milestone,
                 'labels'    => $labels
-            ]);
+                                                 ]);
     }
-} 
+}

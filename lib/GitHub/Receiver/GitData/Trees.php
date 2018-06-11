@@ -24,8 +24,12 @@ class Trees extends AbstractGitData
      */
     public function get(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/trees/:sha',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/trees/:sha',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -40,8 +44,12 @@ class Trees extends AbstractGitData
      */
     public function getRecursively(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/trees/:sha?recursive=1',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/trees/:sha?recursive=1',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -58,10 +66,13 @@ class Trees extends AbstractGitData
     public function create(array $tree, string $base_tree): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/git/trees', $this->getGitData()->getOwner(),
-                                                 $this->getGitData()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/git/trees',
+                                                 $this->getGitData()->getOwner(),
+                                                 $this->getGitData()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'tree'      => $tree,
                 'base_tree' => $base_tree
-            ]);
+                                                 ]);
     }
-} 
+}

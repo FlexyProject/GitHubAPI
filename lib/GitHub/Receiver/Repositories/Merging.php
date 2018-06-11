@@ -25,11 +25,14 @@ class Merging extends AbstractRepositories
      */
     public function performMerge(string $base, string $head, string $commitMessage = null): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/merges',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/merges',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ), Request::METHOD_POST, [
                 'base'           => $base,
                 'head'           => $head,
                 'commit_message' => $commitMessage
             ]);
     }
-} 
+}

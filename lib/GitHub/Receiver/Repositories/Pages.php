@@ -18,8 +18,11 @@ class Pages extends AbstractRepositories
      */
     public function getInformation(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pages',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pages',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -30,8 +33,11 @@ class Pages extends AbstractRepositories
      */
     public function listPagesBuilds(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pages/builds',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pages/builds',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -42,7 +48,10 @@ class Pages extends AbstractRepositories
      */
     public function listLatestPagesBuilds(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/pages/builds/latest',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/pages/builds/latest',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 }

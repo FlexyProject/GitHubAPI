@@ -33,8 +33,12 @@ class Gists extends AbstractReceiver
             $url = '/users/:username/gists';
         }
 
-        return $this->getApi()->request($this->getApi()->sprintf(':url?:arg', $url, $username,
-            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            ':url?:arg',
+            $url,
+            $username,
+            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])
+        ));
     }
 
     /**
@@ -48,8 +52,10 @@ class Gists extends AbstractReceiver
      */
     public function listPublicGists(string $since = '1970-01-01'): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/public?:arg',
-            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/gists/public?:arg',
+            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])
+        ));
     }
 
     /**
@@ -63,8 +69,10 @@ class Gists extends AbstractReceiver
      */
     public function listUsersStarredGists(string $since = '1970-01-01'): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/starred?:arg',
-            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/gists/starred?:arg',
+            http_build_query(['since' => (new DateTime($since))->format(DateTime::ATOM)])
+        ));
     }
 
     /**
@@ -130,9 +138,13 @@ class Gists extends AbstractReceiver
      *
      * @return array
      */
-    public function editGist(string $id, string $description = '', array $files = [], string $content = '',
-                             string $filename = ''): array
-    {
+    public function editGist(
+        string $id,
+        string $description = '',
+        array $files = [],
+        string $content = '',
+        string $filename = ''
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/gists/:id', $id), Request::METHOD_PATCH, [
             'description' => $description,
             'files'       => $files,
@@ -262,4 +274,4 @@ class Gists extends AbstractReceiver
 
         return false;
     }
-} 
+}

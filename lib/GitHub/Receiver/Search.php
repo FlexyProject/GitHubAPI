@@ -31,11 +31,15 @@ class Search extends AbstractReceiver
      * @return array
      * @throws \Exception
      */
-    public function searchRepositories(string $q, string $sort = null,
-                                       string $order = AbstractApi::DIRECTION_DESC): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/search/repositories?:args',
-            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])));
+    public function searchRepositories(
+        string $q,
+        string $sort = null,
+        string $order = AbstractApi::DIRECTION_DESC
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/search/repositories?:args',
+            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])
+        ));
     }
 
     /**
@@ -52,8 +56,10 @@ class Search extends AbstractReceiver
      */
     public function searchCode(string $q, string $sort = null, string $order = AbstractApi::DIRECTION_DESC): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/search/code?:args',
-            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/search/code?:args',
+            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])
+        ));
     }
 
     /**
@@ -70,8 +76,10 @@ class Search extends AbstractReceiver
      */
     public function searchIssues(string $q, string $sort = null, string $order = AbstractApi::DIRECTION_DESC): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/search/issues?:args',
-            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/search/issues?:args',
+            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])
+        ));
     }
 
     /**
@@ -88,7 +96,9 @@ class Search extends AbstractReceiver
      */
     public function searchUsers(string $q, string $sort = null, string $order = AbstractApi::DIRECTION_DESC): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/search/users?:args',
-            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/search/users?:args',
+            http_build_query(['q' => $q, 'sort' => $sort, 'order' => $order])
+        ));
     }
 }

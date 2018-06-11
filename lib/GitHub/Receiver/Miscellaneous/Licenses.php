@@ -34,7 +34,9 @@ class Licenses extends AbstractMiscellaneous
     public function getIndividualLicense(string $license): array
     {
         return $this->getApi()->setAccept('application/vnd.github.drax-preview+json')->request($this->getApi()
-                                                                                                    ->sprintf('/licenses/:license',
-                                                                                                        $license));
+                                                                                                    ->sprintf(
+                                                                                                        '/licenses/:license',
+                                                                                                        $license
+                                                                                                    ));
     }
 }

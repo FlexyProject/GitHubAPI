@@ -1,9 +1,9 @@
 <?php
 namespace FlexyProject\GitHub\Tests\Receiver;
 
-use FlexyProject\GitHub\{
-    Client, Receiver\Gists, Tests\AbstractClientTest
-};
+use FlexyProject\GitHub\Client;
+use FlexyProject\GitHub\Receiver\Gists;
+use FlexyProject\GitHub\Tests\AbstractClientTest;
 
 /**
  * Class GistsTest
@@ -350,5 +350,4 @@ class GistsTest extends AbstractClientTest
     {
         $this->assertTrue($this->gists->deleteGist($gistId));
     }
-
 }

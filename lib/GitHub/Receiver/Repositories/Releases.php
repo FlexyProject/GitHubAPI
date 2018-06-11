@@ -22,8 +22,11 @@ class Releases extends AbstractRepositories
      */
     public function listReleases(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -37,8 +40,12 @@ class Releases extends AbstractRepositories
      */
     public function getSingleRelease(string $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -50,8 +57,11 @@ class Releases extends AbstractRepositories
      */
     public function getLatestRelease(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/latest',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/latest',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -66,8 +76,12 @@ class Releases extends AbstractRepositories
      */
     public function getReleaseByTagName(string $tag): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/tags/:tag',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $tag));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/tags/:tag',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $tag
+        ));
     }
 
     /**
@@ -84,12 +98,19 @@ class Releases extends AbstractRepositories
      *
      * @return array
      */
-    public function createRelease(string $tagName, string $targetCommitish = AbstractApi::BRANCH_MASTER,
-                                  string $name = null, string $body = null, bool $draft = false,
-                                  bool $preRelease = false): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()), Request::METHOD_POST, [
+    public function createRelease(
+        string $tagName,
+        string $targetCommitish = AbstractApi::BRANCH_MASTER,
+        string $name = null,
+        string $body = null,
+        bool $draft = false,
+        bool $preRelease = false
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ), Request::METHOD_POST, [
                 'tag_name'         => $tagName,
                 'target_commitish' => $targetCommitish,
                 'name'             => $name,
@@ -114,11 +135,21 @@ class Releases extends AbstractRepositories
      *
      * @return array
      */
-    public function editRelease(string $id, string $tagName, string $targetCommitish = AbstractApi::BRANCH_MASTER,
-                                string $name, string $body, bool $draft = false, bool $preRelease = false): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_PATCH, [
+    public function editRelease(
+        string $id,
+        string $tagName,
+        string $targetCommitish = AbstractApi::BRANCH_MASTER,
+        string $name,
+        string $body,
+        bool $draft = false,
+        bool $preRelease = false
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_PATCH, [
                 'tag_name'         => $tagName,
                 'target_commitish' => $targetCommitish,
                 'name'             => $name,
@@ -139,8 +170,12 @@ class Releases extends AbstractRepositories
      */
     public function deleteRelease(string $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_DELETE);
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -160,8 +195,12 @@ class Releases extends AbstractRepositories
      */
     public function getReleaseAssets(string $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/:id/assets',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/:id/assets',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -178,16 +217,22 @@ class Releases extends AbstractRepositories
     public function uploadReleaseAsset(string $id, string $contentType, string $name): array
     {
 
-        return $this->getApi()->setApiUrl(AbstractApi::API_UPLOADS)->request($this->getApi()
-                                                                                  ->sprintf('/repos/:owner/:repo/releases/:id/assets?:arg',
+        return $this->getApi()->setApiUrl(AbstractApi::API_UPLOADS)->request(
+            $this->getApi()
+                                                                                  ->sprintf(
+                                                                                      '/repos/:owner/:repo/releases/:id/assets?:arg',
                                                                                       $this->getRepositories()
                                                                                            ->getOwner(),
                                                                                       $this->getRepositories()
-                                                                                           ->getRepo(), $id,
-                                                                                      http_build_query(['name' => $name])),
-            Request::METHOD_POST, [
+                                                                                           ->getRepo(),
+                                                                                      $id,
+                                                                                      http_build_query(['name' => $name])
+                                                                                  ),
+            Request::METHOD_POST,
+            [
                 'Content-Type' => $contentType
-            ]);
+            ]
+        );
     }
 
     /**
@@ -201,8 +246,12 @@ class Releases extends AbstractRepositories
      */
     public function getSingleReleaseAsset(string $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/assets/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -218,8 +267,12 @@ class Releases extends AbstractRepositories
      */
     public function editReleaseAsset(string $id, string $name, string $label = ''): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_PATCH, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/assets/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_PATCH, [
                 'name'  => $name,
                 'label' => $label
             ]);
@@ -236,8 +289,12 @@ class Releases extends AbstractRepositories
      */
     public function deleteReleaseAsset(string $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/releases/assets/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_DELETE);
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/releases/assets/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;

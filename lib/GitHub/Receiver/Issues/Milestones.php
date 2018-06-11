@@ -25,15 +25,21 @@ class Milestones extends AbstractIssues
      *
      * @return array
      */
-    public function listMilestones(string $state = AbstractApi::STATE_OPEN, string $sort = AbstractApi::SORT_DUE_DATE,
-                                   string $direction = AbstractApi::DIRECTION_ASC): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/milestones?:args',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
+    public function listMilestones(
+        string $state = AbstractApi::STATE_OPEN,
+        string $sort = AbstractApi::SORT_DUE_DATE,
+        string $direction = AbstractApi::DIRECTION_ASC
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/milestones?:args',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            http_build_query([
                 'state'     => $state,
                 'sort'      => $sort,
                 'direction' => $direction
-            ])));
+            ])
+        ));
     }
 
     /**
@@ -47,8 +53,12 @@ class Milestones extends AbstractIssues
      */
     public function getMilestone(int $number): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/milestones/:number',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $number
+        ));
     }
 
     /**
@@ -63,17 +73,23 @@ class Milestones extends AbstractIssues
      *
      * @return array
      */
-    public function createMilestone(string $title, string $state = AbstractApi::STATE_OPEN, string $description = '',
-                                    string $dueOn = ''): array
-    {
+    public function createMilestone(
+        string $title,
+        string $state = AbstractApi::STATE_OPEN,
+        string $description = '',
+        string $dueOn = ''
+    ): array {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/milestones', $this->getIssues()->getOwner(),
-                                                 $this->getIssues()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/milestones',
+                                                 $this->getIssues()->getOwner(),
+                                                 $this->getIssues()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'title'       => $title,
                 'state'       => $state,
                 'description' => $description,
                 'due_on'      => (new DateTime($dueOn))->format(DateTime::ATOM)
-            ]);
+                                                 ]);
     }
 
     /**
@@ -89,11 +105,19 @@ class Milestones extends AbstractIssues
      *
      * @return array
      */
-    public function updateMilestone(int $number, string $title = '', string $state = AbstractApi::STATE_OPEN,
-                                    string $description = '', string $dueOn = ''): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number), Request::METHOD_PATCH, [
+    public function updateMilestone(
+        int $number,
+        string $title = '',
+        string $state = AbstractApi::STATE_OPEN,
+        string $description = '',
+        string $dueOn = ''
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/milestones/:number',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $number
+        ), Request::METHOD_PATCH, [
                 'title'       => $title,
                 'state'       => $state,
                 'description' => $description,
@@ -112,8 +136,12 @@ class Milestones extends AbstractIssues
      */
     public function deleteMilestone(int $number): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/milestones/:number',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number), Request::METHOD_DELETE);
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/milestones/:number',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $number
+        ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -121,4 +149,4 @@ class Milestones extends AbstractIssues
 
         return false;
     }
-} 
+}

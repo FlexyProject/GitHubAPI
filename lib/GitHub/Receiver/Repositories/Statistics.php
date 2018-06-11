@@ -18,8 +18,11 @@ class Statistics extends AbstractRepositories
      */
     public function listContributors(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/stats/contributors',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/stats/contributors',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -30,8 +33,11 @@ class Statistics extends AbstractRepositories
      */
     public function getCommitActivity(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/stats/commit_activity',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/stats/commit_activity',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -42,8 +48,11 @@ class Statistics extends AbstractRepositories
      */
     public function getCodeFrequency(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/stats/code_frequency',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/stats/code_frequency',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -54,8 +63,11 @@ class Statistics extends AbstractRepositories
      */
     public function getParticipation(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/stats/participation',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/stats/participation',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -66,7 +78,10 @@ class Statistics extends AbstractRepositories
      */
     public function getPunchCard(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/stats/punch_card',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/stats/punch_card',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 }

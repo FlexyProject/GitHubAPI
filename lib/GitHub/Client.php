@@ -42,5 +42,4 @@ class Client extends AbstractApi
 
         return null;
     }
-
-} 
+}

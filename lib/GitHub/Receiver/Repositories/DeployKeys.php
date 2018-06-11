@@ -21,8 +21,11 @@ class DeployKeys extends AbstractRepositories
     public function listDeployKeys(): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(),
-                                                 $this->getRepositories()->getRepo()));
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/keys',
+                                                 $this->getRepositories()->getOwner(),
+                                                 $this->getRepositories()->getRepo()
+                                             ));
     }
 
     /**
@@ -36,8 +39,12 @@ class DeployKeys extends AbstractRepositories
      */
     public function getDeployKey(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/keys/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/keys/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -53,11 +60,14 @@ class DeployKeys extends AbstractRepositories
     public function addNewDeployKey(string $title, string $key): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/keys', $this->getRepositories()->getOwner(),
-                                                 $this->getRepositories()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/keys',
+                                                 $this->getRepositories()->getOwner(),
+                                                 $this->getRepositories()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'title' => $title,
                 'key'   => $key
-            ]);
+                                                 ]);
     }
 
     /**
@@ -71,7 +81,11 @@ class DeployKeys extends AbstractRepositories
      */
     public function removeDeployKey(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/keys/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_DELETE);
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/keys/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_DELETE);
     }
-} 
+}

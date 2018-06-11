@@ -24,8 +24,12 @@ class Commits extends AbstractGitData
      */
     public function get(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/commits/:sha',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/commits/:sha',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -43,11 +47,19 @@ class Commits extends AbstractGitData
      * @return array
      * @throws \Exception
      */
-    public function create(string $message, string $tree, $parents, string $name = null, string $email = null,
-                           string $date = 'now'): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/commits',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo()), Request::METHOD_POST, [
+    public function create(
+        string $message,
+        string $tree,
+        $parents,
+        string $name = null,
+        string $email = null,
+        string $date = 'now'
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/commits',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo()
+        ), Request::METHOD_POST, [
                 'message' => $message,
                 'tree'    => $tree,
                 'parents' => $parents,

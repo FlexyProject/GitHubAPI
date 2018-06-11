@@ -25,17 +25,25 @@ class Commits extends AbstractRepositories
      *
      * @return array
      */
-    public function listCommits(string $sha = AbstractApi::BRANCH_MASTER, string $path = null, string $author = null,
-                                string $since = null, string $until = null): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits?:args',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), http_build_query([
+    public function listCommits(
+        string $sha = AbstractApi::BRANCH_MASTER,
+        string $path = null,
+        string $author = null,
+        string $since = null,
+        string $until = null
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits?:args',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            http_build_query([
                 "sha"    => $sha,
                 "path"   => $path,
                 "author" => $author,
                 "since"  => $since,
                 "until"  => $until
-            ])));
+            ])
+        ));
     }
 
     /**
@@ -49,8 +57,12 @@ class Commits extends AbstractRepositories
      */
     public function getSingleCommit(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/commits/:sha',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/commits/:sha',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -65,7 +77,12 @@ class Commits extends AbstractRepositories
      */
     public function compareTwoCommits(string $base, string $head): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/compare/:base...:head',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $base, $head));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/compare/:base...:head',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $base,
+            $head
+        ));
     }
-} 
+}

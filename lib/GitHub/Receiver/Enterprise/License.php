@@ -20,4 +20,4 @@ class License extends AbstractEnterprise
     {
         return $this->getApi()->request(sprintf('/enterprise/settings/license'));
     }
-} 
+}

@@ -21,8 +21,12 @@ class Events extends AbstractIssues
      */
     public function listIssueEvents(int $issueNumber): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/:issue_number/events',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $issueNumber));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/:issue_number/events',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $issueNumber
+        ));
     }
 
     /**
@@ -33,8 +37,11 @@ class Events extends AbstractIssues
      */
     public function listRepositoryEvents(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/events',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/events',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo()
+        ));
     }
 
     /**
@@ -48,7 +55,11 @@ class Events extends AbstractIssues
      */
     public function getEvent(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/events/:id',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/events/:id',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $id
+        ));
     }
-} 
+}

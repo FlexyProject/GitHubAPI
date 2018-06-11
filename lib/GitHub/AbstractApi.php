@@ -413,9 +413,12 @@ abstract class AbstractApi
      *
      * @return array
      */
-    public function request(string $url, string $method = Request::METHOD_GET, array $postFields = [],
-                            string $apiUrl = null): array
-    {
+    public function request(
+        string $url,
+        string $method = Request::METHOD_GET,
+        array $postFields = [],
+        string $apiUrl = null
+    ): array {
         /** Building url */
         if (null === $apiUrl) {
             $apiUrl = $this->getApiUrl();
@@ -435,9 +438,9 @@ abstract class AbstractApi
          * Basic authentication via OAuth2 Token (sent as a parameter)
          *
          * @see https://developer.github.com/v3/#oauth2-token-sent-as-a-parameter
-         */ else if ($this->getAuthentication() === self::OAUTH2_PARAMETERS_AUTH) {
+         */ elseif ($this->getAuthentication() === self::OAUTH2_PARAMETERS_AUTH) {
             $query['access_token'] = $this->getToken();
-        }
+}
 
         /**
          * Pagination
@@ -448,22 +451,22 @@ abstract class AbstractApi
          *
          * @see https://developer.github.com/v3/#pagination
          */
-        if (null !== $this->getPagination()) {
-            if (null !== $this->getPagination()->getPage()) {
-                $query['page'] = $this->getPagination()->getPage();
-            }
-            if (null !== $this->getPagination()->getLimit()) {
-                $query['per_page'] = $this->getPagination()->getLimit();
-            }
-        }
+if (null !== $this->getPagination()) {
+    if (null !== $this->getPagination()->getPage()) {
+        $query['page'] = $this->getPagination()->getPage();
+    }
+    if (null !== $this->getPagination()->getLimit()) {
+        $query['per_page'] = $this->getPagination()->getLimit();
+    }
+}
 
         /**
          * Add URL-encoded query string parameters
          */
-        if (!empty($query)) {
-            $url .= (strstr($url, '?') !== false ? '&' : '?');
-            $url .= http_build_query($query);
-        }
+if (!empty($query)) {
+    $url .= (strstr($url, '?') !== false ? '&' : '?');
+    $url .= http_build_query($query);
+}
 
         /** Call curl */
         $curl = new CurlClient();
@@ -493,8 +496,11 @@ abstract class AbstractApi
             } else {
                 $curl->setOption([
                     CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-                    CURLOPT_USERPWD  => sprintf('%s:%s', $this->getHttpAuth()['username'],
-                        $this->getHttpAuth()['password'])
+                    CURLOPT_USERPWD  => sprintf(
+                        '%s:%s',
+                        $this->getHttpAuth()['username'],
+                        $this->getHttpAuth()['password']
+                    )
                 ]);
             }
         }
@@ -514,12 +520,12 @@ abstract class AbstractApi
              * Basic authentication via OAuth2 Token (sent in a header)
              *
              * @see https://developer.github.com/v3/#oauth2-token-sent-in-a-header
-             */ else if ($this->getAuthentication() === self::OAUTH2_HEADER_AUTH) {
+             */ elseif ($this->getAuthentication() === self::OAUTH2_HEADER_AUTH) {
                 $curl->setOption([
                     CURLOPT_HTTPAUTH   => CURLAUTH_BASIC,
                     CURLOPT_HTTPHEADER => [sprintf('Authorization: token %s', $this->getToken())]
                 ]);
-            }
+}
         }
 
         /** Methods */

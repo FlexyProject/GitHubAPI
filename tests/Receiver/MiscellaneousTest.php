@@ -1,9 +1,9 @@
 <?php
 namespace FlexyProject\GitHub\Tests\Receiver;
 
-use FlexyProject\GitHub\{
-    Client, Receiver\Miscellaneous, Tests\AbstractClientTest
-};
+use FlexyProject\GitHub\Client;
+use FlexyProject\GitHub\Receiver\Miscellaneous;
+use FlexyProject\GitHub\Tests\AbstractClientTest;
 
 /**
  * Class MiscellaneousTest
@@ -184,8 +184,10 @@ class MiscellaneousTest extends AbstractClientTest
     {
         $output = $this->markdown->render('Hello world FlexyProject/GitHubAPI#43 **cool**, and #43!');
 
-        $this->assertEquals('<p>Hello world FlexyProject/GitHubAPI#43 <strong>cool</strong>, and #43!</p>',
-            str_replace(["\r\n", "\r", "\n"], "", $output[0]));
+        $this->assertEquals(
+            '<p>Hello world FlexyProject/GitHubAPI#43 <strong>cool</strong>, and #43!</p>',
+            str_replace(["\r\n", "\r", "\n"], "", $output[0])
+        );
     }
 
     /**
@@ -195,8 +197,10 @@ class MiscellaneousTest extends AbstractClientTest
     {
         $output = $this->markdown->renderRaw('**cool**');
 
-        $this->assertEquals('<p>{"file":"<strong>cool</strong>"}</p>',
-            str_replace(["\r\n", "\r", "\n"], "", $output[0]));
+        $this->assertEquals(
+            '<p>{"file":"<strong>cool</strong>"}</p>',
+            str_replace(["\r\n", "\r", "\n"], "", $output[0])
+        );
     }
 
     /**
