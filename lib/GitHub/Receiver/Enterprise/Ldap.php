@@ -27,8 +27,10 @@ class Ldap extends AbstractEnterprise
      */
     public function updateMappingUser(string $username): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/admin/ldap/user/:username/mapping', $username),
-            Request::METHOD_PATCH);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/admin/ldap/user/:username/mapping', $username),
+            Request::METHOD_PATCH
+        );
     }
 
     /**
@@ -43,8 +45,10 @@ class Ldap extends AbstractEnterprise
      */
     public function syncMappingUser(int $userId): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/admin/ldap/user/:user_id/sync', (string)$userId),
-            Request::METHOD_POST);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/admin/ldap/user/:user_id/sync', (string)$userId),
+            Request::METHOD_POST
+        );
     }
 
     /**
@@ -59,8 +63,10 @@ class Ldap extends AbstractEnterprise
      */
     public function updateMappingTeam(int $teamId): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/admin/ldap/teams/:team_id/mapping', (string)$teamId),
-            Request::METHOD_PATCH);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/admin/ldap/teams/:team_id/mapping', (string)$teamId),
+            Request::METHOD_PATCH
+        );
     }
 
     /**
@@ -75,7 +81,9 @@ class Ldap extends AbstractEnterprise
      */
     public function syncMappingTeam(int $teamId): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/admin/ldap/teams/:team_id/sync', (string)$teamId),
-            Request::METHOD_POST);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/admin/ldap/teams/:team_id/sync', (string)$teamId),
+            Request::METHOD_POST
+        );
     }
 }

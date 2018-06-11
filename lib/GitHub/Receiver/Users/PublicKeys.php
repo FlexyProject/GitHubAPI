@@ -78,7 +78,9 @@ class PublicKeys extends AbstractUsers
      */
     public function deletePublicKey(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/user/keys/:id', (string)$id),
-            Request::METHOD_DELETE);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/user/keys/:id', (string)$id),
+            Request::METHOD_DELETE
+        );
     }
 }

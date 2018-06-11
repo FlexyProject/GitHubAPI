@@ -21,4 +21,4 @@ class Meta extends AbstractMiscellaneous
     {
         return $this->getApi()->request('/meta');
     }
-} 
+}

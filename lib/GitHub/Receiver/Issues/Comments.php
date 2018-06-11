@@ -24,8 +24,12 @@ class Comments extends AbstractIssues
      */
     public function listIssueComments(int $number): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/comments',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/:number/comments',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $number
+        ));
     }
 
     /**
@@ -39,16 +43,21 @@ class Comments extends AbstractIssues
      *
      * @return array
      */
-    public function listRepositoryComments(string $sort = AbstractApi::SORT_CREATED,
-                                           string $direction = AbstractApi::DIRECTION_DESC,
-                                           string $since = 'now'): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/comments?:args',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), http_build_query([
+    public function listRepositoryComments(
+        string $sort = AbstractApi::SORT_CREATED,
+        string $direction = AbstractApi::DIRECTION_DESC,
+        string $since = 'now'
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/comments?:args',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            http_build_query([
                 'sort'      => $sort,
                 'direction' => $direction,
                 'since'     => $since
-            ])));
+            ])
+        ));
     }
 
     /**
@@ -62,8 +71,12 @@ class Comments extends AbstractIssues
      */
     public function getComment(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/comments/:id',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -78,8 +91,12 @@ class Comments extends AbstractIssues
      */
     public function createComment(int $number, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/:number/comments',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $number), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/:number/comments',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $number
+        ), Request::METHOD_POST, [
                 'body' => $body
             ]);
     }
@@ -96,8 +113,12 @@ class Comments extends AbstractIssues
      */
     public function editComment(int $id, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id), Request::METHOD_PATCH, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/comments/:id',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $id
+        ), Request::METHOD_PATCH, [
                 'body' => $body
             ]);
     }
@@ -113,8 +134,12 @@ class Comments extends AbstractIssues
      */
     public function deleteComment(int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/issues/comments/:id',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $id), Request::METHOD_DELETE);
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/issues/comments/:id',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $id
+        ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -122,4 +147,4 @@ class Comments extends AbstractIssues
 
         return false;
     }
-} 
+}

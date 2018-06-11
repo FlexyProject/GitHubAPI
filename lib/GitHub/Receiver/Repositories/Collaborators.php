@@ -20,8 +20,11 @@ class Collaborators extends AbstractRepositories
      */
     public function listCollaborators(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/collaborators',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/collaborators',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -35,8 +38,12 @@ class Collaborators extends AbstractRepositories
      */
     public function checkUserIsACollaborator(string $username): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username));
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/collaborators/:username',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $username
+        ));
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -56,8 +63,12 @@ class Collaborators extends AbstractRepositories
      */
     public function addUserAsCollaborator(string $username): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username), Request::METHOD_PUT);
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/collaborators/:username',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $username
+        ), Request::METHOD_PUT);
     }
 
     /**
@@ -71,8 +82,14 @@ class Collaborators extends AbstractRepositories
      */
     public function removeUserAsCollaborator(string $username): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/collaborators/:username',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $username),
-            Request::METHOD_DELETE);
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/collaborators/:username',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo(),
+                $username
+            ),
+            Request::METHOD_DELETE
+        );
     }
-} 
+}

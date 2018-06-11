@@ -20,8 +20,11 @@ class Hooks extends AbstractRepositories
      */
     public function listHooks(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -35,8 +38,12 @@ class Hooks extends AbstractRepositories
      */
     public function getSingleHook(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -53,8 +60,11 @@ class Hooks extends AbstractRepositories
      */
     public function createHook(string $name, string $config, array $events = ['push'], bool $active = true): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ), Request::METHOD_POST, [
                 'name'   => $name,
                 'config' => $config,
                 'events' => $events,
@@ -76,11 +86,20 @@ class Hooks extends AbstractRepositories
      *
      * @return array
      */
-    public function editHook(int $id, string $config, array $events = ['push'], array $addEvents = [],
-                             array $removeEvents = [], bool $active = true): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_PATCH, [
+    public function editHook(
+        int $id,
+        string $config,
+        array $events = ['push'],
+        array $addEvents = [],
+        array $removeEvents = [],
+        bool $active = true
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_PATCH, [
                 'config'        => $config,
                 'events'        => $events,
                 'add_events'    => $addEvents,
@@ -100,8 +119,12 @@ class Hooks extends AbstractRepositories
      */
     public function testPushHook(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id/tests',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_POST);
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks/:id/tests',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_POST);
     }
 
     /**
@@ -115,8 +138,12 @@ class Hooks extends AbstractRepositories
      */
     public function pingHook(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id/pings',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_POST);
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks/:id/pings',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_POST);
     }
 
     /**
@@ -130,7 +157,11 @@ class Hooks extends AbstractRepositories
      */
     public function deleteHook(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/hooks/:id',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_DELETE);
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/hooks/:id',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_DELETE);
     }
 }

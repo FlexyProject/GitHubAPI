@@ -20,4 +20,4 @@ class RateLimit extends AbstractMiscellaneous
     {
         return $this->getApi()->request('/rate_limit');
     }
-} 
+}

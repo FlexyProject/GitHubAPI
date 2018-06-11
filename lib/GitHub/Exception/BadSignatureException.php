@@ -11,4 +11,4 @@ use Exception;
 class BadSignatureException extends Exception
 {
 
-} 
+}

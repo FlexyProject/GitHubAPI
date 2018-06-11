@@ -20,4 +20,4 @@ class Feeds extends AbstractActivity
     {
         return $this->getApi()->request(sprintf('/feeds'));
     }
-} 
+}

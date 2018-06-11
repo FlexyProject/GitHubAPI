@@ -53,10 +53,13 @@ class Comments extends AbstractGists
      */
     public function createComment(string $gistId, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments', $gistId),
-            Request::METHOD_POST, [
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/gists/:gist_id/comments', $gistId),
+            Request::METHOD_POST,
+            [
                 'body' => $body
-            ]);
+            ]
+        );
     }
 
     /**
@@ -72,10 +75,13 @@ class Comments extends AbstractGists
      */
     public function editComment(string $gistId, int $id, string $body): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
-            Request::METHOD_PATCH, [
+        return $this->getApi()->request(
+            $this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
+            Request::METHOD_PATCH,
+            [
                 'body' => $body
-            ]);
+            ]
+        );
     }
 
     /**
@@ -90,8 +96,10 @@ class Comments extends AbstractGists
      */
     public function deleteComment(string $gistId, int $id): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
-            Request::METHOD_DELETE);
+        $this->getApi()->request(
+            $this->getApi()->sprintf('/gists/:gist_id/comments/:id', $gistId, (string)$id),
+            Request::METHOD_DELETE
+        );
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -99,4 +107,4 @@ class Comments extends AbstractGists
 
         return false;
     }
-} 
+}

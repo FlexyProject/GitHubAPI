@@ -129,8 +129,10 @@ class Followers extends AbstractUsers
      */
     public function unfollowUser(string $username): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/user/following/:username', $username),
-            Request::METHOD_DELETE);
+        $this->getApi()->request(
+            $this->getApi()->sprintf('/user/following/:username', $username),
+            Request::METHOD_DELETE
+        );
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -138,4 +140,4 @@ class Followers extends AbstractUsers
 
         return false;
     }
-} 
+}

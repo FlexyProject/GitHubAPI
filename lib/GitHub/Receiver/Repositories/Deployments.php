@@ -25,12 +25,18 @@ class Deployments extends AbstractRepositories
      *
      * @return array
      */
-    public function listDeployments(string $sha = null, string $ref = null, string $task = null,
-                                    string $environment = null): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/deployments',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(),
-            http_build_query(['sha' => $sha, 'ref' => $ref, 'task' => $task, 'environment' => $environment])));
+    public function listDeployments(
+        string $sha = null,
+        string $ref = null,
+        string $task = null,
+        string $environment = null
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/deployments',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            http_build_query(['sha' => $sha, 'ref' => $ref, 'task' => $task, 'environment' => $environment])
+        ));
     }
 
     /**
@@ -48,13 +54,20 @@ class Deployments extends AbstractRepositories
      *
      * @return array
      */
-    public function createDeployement(string $ref, string $task = AbstractApi::TASK_DEPLOY, bool $autoMerge = true,
-                                      array $requiredContexts = [], string $payload = '',
-                                      string $environment = AbstractApi::ENVIRONMENT_PRODUCTION,
-                                      string $description = ''): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/deployments',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()), Request::METHOD_POST, [
+    public function createDeployement(
+        string $ref,
+        string $task = AbstractApi::TASK_DEPLOY,
+        bool $autoMerge = true,
+        array $requiredContexts = [],
+        string $payload = '',
+        string $environment = AbstractApi::ENVIRONMENT_PRODUCTION,
+        string $description = ''
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/deployments',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ), Request::METHOD_POST, [
                 'ref'               => $ref,
                 'task'              => $task,
                 'auto_merge'        => $autoMerge,
@@ -76,8 +89,12 @@ class Deployments extends AbstractRepositories
      */
     public function listDeploymentStatus(int $id): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/deployments/:id/statuses',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/deployments/:id/statuses',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ));
     }
 
     /**
@@ -92,14 +109,21 @@ class Deployments extends AbstractRepositories
      *
      * @return array
      */
-    public function createDeploymentStatus(int $id, string $state, string $targetUrl = '',
-                                           string $description = ''): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/deployments/:id/statuses',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $id), Request::METHOD_POST, [
+    public function createDeploymentStatus(
+        int $id,
+        string $state,
+        string $targetUrl = '',
+        string $description = ''
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/deployments/:id/statuses',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $id
+        ), Request::METHOD_POST, [
                 'state'       => $state,
                 'target_url'  => $targetUrl,
                 'description' => $description
             ]);
     }
-} 
+}

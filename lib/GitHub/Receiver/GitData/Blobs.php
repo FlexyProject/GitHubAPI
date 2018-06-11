@@ -23,8 +23,12 @@ class Blobs extends AbstractGitData
      */
     public function getBlob(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/blobs/:sha',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/blobs/:sha',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -40,10 +44,13 @@ class Blobs extends AbstractGitData
     public function createBlob(string $content, string $encoding = 'utf-8'): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/git/blobs', $this->getGitData()->getOwner(),
-                                                 $this->getGitData()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/git/blobs',
+                                                 $this->getGitData()->getOwner(),
+                                                 $this->getGitData()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'content'  => $content,
                 'encoding' => $encoding
-            ]);
+                                                 ]);
     }
 }

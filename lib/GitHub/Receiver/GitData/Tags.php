@@ -24,8 +24,12 @@ class Tags extends AbstractGitData
      */
     public function get(string $sha): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/tags/:sha',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $sha));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/tags/:sha',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $sha
+        ));
     }
 
     /**
@@ -45,13 +49,16 @@ class Tags extends AbstractGitData
     public function create(string $tag, string $message, string $object, string $type, array $tagger = []): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/git/tags', $this->getGitData()->getOwner(),
-                                                 $this->getGitData()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/git/tags',
+                                                 $this->getGitData()->getOwner(),
+                                                 $this->getGitData()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'tag'     => $tag,
                 'message' => $message,
                 'object'  => $object,
                 'type'    => $type,
                 'tagger'  => $tagger
-            ]);
+                                                 ]);
     }
-} 
+}

@@ -27,4 +27,4 @@ class SearchIndexing extends AbstractEnterprise
                 'target' => $target
             ]);
     }
-} 
+}

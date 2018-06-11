@@ -60,9 +60,15 @@ class Users extends AbstractReceiver
      * @return array
      * @throws \Exception
      */
-    public function updateUser(string $name = null, string $email = null, string $blog = null, string $company = null,
-                               string $location = null, bool $hireable = false, string $bio = null): array
-    {
+    public function updateUser(
+        string $name = null,
+        string $email = null,
+        string $blog = null,
+        string $company = null,
+        string $location = null,
+        bool $hireable = false,
+        string $bio = null
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/user'), Request::METHOD_PATCH, [
                 'name'     => $name,
                 'email'    => $email,

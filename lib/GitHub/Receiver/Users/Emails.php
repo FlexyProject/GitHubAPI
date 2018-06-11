@@ -59,4 +59,4 @@ class Emails extends AbstractUsers
 
         return false;
     }
-} 
+}

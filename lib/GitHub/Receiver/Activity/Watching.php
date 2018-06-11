@@ -21,8 +21,11 @@ class Watching extends AbstractActivity
      */
     public function listWatchers(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/subscribers',
-            $this->getActivity()->getOwner(), $this->getActivity()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/subscribers',
+            $this->getActivity()->getOwner(),
+            $this->getActivity()->getRepo()
+        ));
     }
 
     /**
@@ -37,13 +40,20 @@ class Watching extends AbstractActivity
     public function listSubscriptions(string $username = null): array
     {
         if (null !== $username) {
-            return $this->getApi()->request($this->getApi()->sprintf('/users/:username/subscriptions',
-                $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), $username));
+            return $this->getApi()->request($this->getApi()->sprintf(
+                '/users/:username/subscriptions',
+                $this->getActivity()->getOwner(),
+                $this->getActivity()->getRepo(),
+                $username
+            ));
         }
 
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/user/subscriptions', $this->getActivity()->getOwner(),
-                                                 $this->getActivity()->getRepo()));
+                                             ->sprintf(
+                                                 '/user/subscriptions',
+                                                 $this->getActivity()->getOwner(),
+                                                 $this->getActivity()->getRepo()
+                                             ));
     }
 
     /**
@@ -54,8 +64,11 @@ class Watching extends AbstractActivity
      */
     public function getRepositorySubscription(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/subscription',
-            $this->getActivity()->getOwner(), $this->getActivity()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/subscription',
+            $this->getActivity()->getOwner(),
+            $this->getActivity()->getRepo()
+        ));
     }
 
     /**
@@ -70,11 +83,15 @@ class Watching extends AbstractActivity
      */
     public function setRepositorySubscription(bool $subscribed = false, bool $ignored = false): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/subscription?:args',
-            $this->getActivity()->getOwner(), $this->getActivity()->getRepo(), http_build_query([
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/subscription?:args',
+            $this->getActivity()->getOwner(),
+            $this->getActivity()->getRepo(),
+            http_build_query([
                 'subscribed' => $subscribed,
                 'ignored'    => $ignored
-            ])), Request::METHOD_PUT);
+            ])
+        ), Request::METHOD_PUT);
     }
 
     /**
@@ -86,8 +103,11 @@ class Watching extends AbstractActivity
     public function deleteRepositorySubscription(): bool
     {
         $this->getApi()->request($this->getApi()
-                                      ->sprintf('/repos/:owner/:repo/subscription', $this->getActivity()->getOwner(),
-                                          $this->getActivity()->getRepo()), Request::METHOD_DELETE);
+                                      ->sprintf(
+                                          '/repos/:owner/:repo/subscription',
+                                          $this->getActivity()->getOwner(),
+                                          $this->getActivity()->getRepo()
+                                      ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -105,8 +125,11 @@ class Watching extends AbstractActivity
     public function userSubscriptions(): bool
     {
         $this->getApi()->request($this->getApi()
-                                      ->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(),
-                                          $this->getActivity()->getRepo()));
+                                      ->sprintf(
+                                          '/user/subscriptions/:owner/:repo',
+                                          $this->getActivity()->getOwner(),
+                                          $this->getActivity()->getRepo()
+                                      ));
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -124,8 +147,11 @@ class Watching extends AbstractActivity
     public function watchRepository(): bool
     {
         $this->getApi()->request($this->getApi()
-                                      ->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(),
-                                          $this->getActivity()->getRepo()), Request::METHOD_PUT);
+                                      ->sprintf(
+                                          '/user/subscriptions/:owner/:repo',
+                                          $this->getActivity()->getOwner(),
+                                          $this->getActivity()->getRepo()
+                                      ), Request::METHOD_PUT);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -143,8 +169,11 @@ class Watching extends AbstractActivity
     public function stopWatchingRepository(): bool
     {
         $this->getApi()->request($this->getApi()
-                                      ->sprintf('/user/subscriptions/:owner/:repo', $this->getActivity()->getOwner(),
-                                          $this->getActivity()->getRepo()), Request::METHOD_DELETE);
+                                      ->sprintf(
+                                          '/user/subscriptions/:owner/:repo',
+                                          $this->getActivity()->getOwner(),
+                                          $this->getActivity()->getRepo()
+                                      ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;

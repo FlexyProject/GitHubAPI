@@ -24,8 +24,12 @@ class References extends AbstractGitData
      */
     public function get(string $branch): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/refs/heads/:branch',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $branch));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/refs/heads/:branch',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $branch
+        ));
     }
 
     /**
@@ -38,8 +42,11 @@ class References extends AbstractGitData
     public function getAll(): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(),
-                                                 $this->getGitData()->getRepo()));
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/git/refs',
+                                                 $this->getGitData()->getOwner(),
+                                                 $this->getGitData()->getRepo()
+                                             ));
     }
 
     /**
@@ -56,11 +63,14 @@ class References extends AbstractGitData
     public function create(string $ref, string $sha): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/git/refs', $this->getGitData()->getOwner(),
-                                                 $this->getGitData()->getRepo()), Request::METHOD_POST, [
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/git/refs',
+                                                 $this->getGitData()->getOwner(),
+                                                 $this->getGitData()->getRepo()
+                                             ), Request::METHOD_POST, [
                 'ref' => $ref,
                 'sha' => $sha
-            ]);
+                                                 ]);
     }
 
     /**
@@ -77,8 +87,12 @@ class References extends AbstractGitData
      */
     public function update(string $ref, string $sha, bool $force = false): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/git/refs/:ref',
-            $this->getGitData()->getOwner(), $this->getGitData()->getRepo(), $ref), Request::METHOD_POST, [
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/git/refs/:ref',
+            $this->getGitData()->getOwner(),
+            $this->getGitData()->getRepo(),
+            $ref
+        ), Request::METHOD_POST, [
                 'sha'   => $sha,
                 'force' => $force
             ]);
@@ -97,8 +111,12 @@ class References extends AbstractGitData
     public function delete(string $ref): bool
     {
         $this->getApi()->request($this->getApi()
-                                      ->sprintf('/repos/:owner/:repo/git/refs/:ref', $this->getGitData()->getOwner(),
-                                          $this->getGitData()->getRepo(), $ref), Request::METHOD_DELETE);
+                                      ->sprintf(
+                                          '/repos/:owner/:repo/git/refs/:ref',
+                                          $this->getGitData()->getOwner(),
+                                          $this->getGitData()->getRepo(),
+                                          $ref
+                                      ), Request::METHOD_DELETE);
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -106,4 +124,4 @@ class References extends AbstractGitData
 
         return false;
     }
-} 
+}

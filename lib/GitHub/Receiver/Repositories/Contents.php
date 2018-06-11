@@ -21,8 +21,11 @@ class Contents extends AbstractRepositories
      */
     public function getReadme(): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/readme',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo()));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/readme',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo()
+        ));
     }
 
     /**
@@ -37,9 +40,13 @@ class Contents extends AbstractRepositories
      */
     public function getContents(string $path = '', string $ref = AbstractApi::BRANCH_MASTER): array
     {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path,
-            http_build_query(['ref' => $ref])));
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/contents/:path?:args',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $path,
+            http_build_query(['ref' => $ref])
+        ));
     }
 
     /**
@@ -54,13 +61,22 @@ class Contents extends AbstractRepositories
      *
      * @return array
      */
-    public function createFile(string $path, string $message, string $content,
-                               string $branch = AbstractApi::BRANCH_MASTER): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path,
-            http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])),
-            Request::METHOD_PUT);
+    public function createFile(
+        string $path,
+        string $message,
+        string $content,
+        string $branch = AbstractApi::BRANCH_MASTER
+    ): array {
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/contents/:path?:args',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo(),
+                $path,
+                http_build_query(['message' => $message, 'content' => $content, 'branch' => $branch])
+            ),
+            Request::METHOD_PUT
+        );
     }
 
     /**
@@ -76,13 +92,23 @@ class Contents extends AbstractRepositories
      *
      * @return array
      */
-    public function updateFile(string $path, string $message, string $content, string $sha,
-                               string $branch = AbstractApi::BRANCH_MASTER): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/contents/:path?:args',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path,
-            http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])),
-            Request::METHOD_PUT);
+    public function updateFile(
+        string $path,
+        string $message,
+        string $content,
+        string $sha,
+        string $branch = AbstractApi::BRANCH_MASTER
+    ): array {
+        return $this->getApi()->request(
+            $this->getApi()->sprintf(
+                '/repos/:owner/:repo/contents/:path?:args',
+                $this->getRepositories()->getOwner(),
+                $this->getRepositories()->getRepo(),
+                $path,
+                http_build_query(['message' => $message, 'content' => $content, 'sha' => $sha, 'branch' => $branch])
+            ),
+            Request::METHOD_PUT
+        );
     }
 
     /**
@@ -97,11 +123,18 @@ class Contents extends AbstractRepositories
      *
      * @return array
      */
-    public function deleteFile(string $path, string $message, string $sha,
-                               string $branch = AbstractApi::BRANCH_MASTER): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/contents/:path',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $path), Request::METHOD_DELETE, [
+    public function deleteFile(
+        string $path,
+        string $message,
+        string $sha,
+        string $branch = AbstractApi::BRANCH_MASTER
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/contents/:path',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $path
+        ), Request::METHOD_DELETE, [
                 'message' => $message,
                 'sha'     => $sha,
                 'branch'  => $branch
@@ -118,10 +151,16 @@ class Contents extends AbstractRepositories
      *
      * @return array
      */
-    public function getArchiveLink(string $archiveFormat = AbstractApi::ARCHIVE_TARBALL,
-                                   string $ref = AbstractApi::BRANCH_MASTER): array
-    {
-        return $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/:archive_format/:ref',
-            $this->getRepositories()->getOwner(), $this->getRepositories()->getRepo(), $archiveFormat, $ref));
+    public function getArchiveLink(
+        string $archiveFormat = AbstractApi::ARCHIVE_TARBALL,
+        string $ref = AbstractApi::BRANCH_MASTER
+    ): array {
+        return $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/:archive_format/:ref',
+            $this->getRepositories()->getOwner(),
+            $this->getRepositories()->getRepo(),
+            $archiveFormat,
+            $ref
+        ));
     }
 }

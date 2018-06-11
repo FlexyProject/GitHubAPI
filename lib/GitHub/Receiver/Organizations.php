@@ -75,9 +75,15 @@ class Organizations extends AbstractReceiver
      * @return array
      * @throws \Exception
      */
-    public function edit(string $org, string $billingEmail = null, string $company = null, string $email = null,
-                         string $location = null, string $name = null, string $description = null): array
-    {
+    public function edit(
+        string $org,
+        string $billingEmail = null,
+        string $company = null,
+        string $email = null,
+        string $location = null,
+        string $name = null,
+        string $description = null
+    ): array {
         return $this->getApi()->request($this->getApi()->sprintf('/orgs/:org', $org), Request::METHOD_PATCH, [
                 'billing_email' => $billingEmail,
                 'company'       => $company,

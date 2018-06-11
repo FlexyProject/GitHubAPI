@@ -19,8 +19,11 @@ class Assignees extends AbstractIssues
     public function listAssignees(): array
     {
         return $this->getApi()->request($this->getApi()
-                                             ->sprintf('/repos/:owner/:repo/assignees', $this->getIssues()->getOwner(),
-                                                 $this->getIssues()->getRepo()));
+                                             ->sprintf(
+                                                 '/repos/:owner/:repo/assignees',
+                                                 $this->getIssues()->getOwner(),
+                                                 $this->getIssues()->getRepo()
+                                             ));
     }
 
     /**
@@ -34,8 +37,12 @@ class Assignees extends AbstractIssues
      */
     public function checkAssignee(string $assignee): bool
     {
-        $this->getApi()->request($this->getApi()->sprintf('/repos/:owner/:repo/assignees/:assignee',
-            $this->getIssues()->getOwner(), $this->getIssues()->getRepo(), $assignee));
+        $this->getApi()->request($this->getApi()->sprintf(
+            '/repos/:owner/:repo/assignees/:assignee',
+            $this->getIssues()->getOwner(),
+            $this->getIssues()->getRepo(),
+            $assignee
+        ));
 
         if ($this->getApi()->getHeaders()['Status'] == '204 No Content') {
             return true;
@@ -43,4 +50,4 @@ class Assignees extends AbstractIssues
 
         return false;
     }
-} 
+}

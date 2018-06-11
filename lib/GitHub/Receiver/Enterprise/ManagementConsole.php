@@ -79,8 +79,12 @@ class ManagementConsole extends AbstractEnterprise
     {
         $this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
-        return $this->getApi()->request(sprintf('/setup/api/start -F package=@%s -F license=@%s -F settings=<%s',
-            $package, $license, $settings), Request::METHOD_POST);
+        return $this->getApi()->request(sprintf(
+            '/setup/api/start -F package=@%s -F license=@%s -F settings=<%s',
+            $package,
+            $license,
+            $settings
+        ), Request::METHOD_POST);
     }
 
     /**
@@ -97,8 +101,10 @@ class ManagementConsole extends AbstractEnterprise
     {
         $this->getApi()->setApiUrl(sprintf('http://license:%s@%s', md5($license), $this->getHostname()));
 
-        return $this->getApi()->request(sprintf('/setup/api/upgrade -F package=@%s -F license=@%s', $package, $license),
-            Request::METHOD_POST);
+        return $this->getApi()->request(
+            sprintf('/setup/api/upgrade -F package=@%s -F license=@%s', $package, $license),
+            Request::METHOD_POST
+        );
     }
 
     /**
@@ -170,8 +176,10 @@ class ManagementConsole extends AbstractEnterprise
      */
     public function updateMaintenanceStatus(string $maintenance): array
     {
-        return $this->getApi()->request(sprintf('/setup/api/maintenance -d maintenance=%s', $maintenance),
-            Request::METHOD_POST);
+        return $this->getApi()->request(
+            sprintf('/setup/api/maintenance -d maintenance=%s', $maintenance),
+            Request::METHOD_POST
+        );
     }
 
     /**
@@ -196,8 +204,10 @@ class ManagementConsole extends AbstractEnterprise
      */
     public function addNewAuthorizedSshKeys(string $authorizedKey): array
     {
-        return $this->getApi()->request(sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s',
-            $authorizedKey), Request::METHOD_POST);
+        return $this->getApi()->request(sprintf(
+            '/setup/api/settings/authorized-keys -F authorized_key=@%s',
+            $authorizedKey
+        ), Request::METHOD_POST);
     }
 
     /**
@@ -211,7 +221,9 @@ class ManagementConsole extends AbstractEnterprise
      */
     public function removeAuthorizedSshKeys(string $authorizedKey): array
     {
-        return $this->getApi()->request(sprintf('/setup/api/settings/authorized-keys -F authorized_key=@%s',
-            $authorizedKey), Request::METHOD_DELETE);
+        return $this->getApi()->request(sprintf(
+            '/setup/api/settings/authorized-keys -F authorized_key=@%s',
+            $authorizedKey
+        ), Request::METHOD_DELETE);
     }
-} 
+}
